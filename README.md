@@ -1,0 +1,2 @@
+# MultiDomainInventoryProxy
+Interface towards the MultiDomainInventory
