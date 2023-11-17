@@ -2,35 +2,25 @@
 skinparam responseMessageBelowArrow true
 
 title
-PromptForBequeathingDataCausesTransferringExistingSubscriptionsForDeviceAttributeValueChanges
-PromptForBequeathingDataCausesTransferringExistingSubscriptionsForDeviceObjectCreations
-PromptForBequeathingDataCausesTransferringExistingSubscriptionsForDeviceObjectDeletions
-PromptForBequeathingDataCausesUnsubscribingFromDeviceAndControllerNotificationsAtNP
+PromptForBequeathingDataCausesRequestForBroadcastingInfoAboutServerReplacement
+PromptForBequeathingDataCausesRequestForDeregisteringOfOldRelease
+PromptingNewReleaseForUpdatingServerCausesRequestForBroadcastingInfoAboutBackwardCompatibleUpdateOfOperation
 end title
 
 participant "NR://v1/embed-yourself" as NewRelease
 participant "OR://v1/bequeath-your-data-and-die" as OldRelease
-participant "NR://v1/notify-attribute-value-changes" as notifyAttributeChange
-participant "NR://v1/notify-object-creations" as notifyObjectCreation
-participant "NR://v1/notify-object-deletions" as notifyObjectDeletion
-participant "NP://v1/end-subscription" as endSubsriptionAtNp
+participant "RO://v1/relay-server-replacement" as RoRsr
+participant "RO://v1/deregister-application" as RoDa
+participant "RO://v1/relay-operation-update" as RoRou
 
 NewRelease -> OldRelease
 activate OldRelease
 
-note over OldRelease
-Transfer all existing subscriptions 
-of 3rd applications to NewRelease
-end note
-OldRelease -> notifyAttributeChange: {address info of subscriber at OldRelease}
-OldRelease -> notifyObjectCreation: {address info of subscriber at OldRelease}
-OldRelease -> notifyObjectDeletion: {address info of subscriber at OldRelease}
+OldRelease -> RoRsr : {new replaces old}
 
-note over OldRelease
-Terminate existing subscriptions 
-of discontinued release at NP
-end note
-OldRelease -> endSubsriptionAtNp: {own application info}
+OldRelease -> RoDa : {old}
+
+OldRelease -> RoRou : {backward compatible service updates}
 
 deactivate OldRelease
 

@@ -1,0 +1,25 @@
+@startuml 100_provideControlConstruct
+skinparam responseMessageBelowArrow true
+
+title RequestForCachedControlConstructCausesReadingFromCache
+
+participant "RA" as requestor
+participant "MDIP://core-model-1-4:network-control-domain=cache/control-construct={mountName}" as MdipResourcePath
+participant "MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}" as MwdiResourcePath
+
+
+note over MdipResourcePath
+some resource path might include a ?fields= filter
+to retrieve just specific components of the addressed class
+end note
+
+requestor -> MdipResourcePath: {mount-name} (BasicAuth)
+activate MdipResourcePath
+
+MdipResourcePath -> MwdiResourcePath : {mount-name} (apiKeyAuth)
+MwdiResourcePath --> MdipResourcePath
+
+MdipResourcePath --> requestor
+deactivate MdipResourcePath
+
+@enduml

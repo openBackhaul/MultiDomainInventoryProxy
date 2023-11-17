@@ -43,49 +43,149 @@ servers:
         - operation-name: /docs
           uuid: mdip-1-0-0-op-s-bs-005
       individual:
-        # receivers for notifications from NotificationProxy
-        - operation-name: /v1/regard-controller-attribute-value-change
-          uuid: mdip-1-0-0-op-s-is-000
-
         # ordinary services
         - operation-name: /v1/provide-list-of-connected-devices
           uuid: mdip-1-0-0-op-s-is-010
+        - operation-name: /v1/provide-list-of-device-interfaces
+          uuid: mdip-1-0-0-op-s-is-011
+        - operation-name: /v1/provide-list-of-actual-device-equipment
+          uuid: mdip-1-0-0-op-s-is-012
+        - operation-name: /v1/provide-list-of-parallel-links
+          uuid: mdip-1-0-0-op-s-is-013
 
-        # 100 ControlConstruct
-        - operation-name: /core-model-1-4:network-control-domain=live/control-construct={mountName}/equipment-augment-1-0:control-construct-pac/external-label
-          uuid: mdip-1-0-0-op-s-is-101
+        # ressources provided from cache
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}
+          uuid: mdip-1-0-0-op-s-is-100
 
-        # 200 LTP
-        - operation-name: /core-model-1-4:network-control-domain=live/control-construct={mountName}/logical-termination-point={uuid}/ltp-augment-1-0:ltp-augment-pac/external-label
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/alarms-1-0:alarm-pac/alarm-capability
+          uuid: mdip-1-0-0-op-s-is-105
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/alarms-1-0:alarm-pac/alarm-configuration
+          uuid: mdip-1-0-0-op-s-is-106
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/alarms-1-0:alarm-pac/current-alarms
+          uuid: mdip-1-0-0-op-s-is-107
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/alarms-1-0:alarm-pac/alarm-event-records
+          uuid: mdip-1-0-0-op-s-is-108
+
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/equipment={uuid}
+          uuid: mdip-1-0-0-op-s-is-110
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/equipment={uuid}/connector={localId}
+          uuid: mdip-1-0-0-op-s-is-111
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/equipment={uuid}/contained-holder={localId}
+          uuid: mdip-1-0-0-op-s-is-112
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/equipment={uuid}/expected-equipment={localId}
+          uuid: mdip-1-0-0-op-s-is-113
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/equipment={uuid}/actual-equipment
+          uuid: mdip-1-0-0-op-s-is-114
+
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/firmware-1-0:firmware-collection
+          uuid: mdip-1-0-0-op-s-is-120
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/firmware-1-0:firmware-collection/firmware-component-list={localId}
+          uuid: mdip-1-0-0-op-s-is-121
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/firmware-1-0:firmware-collection/firmware-component-list={localId}/firmware-component-pac/firmware-component-capability
+          uuid: mdip-1-0-0-op-s-is-122
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/firmware-1-0:firmware-collection/firmware-component-list={localId}/firmware-component-pac/firmware-component-status
+          uuid: mdip-1-0-0-op-s-is-123
+
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/profile-collection
+          uuid: mdip-1-0-0-op-s-is-130
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/profile-collection/profile={uuid}
+          uuid: mdip-1-0-0-op-s-is-131
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/profile-collection/profile={uuid}/co-channel-profile-1-0:co-channel-profile-pac/co-channel-profile-capability
+          uuid: mdip-1-0-0-op-s-is-135
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/profile-collection/profile={uuid}/co-channel-profile-1-0:co-channel-profile-pac/co-channel-profile-configuration
+          uuid: mdip-1-0-0-op-s-is-136
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/profile-collection/profile={uuid}/policing-profile-1-0:policing-profile-pac/policing-profile-capability
+          uuid: mdip-1-0-0-op-s-is-145
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/profile-collection/profile={uuid}/policing-profile-1-0:policing-profile-pac/policing-profile-configuration
+          uuid: mdip-1-0-0-op-s-is-146
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/profile-collection/profile={uuid}/qos-profile-1-0:qos-profile-pac/qos-profile-capability
+          uuid: mdip-1-0-0-op-s-is-150
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/profile-collection/profile={uuid}/qos-profile-1-0:qos-profile-pac/qos-profile-configuration
+          uuid: mdip-1-0-0-op-s-is-151
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/profile-collection/profile={uuid}/scheduler-profile-1-0:scheduler-profile-pac/scheduler-profile-capability
+          uuid: mdip-1-0-0-op-s-is-155
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/profile-collection/profile={uuid}/scheduler-profile-1-0:scheduler-profile-pac/scheduler-profile-configuration
+          uuid: mdip-1-0-0-op-s-is-156
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/profile-collection/profile={uuid}/wred-profile-1-0:wred-profile-pac/wred-profile-capability
+          uuid: mdip-1-0-0-op-s-is-160
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/profile-collection/profile={uuid}/wred-profile-1-0:wred-profile-pac/wred-profile-configuration
+          uuid: mdip-1-0-0-op-s-is-161
+
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}
+          uuid: mdip-1-0-0-op-s-is-200
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/ltp-augment-1-0:ltp-augment-pac
           uuid: mdip-1-0-0-op-s-is-201
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}
+          uuid: mdip-1-0-0-op-s-is-202
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct{uuid1}
+          uuid: mdip-1-0-0-op-s-is-203
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct{uuid1}/fc-port{localId}
+          uuid: mdip-1-0-0-op-s-is-204
+        - operation-name: /core-model-1-4:network-control-domain=cache/link={uuid}
+          uuid: mdip-1-0-0-op-s-is-205
+        - operation-name: /core-model-1-4:network-control-domain=cache/link={uuid}/link-port{localId}
+          uuid: mdip-1-0-0-op-s-is-206
 
-        # 210 AirInterface
-        - operation-name: /core-model-1-4:network-control-domain=live/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/air-interface-2-0:air-interface-pac/air-interface-configuration/transmitter-is-on
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/air-interface-2-0:air-interface-pac/air-interface-capability
+          uuid: mdip-1-0-0-op-s-is-210
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/air-interface-2-0:air-interface-pac/air-interface-configuration
           uuid: mdip-1-0-0-op-s-is-211
-        - operation-name: /core-model-1-4:network-control-domain=live/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/air-interface-2-0:air-interface-pac/air-interface-configuration/performance-monitoring-is-on
-          uuid: mdip-1-0-0-op-s-is-239
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/air-interface-2-0:air-interface-pac/air-interface-status
+          uuid: mdip-1-0-0-op-s-is-212
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/air-interface-2-0:air-interface-pac/air-interface-historical-performances
+          uuid: mdip-1-0-0-op-s-is-214
 
-        # 240 EthernetContainer
-        - operation-name: /core-model-1-4:network-control-domain=live/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/ethernet-container-2-0:ethernet-container-pac/ethernet-container-configuration/performance-monitoring-is-on
-          uuid: mdip-1-0-0-op-s-is-259
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/ethernet-container-2-0:ethernet-container-pac/ethernet-container-capability
+          uuid: mdip-1-0-0-op-s-is-220
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/ethernet-container-2-0:ethernet-container-pac/ethernet-container-configuration
+          uuid: mdip-1-0-0-op-s-is-221
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/ethernet-container-2-0:ethernet-container-pac/ethernet-container-status
+          uuid: mdip-1-0-0-op-s-is-222
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/ethernet-container-2-0:ethernet-container-pac/ethernet-container-historical-performances
+          uuid: mdip-1-0-0-op-s-is-224
 
-        # 260 HybridMicrowaveStructure
-        - operation-name: /core-model-1-4:network-control-domain=live/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/hybrid-mw-structure-2-0:hybrid-mw-structure-pac/hybrid-mw-structure-configuration/performance-monitoring-is-on
-          uuid: mdip-1-0-0-op-s-is-269
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/hybrid-mw-structure-2-0:hybrid-mw-structure-pac/hybrid-mw-structure-capability
+          uuid: mdip-1-0-0-op-s-is-230
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/hybrid-mw-structure-2-0:hybrid-mw-structure-pac/hybrid-mw-structure-configuration
+          uuid: mdip-1-0-0-op-s-is-231
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/hybrid-mw-structure-2-0:hybrid-mw-structure-pac/hybrid-mw-structure-status
+          uuid: mdip-1-0-0-op-s-is-232
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/hybrid-mw-structure-2-0:hybrid-mw-structure-pac/hybrid-mw-structure-historical-performances
+          uuid: mdip-1-0-0-op-s-is-234
 
-        # 270 MacInterface
-        - operation-name: /core-model-1-4:network-control-domain=live/control-construct={mountName}/mac-fd-1-0:provide-learned-mac-addresses
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/mac-interface-1-0:mac-interface-pac/mac-interface-capability
+          uuid: mdip-1-0-0-op-s-is-240
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/mac-interface-1-0:mac-interface-pac/mac-interface-configuration
+          uuid: mdip-1-0-0-op-s-is-241
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/mac-interface-1-0:mac-interface-pac/mac-interface-status
+          uuid: mdip-1-0-0-op-s-is-242
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/mac-interface-1-0:mac-interface-pac/mac-interface-historical-performances
+          uuid: mdip-1-0-0-op-s-is-244
+
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/pure-ethernet-structure-2-0:pure-ethernet-structure-pac/pure-ethernet-structure-capability
+          uuid: mdip-1-0-0-op-s-is-250
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/pure-ethernet-structure-2-0:pure-ethernet-structure-pac/pure-ethernet-structure-configuration
+          uuid: mdip-1-0-0-op-s-is-251
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/pure-ethernet-structure-2-0:pure-ethernet-structure-pac/pure-ethernet-structure-status
+          uuid: mdip-1-0-0-op-s-is-252
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/pure-ethernet-structure-2-0:pure-ethernet-structure-pac/pure-ethernet-structure-historical-performances
+          uuid: mdip-1-0-0-op-s-is-254
+
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/vlan-interface-1-0:vlan-interface-pac/vlan-interface-capability
+          uuid: mdip-1-0-0-op-s-is-260
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/vlan-interface-1-0:vlan-interface-pac/vlan-interface-configuration
+          uuid: mdip-1-0-0-op-s-is-261
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/vlan-interface-1-0:vlan-interface-pac/vlan-interface-historical-performances
+          uuid: mdip-1-0-0-op-s-is-264
+
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/wire-interface-2-0:wire-interface-pac/wire-interface-capability
           uuid: mdip-1-0-0-op-s-is-270
-
-        # 290 PureEthernetStructure
-        - operation-name: /core-model-1-4:network-control-domain=live/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/pure-ethernet-structure-2-0:pure-ethernet-structure-pac/pure-ethernet-structure-configuration/performance-monitoring-is-on
-          uuid: mdip-1-0-0-op-s-is-299
-
-        # 300 VlanInterface
-
-        # 330 WireInterface
-        - operation-name: /core-model-1-4:network-control-domain=live/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/wire-interface-2-0:wire-interface-pac/wire-interface-configuration/performance-monitoring-is-on
-          uuid: mdip-1-0-0-op-s-is-359
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/wire-interface-2-0:wire-interface-pac/wire-interface-configuration
+          uuid: mdip-1-0-0-op-s-is-271
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/wire-interface-2-0:wire-interface-pac/wire-interface-status
+          uuid: mdip-1-0-0-op-s-is-272
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/wire-interface-2-0:wire-interface-pac/wire-interface-historical-performances
+          uuid: mdip-1-0-0-op-s-is-274
   http-server:
     own-application-name: MultiDomainInventoryProxy
     own-release-number: 1.0.0
@@ -93,8 +193,8 @@ servers:
   tcp-server:
     - description: Without TLS layer
       local-protocol: http
-      own-ip-address: 1.1.4.14
-      own-tcp-port: 4014
+      own-ip-address: 1.1.4.16
+      own-tcp-port: 4016
       uuid: mdip-1-0-0-tcp-s-000
 
 
@@ -106,8 +206,8 @@ clients:
       uuid: mdip-1-0-0-http-c-or-1-0-0-000
     tcp-client:
       remote-protocol: http
-      ip-address: 1.1.4.14
-      tcp-port: 4014
+      ip-address: 1.1.4.16
+      tcp-port: 4016
       uuid: mdip-1-0-0-tcp-c-or-1-0-0-000
     operation-clients:
       own-oam:
@@ -125,8 +225,8 @@ clients:
       uuid: mdip-1-0-0-http-c-nr-1-0-0-000
     tcp-client:
       remote-protocol: http
-      ip-address: 1.1.4.14
-      tcp-port: 4014
+      ip-address: 1.1.4.16
+      tcp-port: 4016
       uuid: mdip-1-0-0-tcp-c-nr-1-0-0-000
     operation-clients:
       own-oam:
@@ -281,83 +381,155 @@ clients:
         basic:
         individual:
 
-  - http-client:
-      application-name: OpenDayLight
-      release-number: 4.0.2
-      uuid: mdip-1-0-0-http-c-odl-4-0-2-000
-    tcp-client:
-      remote-protocol: http
-      ip-address: 1.1.1.1
-      tcp-port: 1001
-      uuid: mdip-1-0-0-tcp-c-odl-4-0-2-000
-    operation-clients:
-      own-oam:
-        basic:
-        individual:
-      service:
-        basic:
-        individual:
-          ## GET list of mounted devices with connection status from Controller
-          # called with fields filter: ?fields=node(node-id;netconf-node-topology:connection-status)
-          - operation-name: /{controllerInternalPathToMountPoint}
-            uuid: mdip-1-0-0-op-c-is-odl-4-0-2-000
-
-          ## 100 ControlConstruct
-          - operation-name: /{controllerInternalPathToMountPoint}/node={mountName}/yang-ext:mount/core-model-1-4:control-construct/equipment-augment-1-0:control-construct-pac/external-label
-            uuid: mdip-1-0-0-op-c-is-odl-4-0-2-101
-
-          ## 200 LTP
-          - operation-name: /{controllerInternalPathToMountPoint}/node={mountName}/yang-ext:mount/core-model-1-4:control-construct/logical-termination-point={uuid}/ltp-augment-1-0:ltp-augment-pac/external-label
-            uuid: mdip-1-0-0-op-c-is-odl-4-0-2-201
-
-          ## 210 AirInterface
-          - operation-name: /{controllerInternalPathToMountPoint}/node={mountName}/yang-ext:mount/core-model-1-4:control-construct/logical-termination-point={uuid}/layer-protocol={localId}/air-interface-2-0:air-interface-pac/air-interface-configuration/transmitter-is-on
-            uuid: mdip-1-0-0-op-c-is-odl-4-0-2-211
-          - operation-name: /{controllerInternalPathToMountPoint}/node={mountName}/yang-ext:mount/core-model-1-4:control-construct/logical-termination-point={uuid}/layer-protocol={localId}/air-interface-2-0:air-interface-pac/air-interface-configuration/performance-monitoring-is-on
-            uuid: mdip-1-0-0-op-c-is-odl-4-0-2-239
-
-          ## 240 EthernetContainer
-          - operation-name: /{controllerInternalPathToMountPoint}/node={mountName}/yang-ext:mount/core-model-1-4:control-construct/logical-termination-point={uuid}/layer-protocol={localId}/ethernet-container-2-0:ethernet-container-pac/ethernet-container-configuration/performance-monitoring-is-on
-            uuid: mdip-1-0-0-op-c-is-odl-4-0-2-259
-
-          ## 260 HybridMicrowaveStructure
-          - operation-name: /{controllerInternalPathToMountPoint}/node={mountName}/yang-ext:mount/core-model-1-4:control-construct/logical-termination-point={uuid}/layer-protocol={localId}/hybrid-mw-structure-2-0:hybrid-mw-structure-pac/hybrid-mw-structure-configuration/performance-monitoring-is-on
-            uuid: mdip-1-0-0-op-c-is-odl-4-0-2-269
-
-          ## 270 MacInterface
-          - operation-name: /{controllerInternalPathToMountPoint}/node={mountName}/yang-ext:mount/mac-fd-1-0:provide-learned-mac-addresses
-            uuid: mdip-1-0-0-op-c-is-odl-4-0-2-270
-
-          ## 290 PureEthernetStructure
-          - operation-name: /{controllerInternalPathToMountPoint}/node={mountName}/yang-ext:mount/core-model-1-4:control-construct/logical-termination-point={uuid}/layer-protocol={localId}/pure-ethernet-structure-2-0:pure-ethernet-structure-pac/pure-ethernet-structure-configuration/performance-monitoring-is-on
-            uuid: mdip-1-0-0-op-c-is-odl-4-0-2-299
-
-          ## 300 VlanInterface
-
-          ## 330 WireInterface
-          - operation-name: /{controllerInternalPathToMountPoint}/node={mountName}/yang-ext:mount/core-model-1-4:control-construct/logical-termination-point={uuid}/layer-protocol={localId}/wire-interface-2-0:wire-interface-pac/wire-interface-configuration/performance-monitoring-is-on
-            uuid: mdip-1-0-0-op-c-is-odl-4-0-2-359
 
   - http-client:
-      application-name: NotificationProxy
-      release-number: 1.0.1
-      uuid: mdip-1-0-0-http-c-np-1-0-1-000
+      application-name: MicrowaveDeviceInventory
+      release-number: 1.1.1
+      uuid: mdip-1-0-0-http-c-mwdi-1-1-1-000
     tcp-client:
       remote-protocol: http
-      ip-address: 1.1.4.11
-      tcp-port: 4011
-      uuid: mdip-1-0-0-tcp-c-np-1-0-1-000
+      ip-address: 1.1.4.15
+      tcp-port: 4015
+      uuid: mdip-1-0-0-tcp-c-mwdi-1-1-1-000
     operation-clients:
-      own-oam:
-        basic:
-        individual:
-      service:
-        basic:
-        individual:
-          ## subscribing for controller notifications
-          - operation-name: /v1/notify-controller-attribute-value-changes
-            uuid: mdip-1-0-0-op-c-is-np-1-0-1-000
+      - operation-name: /v1/provide-list-of-connected-devices
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-010
+      - operation-name: /v1/provide-list-of-device-interfaces
+        uuid: mmdip-1-0-0-op-c-is-mwdi-1-1-1-011
+      - operation-name: /v1/provide-list-of-actual-device-equipment
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-012
+      - operation-name: /v1/provide-list-of-parallel-links
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-013
 
-          ## unsubscribe from notifications
-          - operation-name: /v1/end-subscription
-            uuid: mdip-1-0-0-op-c-is-np-1-0-1-020
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-100
+
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/alarms-1-0:alarm-pac/alarm-capability
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-105
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/alarms-1-0:alarm-pac/alarm-configuration
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-106
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/alarms-1-0:alarm-pac/current-alarms
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-107
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/alarms-1-0:alarm-pac/alarm-event-records
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-108
+
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/equipment={uuid}
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-110
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/equipment={uuid}/connector={localId}
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-111
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/equipment={uuid}/contained-holder={localId}
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-112
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/equipment={uuid}/expected-equipment={localId}
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-113
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/equipment={uuid}/actual-equipment
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-114
+
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/firmware-1-0:firmware-collection
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-120
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/firmware-1-0:firmware-collection/firmware-component-list={localId}
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-121
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/firmware-1-0:firmware-collection/firmware-component-list={localId}/firmware-component-pac/firmware-component-capability
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-122
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/firmware-1-0:firmware-collection/firmware-component-list={localId}/firmware-component-pac/firmware-component-status
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-123
+
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/profile-collection
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-130
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/profile-collection/profile={uuid}
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-131
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/profile-collection/profile={uuid}/co-channel-profile-1-0:co-channel-profile-pac/co-channel-profile-capability
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-135
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/profile-collection/profile={uuid}/co-channel-profile-1-0:co-channel-profile-pac/co-channel-profile-configuration
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-136
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/profile-collection/profile={uuid}/policing-profile-1-0:policing-profile-pac/policing-profile-capability
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-145
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/profile-collection/profile={uuid}/policing-profile-1-0:policing-profile-pac/policing-profile-configuration
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-146
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/profile-collection/profile={uuid}/qos-profile-1-0:qos-profile-pac/qos-profile-capability
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-150
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/profile-collection/profile={uuid}/qos-profile-1-0:qos-profile-pac/qos-profile-configuration
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-151
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/profile-collection/profile={uuid}/scheduler-profile-1-0:scheduler-profile-pac/scheduler-profile-capability
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-155
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/profile-collection/profile={uuid}/scheduler-profile-1-0:scheduler-profile-pac/scheduler-profile-configuration
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-156
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/profile-collection/profile={uuid}/wred-profile-1-0:wred-profile-pac/wred-profile-capability
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-160
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/profile-collection/profile={uuid}/wred-profile-1-0:wred-profile-pac/wred-profile-configuration
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-161
+
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-200
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/ltp-augment-1-0:ltp-augment-pac
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-201
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-202
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct{uuid1}
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-203
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct{uuid1}/fc-port{localId}
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-204
+      - operation-name: /core-model-1-4:network-control-domain=cache/link={uuid}
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-205
+      - operation-name: /core-model-1-4:network-control-domain=cache/link={uuid}/link-port{localId}
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-206
+
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/air-interface-2-0:air-interface-pac/air-interface-capability
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-210
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/air-interface-2-0:air-interface-pac/air-interface-configuration
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-211
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/air-interface-2-0:air-interface-pac/air-interface-status
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-212
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/air-interface-2-0:air-interface-pac/air-interface-historical-performances
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-214
+
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/ethernet-container-2-0:ethernet-container-pac/ethernet-container-capability
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-220
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/ethernet-container-2-0:ethernet-container-pac/ethernet-container-configuration
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-221
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/ethernet-container-2-0:ethernet-container-pac/ethernet-container-status
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-222
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/ethernet-container-2-0:ethernet-container-pac/ethernet-container-historical-performances
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-224
+
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/hybrid-mw-structure-2-0:hybrid-mw-structure-pac/hybrid-mw-structure-capability
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-230
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/hybrid-mw-structure-2-0:hybrid-mw-structure-pac/hybrid-mw-structure-configuration
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-231
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/hybrid-mw-structure-2-0:hybrid-mw-structure-pac/hybrid-mw-structure-status
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-232
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/hybrid-mw-structure-2-0:hybrid-mw-structure-pac/hybrid-mw-structure-historical-performances
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-234
+
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/mac-interface-1-0:mac-interface-pac/mac-interface-capability
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-240
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/mac-interface-1-0:mac-interface-pac/mac-interface-configuration
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-241
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/mac-interface-1-0:mac-interface-pac/mac-interface-status
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-242
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/mac-interface-1-0:mac-interface-pac/mac-interface-historical-performances
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-244
+
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/pure-ethernet-structure-2-0:pure-ethernet-structure-pac/pure-ethernet-structure-capability
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-250
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/pure-ethernet-structure-2-0:pure-ethernet-structure-pac/pure-ethernet-structure-configuration
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-251
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/pure-ethernet-structure-2-0:pure-ethernet-structure-pac/pure-ethernet-structure-status
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-252
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/pure-ethernet-structure-2-0:pure-ethernet-structure-pac/pure-ethernet-structure-historical-performances
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-254
+
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/vlan-interface-1-0:vlan-interface-pac/vlan-interface-capability
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-260
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/vlan-interface-1-0:vlan-interface-pac/vlan-interface-configuration
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-261
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/vlan-interface-1-0:vlan-interface-pac/vlan-interface-historical-performances
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-264
+
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/wire-interface-2-0:wire-interface-pac/wire-interface-capability
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-270
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/wire-interface-2-0:wire-interface-pac/wire-interface-configuration
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-271
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/wire-interface-2-0:wire-interface-pac/wire-interface-status
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-272
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/wire-interface-2-0:wire-interface-pac/wire-interface-historical-performances
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-274

@@ -1,0 +1,25 @@
+@startuml 010_ProvideListOfConnectedDevices
+skinparam responseMessageBelowArrow true
+
+title
+RequestForListOfConnectedDevicesCausesReadingFromCache
+also exemplary for
+RequestForListOfDeviceInterfacesCausesReadingFromCache
+RequestForListOfActualDeviceEquipmentCausesReadingFromCache
+RequestForListOfParallelLinksCausesReadingFromCache
+end title
+
+participant "RA" as requestor
+participant "MDIP://v1/provide-list-of-connected-devices" as MDIPprovideListOfConnectedDevices
+participant "MWDI://v1/provide-list-of-connected-devices" as MWDIprovideListOfConnectedDevices
+
+requestor -> MDIPprovideListOfConnectedDevices : (BasicAuth)
+activate MDIPprovideListOfConnectedDevices
+
+MDIPprovideListOfConnectedDevices -> MWDIprovideListOfConnectedDevices : (apiKeyAuth)
+MWDIprovideListOfConnectedDevices --> MDIPprovideListOfConnectedDevices
+
+MDIPprovideListOfConnectedDevices --> requestor
+deactivate MDIPprovideListOfConnectedDevices
+
+@enduml
