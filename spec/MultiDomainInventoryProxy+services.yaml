@@ -196,7 +196,11 @@ servers:
       own-ip-address: 1.1.4.16
       own-tcp-port: 4016
       uuid: mdip-1-0-0-tcp-s-000
-
+    - description: With TLS layer
+      local-protocol: https
+      own-ip-address: 1.2.4.16
+      own-tcp-port: 4216
+      uuid: mdip-1-0-0-tcp-s-001
 
 clients:
 
@@ -395,7 +399,7 @@ clients:
       - operation-name: /v1/provide-list-of-connected-devices
         uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-010
       - operation-name: /v1/provide-list-of-device-interfaces
-        uuid: mmdip-1-0-0-op-c-is-mwdi-1-1-1-011
+        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-011
       - operation-name: /v1/provide-list-of-actual-device-equipment
         uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-012
       - operation-name: /v1/provide-list-of-parallel-links

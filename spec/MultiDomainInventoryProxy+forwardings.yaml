@@ -653,7 +653,7 @@ forwardings:
       - server-name: /v1/provide-list-of-connected-devices
         uuid: mdip-1-0-0-op-s-is-010
     consequent-requests:
-      - client-name: MDIP://v1/provide-list-of-connected-devices
+      - client-name: MWDI://v1/provide-list-of-connected-devices
         uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-010
 
   - forwarding-name: RequestForListOfDeviceInterfacesCausesReadingFromCache
@@ -668,7 +668,7 @@ forwardings:
       - server-name:  /v1/provide-list-of-device-interfaces
         uuid: mdip-1-0-0-op-s-is-011
     consequent-requests:
-      - client-name:  MDIP://v1/provide-list-of-device-interfaces
+      - client-name: MWDI://v1/provide-list-of-device-interfaces
         uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-011
 
   - forwarding-name: RequestForListOfActualDeviceEquipmentCausesReadingFromCache
@@ -683,7 +683,7 @@ forwardings:
       - server-name: /v1/provide-list-of-actual-device-equipment
         uuid: mdip-1-0-0-op-s-is-012
     consequent-requests:
-      - client-name: MDIP://v1/provide-list-of-actual-device-equipment
+      - client-name: MWDI://v1/provide-list-of-actual-device-equipment
         uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-012
 
   - forwarding-name: RequestForListOfParallelLinksCausesReadingFromCache
@@ -698,7 +698,7 @@ forwardings:
       - server-name: /v1/provide-list-of-parallel-links
         uuid: mdip-1-0-0-op-s-is-013
     consequent-requests:
-      - client-name: MDIP://v1/provide-list-of-parallel-links
+      - client-name: MWDI://v1/provide-list-of-parallel-links
         uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-013
 
 

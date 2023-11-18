@@ -9,7 +9,7 @@ participant "MWDI://core-model-1-4:network-control-domain=cache/control-construc
 
 
 note over MdipResourcePath
-some resource path might include a ?fields= filter
+all resource path might include a ?fields= filter
 to retrieve just specific components of the addressed class
 end note
 
