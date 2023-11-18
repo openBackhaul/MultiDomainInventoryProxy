@@ -1,0 +1,27 @@
+@startuml 09x_BequeathYourDataAndDie
+skinparam responseMessageBelowArrow true
+
+title
+PromptForBequeathingDataCausesRequestForBroadcastingInfoAboutServerReplacement
+PromptForBequeathingDataCausesRequestForDeregisteringOfOldRelease
+PromptingNewReleaseForUpdatingServerCausesRequestForBroadcastingInfoAboutBackwardCompatibleUpdateOfOperation
+end title
+
+participant "NR://v1/embed-yourself" as NewRelease
+participant "OR://v1/bequeath-your-data-and-die" as OldRelease
+participant "RO://v1/relay-server-replacement" as RoRsr
+participant "RO://v1/deregister-application" as RoDa
+participant "RO://v1/relay-operation-update" as RoRou
+
+NewRelease -> OldRelease
+activate OldRelease
+
+OldRelease -> RoRsr : {new replaces old}
+
+OldRelease -> RoDa : {old}
+
+OldRelease -> RoRou : {backward compatible service updates}
+
+deactivate OldRelease
+
+@enduml
