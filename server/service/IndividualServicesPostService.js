@@ -33,30 +33,6 @@ exports.bequeathYourDataAndDie = function (requestUrl, body, user, originator, x
   });
 }
 
-
-/**
- * Provides ActualEquipment from cache
- *
- * mountName String The mountName of the device that is addressed by the request
- * uuid String Instance identifier that is unique within the device
- * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_13
- **/
-exports.getCachedActualEquipment = function (requestUrl, mountName, uuid, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "core-model-1-4:actual-equipment": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
-}
-
-
 /**
  * Provides list of actual equipment UUIDs inside a device
  *

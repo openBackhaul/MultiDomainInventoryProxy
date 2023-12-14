@@ -24,8 +24,8 @@ exports.getAppInformation = async function() {
     return appInformation;
 }
 
-exports.createRequestHeader = function () {
-    return new RequestHeader("MultiDomainInventoryProxy", "MultiDomainInventoryProxy", undefined, "1");
+exports.createRequestHeader = function (operationKey) {
+    return new RequestHeader("MultiDomainInventoryProxy", "MultiDomainInventoryProxy", undefined, "1", undefined, operationKey);
 }
 
 exports.buildControllerTargetPath = function (controllerProtocol, controllerAddress, controllerPort) {

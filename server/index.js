@@ -1,28 +1,28 @@
 'use strict';
 
-var path = require('path');
-var http = require('http');
+const path = require('path');
+const http = require('http');
 
-var oas3Tools = require('oas3-tools');
-var appCommons = require('onf-core-model-ap/applicationPattern/commons/AppCommons');
+const oas3Tools = require('oas3-tools');
+const appCommons = require('onf-core-model-ap/applicationPattern/commons/AppCommons');
+const {Oas3AppOptions} = require("oas3-tools/dist/middleware/oas3.options");
 
 const logger = require('./service/LoggingService.js').getLogger();
 
-var serverPort = 9093;
+const serverPort = 9093;
 
 // uncomment if you do not want to validate security e.g. operation-key, basic auth, etc
 //appCommons.openApiValidatorOptions.validateSecurity = false;
 
 // swaggerRouter configuration
-var options = {
-    routing: {
-        controllers: path.join(__dirname, './controllers')
-    },
-    openApiValidator: appCommons.openApiValidatorOptions
-};
+const options = new Oas3AppOptions(
+    {controllers: path.join(__dirname, './controllers')},
+    appCommons.openApiValidatorOptions, undefined, undefined
+);
 
-var expressAppConfig = oas3Tools.expressAppConfig(path.join(__dirname, 'api/openapi.yaml'), options);
-var app = expressAppConfig.getApp();
+
+const expressAppConfig = oas3Tools.expressAppConfig(path.join(__dirname, 'api/openapi.yaml'), options);
+const app = expressAppConfig.getApp();
 
 appCommons.setupExpressApp(app);
 
