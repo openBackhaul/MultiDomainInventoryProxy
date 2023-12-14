@@ -19,6 +19,7 @@ exports.provideListOfData = async function (requestUrl, body) {
     return await requestDataFromMWDI(requestUrl, payload);
 }
 
+
 /**
  * forward request to MWDI instance depending on usecase
  *
@@ -53,4 +54,21 @@ async function requestDataFromMWDI(requestUrl, payload) {
     let targetUrl = requestUtil.buildControllerTargetPath(opData.protocol, opData.address, opData.port) + requestUrl;
 
     return await restClient.startPostDataRequest(targetUrl, payload, requestUrl, opData.operationKey);
+}
+
+
+/**
+ * Forward request to MWDI.
+ * @param requestUrl
+ * @param callbackName
+ * @returns {Promise}
+ */
+exports.getDataFromMWDI = async function (requestUrl, callbackName) {
+    let opData = await controlContructUtils.getForwardingConstructOutputOperationData(callbackName);
+
+    let targetUrl = requestUtil.buildControllerTargetPath(opData.protocol, opData.address, opData.port) + requestUrl;
+
+    let ret = await restClient.startGetRequest(targetUrl, requestUrl, opData.operationKey);
+
+    return {code: ret.code, data: ret.data, headers: ret.headers, operationName: opData.operationName};
 }

@@ -15,7 +15,7 @@ const requestUtil = require("./RequestUtil");
  */
 exports.startPostRequest = async function (targetUrl, payload, operationName, operationKey) {
 
-    let requestHeader = requestUtil.createRequestHeader();
+    let requestHeader = requestUtil.createRequestHeader(operationKey);
     let appInformation = requestUtil.getAppInformation();
 
     return await axios.post(targetUrl, payload, {
@@ -25,7 +25,7 @@ exports.startPostRequest = async function (targetUrl, payload, operationName, op
             'user': requestHeader.user,
             'originator': requestHeader.originator,
             'customer-journey': requestHeader.customerJourney,
-            'operation-key': operationKey
+            'operation-key': requestHeader.operationKey
         }
     })
         .then((response) => {
@@ -56,7 +56,7 @@ exports.startPostRequest = async function (targetUrl, payload, operationName, op
                 requestHeader.user,
                 requestHeader.originator,
                 operationName,
-                responseCodeEnum.code.INTERNAL_SERVER_ERROR,
+                e.response.status ? e.response.status : responseCodeEnum.code.INTERNAL_SERVER_ERROR,
                 payload,
                 e);
 
@@ -66,7 +66,7 @@ exports.startPostRequest = async function (targetUrl, payload, operationName, op
 
 exports.startPostDataRequest = async function (targetUrl, payload, operationName, operationKey) {
 
-    let requestHeader = requestUtil.createRequestHeader();
+    let requestHeader = requestUtil.createRequestHeader(operationKey);
     let appInformation = requestUtil.getAppInformation();
 
     return await axios.post(targetUrl, payload, {
@@ -76,7 +76,7 @@ exports.startPostDataRequest = async function (targetUrl, payload, operationName
             'user': requestHeader.user,
             'originator': requestHeader.originator,
             'customer-journey': requestHeader.customerJourney,
-            'operation-key': operationKey
+            'operation-key': requestHeader.operationKey
         }
     })
         .then((response) => {
@@ -107,10 +107,70 @@ exports.startPostDataRequest = async function (targetUrl, payload, operationName
                 requestHeader.user,
                 requestHeader.originator,
                 operationName,
-                responseCodeEnum.code.INTERNAL_SERVER_ERROR,
+                (e.response && e.response.status) ? e.response.status : responseCodeEnum.code.INTERNAL_SERVER_ERROR,
                 payload,
                 e);
 
             return null;
+        });
+}
+
+
+/**
+ * Execute GET request and await success return value.
+ *
+ * @param targetUrl
+ * @param operationName
+ * @param operationKey
+ * @return {Promise}
+ */
+exports.startGetRequest = async function (targetUrl, operationName, operationKey) {
+    let requestHeader = requestUtil.createRequestHeader(operationKey);
+    let appInformation = requestUtil.getAppInformation();
+
+    return await axios.get(targetUrl, {
+        headers: {
+            'x-correlator': requestHeader.xCorrelator,
+            'trace-indicator': requestHeader.traceIndicator,
+            'user': requestHeader.user,
+            'originator': requestHeader.originator,
+            'customer-journey': requestHeader.customerJourney,
+            'operation-key': requestHeader.operationKey
+        }
+    })
+        .then((response) => {
+            logger.debug(operationName + " success. result from axios call: " + response.status);
+
+            executionAndTraceService.recordServiceRequestFromClient(
+                appInformation["application-name"],
+                appInformation["release-number"],
+                requestHeader.xCorrelator,
+                requestHeader.traceIndicator,
+                requestHeader.user,
+                requestHeader.originator,
+                operationName,
+                response.status,
+                undefined,
+                response.data);
+
+            return {code: response.status, data: response.data, headers: requestHeader};
+        })
+        .catch(e => {
+            logger.error(e, "error during " + operationName);
+            let response = e.response;
+
+            executionAndTraceService.recordServiceRequestFromClient(
+                appInformation["application-name"],
+                appInformation["release-number"],
+                requestHeader.xCorrelator,
+                requestHeader.traceIndicator,
+                requestHeader.user,
+                requestHeader.originator,
+                operationName,
+                response.status ? response.status : responseCodeEnum.code.INTERNAL_SERVER_ERROR,
+                undefined,
+                response.data ? response.data : e);
+
+            return {code: response.status, data: response.data, headers: requestHeader};
         });
 }

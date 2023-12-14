@@ -1,7 +1,17 @@
 'use strict';
-const bequeathHandler = require('./individualServices/BequeathHandler');
-const logger = require('./LoggingService.js').getLogger();
 const provideListRequestHandler = require('./individualServices/ProvideListRequestHandler');
+
+
+/**
+ * Provides ControlConstruct from cache
+ *
+ * mountName String The mountName of the device that is addressed by the request
+ * fields String Query parameter to filter resources according to RFC8040 fields filter spec (optional)
+ * returns inline_response_200_4
+ **/
+exports.getCachedControlConstruct = function (requestUrl, mountName, fields) {
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedControlConstructCausesReadingFromCache');
+}
 
 
 /**
@@ -14,17 +24,7 @@ const provideListRequestHandler = require('./individualServices/ProvideListReque
  * returns inline_response_200_37
  **/
 exports.getCachedAirInterfaceCapability = function (requestUrl, mountName, uuid, localId, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "air-interface-2-0:air-interface-capability": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedAirInterfaceCapabilityCausesReadingFromCache');
 }
 
 
@@ -38,17 +38,7 @@ exports.getCachedAirInterfaceCapability = function (requestUrl, mountName, uuid,
  * returns inline_response_200_38
  **/
 exports.getCachedAirInterfaceConfiguration = function (requestUrl, mountName, uuid, localId, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "air-interface-2-0:air-interface-configuration": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedAirInterfaceConfigurationCausesReadingFromCache');
 }
 
 
@@ -62,17 +52,7 @@ exports.getCachedAirInterfaceConfiguration = function (requestUrl, mountName, uu
  * returns inline_response_200_40
  **/
 exports.getCachedAirInterfaceHistoricalPerformances = function (requestUrl, mountName, uuid, localId, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "air-interface-2-0:air-interface-historical-performances": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedAirInterfaceHistoricalPerformancesCausesReadingFromCache');
 }
 
 
@@ -86,17 +66,7 @@ exports.getCachedAirInterfaceHistoricalPerformances = function (requestUrl, moun
  * returns inline_response_200_39
  **/
 exports.getCachedAirInterfaceStatus = function (requestUrl, mountName, uuid, localId, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "air-interface-2-0:air-interface-status": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedAirInterfaceStatusCausesReadingFromCache');
 }
 
 
@@ -108,17 +78,7 @@ exports.getCachedAirInterfaceStatus = function (requestUrl, mountName, uuid, loc
  * returns inline_response_200_5
  **/
 exports.getCachedAlarmCapability = function (requestUrl, mountName, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "alarms-1-0:alarm-capability": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedAlarmCapabilityCausesReadingFromCache');
 }
 
 
@@ -130,17 +90,7 @@ exports.getCachedAlarmCapability = function (requestUrl, mountName, fields) {
  * returns inline_response_200_6
  **/
 exports.getCachedAlarmConfiguration = function (requestUrl, mountName, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "alarms-1-0:alarm-configuration": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedAlarmConfigurationCausesReadingFromCache');
 }
 
 
@@ -152,17 +102,7 @@ exports.getCachedAlarmConfiguration = function (requestUrl, mountName, fields) {
  * returns inline_response_200_8
  **/
 exports.getCachedAlarmEventRecords = function (requestUrl, mountName, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "alarms-1-0:alarm-event-records": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedAlarmEventRecordsCausesReadingFromCache');
 }
 
 
@@ -175,17 +115,7 @@ exports.getCachedAlarmEventRecords = function (requestUrl, mountName, fields) {
  * returns inline_response_200_20
  **/
 exports.getCachedCoChannelProfileCapability = function (requestUrl, mountName, uuid, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "co-channel-profile-1-0:co-channel-profile-capability": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedCoChannelProfileCapabilityCausesReadingFromCache');
 }
 
 
@@ -198,17 +128,7 @@ exports.getCachedCoChannelProfileCapability = function (requestUrl, mountName, u
  * returns inline_response_200_21
  **/
 exports.getCachedCoChannelProfileConfiguration = function (requestUrl, mountName, uuid, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "co-channel-profile-1-0:co-channel-profile-configuration": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedCoChannelProfileConfigurationCausesReadingFromCache');
 }
 
 
@@ -222,21 +142,7 @@ exports.getCachedCoChannelProfileConfiguration = function (requestUrl, mountName
  * returns inline_response_200_10
  **/
 exports.getCachedConnector = function (requestUrl, mountName, uuid, localId, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "core-model-1-4:connector": [{
-        "local-id": "local-id"
-      }, {
-        "local-id": "local-id"
-      }]
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedConnectorCausesReadingFromCache');
 }
 
 
@@ -250,261 +156,7 @@ exports.getCachedConnector = function (requestUrl, mountName, uuid, localId, fie
  * returns inline_response_200_11
  **/
 exports.getCachedContainedHolder = function (requestUrl, mountName, uuid, localId, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "core-model-1-4:contained-holder": [{
-        "local-id": "local-id"
-      }, {
-        "local-id": "local-id"
-      }]
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
-}
-
-
-/**
- * Provides ControlConstruct from cache
- *
- * mountName String The mountName of the device that is addressed by the request
- * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_4
- **/
-exports.getCachedControlConstruct = function (requestUrl, mountName, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "core-model-1-4:control-construct": [{
-        "firmware-1-0:firmware-collection": {
-          "firmware-component-list": [{
-            "local-id": "local-id",
-            "firmware-component-pac": {
-              "firmware-component-capability": {},
-              "firmware-component-status": {}
-            }
-          }, {
-            "local-id": "local-id",
-            "firmware-component-pac": {
-              "firmware-component-capability": {},
-              "firmware-component-status": {}
-            }
-          }]
-        },
-        "profile-collection": {
-          "profile": ["", ""]
-        },
-        "alarms-1-0:alarm-pac": {
-          "alarm-configuration": {},
-          "alarm-event-records": {},
-          "current-alarms": {},
-          "alarm-capability": {}
-        },
-        "equipment": [{
-          "contained-holder": [{
-            "local-id": "local-id"
-          }, {
-            "local-id": "local-id"
-          }],
-          "actual-equipment": {},
-          "connector": [{
-            "local-id": "local-id"
-          }, {
-            "local-id": "local-id"
-          }],
-          "expected-equipment": [{
-            "local-id": "local-id"
-          }, {
-            "local-id": "local-id"
-          }],
-          "uuid": "uuid"
-        }, {
-          "contained-holder": [{
-            "local-id": "local-id"
-          }, {
-            "local-id": "local-id"
-          }],
-          "actual-equipment": {},
-          "connector": [{
-            "local-id": "local-id"
-          }, {
-            "local-id": "local-id"
-          }],
-          "expected-equipment": [{
-            "local-id": "local-id"
-          }, {
-            "local-id": "local-id"
-          }],
-          "uuid": "uuid"
-        }],
-        "forwarding-domain": [{
-          "forwarding-construct": [{
-            "fc-port": [{
-              "local-id": "local-id"
-            }, {
-              "local-id": "local-id"
-            }],
-            "uuid": "uuid"
-          }, {
-            "fc-port": [{
-              "local-id": "local-id"
-            }, {
-              "local-id": "local-id"
-            }],
-            "uuid": "uuid"
-          }],
-          "uuid": "uuid"
-        }, {
-          "forwarding-construct": [{
-            "fc-port": [{
-              "local-id": "local-id"
-            }, {
-              "local-id": "local-id"
-            }],
-            "uuid": "uuid"
-          }, {
-            "fc-port": [{
-              "local-id": "local-id"
-            }, {
-              "local-id": "local-id"
-            }],
-            "uuid": "uuid"
-          }],
-          "uuid": "uuid"
-        }],
-        "logical-termination-point": [{
-          "ltp-augment-1-0:ltp-augment-pac": {},
-          "layer-protocol": ["", ""],
-          "embedded-clock": [{}, {}],
-          "uuid": "uuid"
-        }, {
-          "ltp-augment-1-0:ltp-augment-pac": {},
-          "layer-protocol": ["", ""],
-          "embedded-clock": [{}, {}],
-          "uuid": "uuid"
-        }],
-        "uuid": "uuid"
-      }, {
-        "firmware-1-0:firmware-collection": {
-          "firmware-component-list": [{
-            "local-id": "local-id",
-            "firmware-component-pac": {
-              "firmware-component-capability": {},
-              "firmware-component-status": {}
-            }
-          }, {
-            "local-id": "local-id",
-            "firmware-component-pac": {
-              "firmware-component-capability": {},
-              "firmware-component-status": {}
-            }
-          }]
-        },
-        "profile-collection": {
-          "profile": ["", ""]
-        },
-        "alarms-1-0:alarm-pac": {
-          "alarm-configuration": {},
-          "alarm-event-records": {},
-          "current-alarms": {},
-          "alarm-capability": {}
-        },
-        "equipment": [{
-          "contained-holder": [{
-            "local-id": "local-id"
-          }, {
-            "local-id": "local-id"
-          }],
-          "actual-equipment": {},
-          "connector": [{
-            "local-id": "local-id"
-          }, {
-            "local-id": "local-id"
-          }],
-          "expected-equipment": [{
-            "local-id": "local-id"
-          }, {
-            "local-id": "local-id"
-          }],
-          "uuid": "uuid"
-        }, {
-          "contained-holder": [{
-            "local-id": "local-id"
-          }, {
-            "local-id": "local-id"
-          }],
-          "actual-equipment": {},
-          "connector": [{
-            "local-id": "local-id"
-          }, {
-            "local-id": "local-id"
-          }],
-          "expected-equipment": [{
-            "local-id": "local-id"
-          }, {
-            "local-id": "local-id"
-          }],
-          "uuid": "uuid"
-        }],
-        "forwarding-domain": [{
-          "forwarding-construct": [{
-            "fc-port": [{
-              "local-id": "local-id"
-            }, {
-              "local-id": "local-id"
-            }],
-            "uuid": "uuid"
-          }, {
-            "fc-port": [{
-              "local-id": "local-id"
-            }, {
-              "local-id": "local-id"
-            }],
-            "uuid": "uuid"
-          }],
-          "uuid": "uuid"
-        }, {
-          "forwarding-construct": [{
-            "fc-port": [{
-              "local-id": "local-id"
-            }, {
-              "local-id": "local-id"
-            }],
-            "uuid": "uuid"
-          }, {
-            "fc-port": [{
-              "local-id": "local-id"
-            }, {
-              "local-id": "local-id"
-            }],
-            "uuid": "uuid"
-          }],
-          "uuid": "uuid"
-        }],
-        "logical-termination-point": [{
-          "ltp-augment-1-0:ltp-augment-pac": {},
-          "layer-protocol": ["", ""],
-          "embedded-clock": [{}, {}],
-          "uuid": "uuid"
-        }, {
-          "ltp-augment-1-0:ltp-augment-pac": {},
-          "layer-protocol": ["", ""],
-          "embedded-clock": [{}, {}],
-          "uuid": "uuid"
-        }],
-        "uuid": "uuid"
-      }]
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedContainedHolderCausesReadingFromCache');
 }
 
 
@@ -516,17 +168,7 @@ exports.getCachedControlConstruct = function (requestUrl, mountName, fields) {
  * returns inline_response_200_7
  **/
 exports.getCachedCurrentAlarms = function (requestUrl, mountName, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "alarms-1-0:current-alarms": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedCurrentAlarmsCausesReadingFromCache');
 }
 
 
@@ -539,53 +181,7 @@ exports.getCachedCurrentAlarms = function (requestUrl, mountName, fields) {
  * returns inline_response_200_9
  **/
 exports.getCachedEquipment = function (requestUrl, mountName, uuid, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "core-model-1-4:equipment": [{
-        "contained-holder": [{
-          "local-id": "local-id"
-        }, {
-          "local-id": "local-id"
-        }],
-        "actual-equipment": {},
-        "connector": [{
-          "local-id": "local-id"
-        }, {
-          "local-id": "local-id"
-        }],
-        "expected-equipment": [{
-          "local-id": "local-id"
-        }, {
-          "local-id": "local-id"
-        }],
-        "uuid": "uuid"
-      }, {
-        "contained-holder": [{
-          "local-id": "local-id"
-        }, {
-          "local-id": "local-id"
-        }],
-        "actual-equipment": {},
-        "connector": [{
-          "local-id": "local-id"
-        }, {
-          "local-id": "local-id"
-        }],
-        "expected-equipment": [{
-          "local-id": "local-id"
-        }, {
-          "local-id": "local-id"
-        }],
-        "uuid": "uuid"
-      }]
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedEquipmentCausesReadingFromCache');
 }
 
 
@@ -599,17 +195,7 @@ exports.getCachedEquipment = function (requestUrl, mountName, uuid, fields) {
  * returns inline_response_200_41
  **/
 exports.getCachedEthernetContainerCapability = function (requestUrl, mountName, uuid, localId, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "ethernet-container-2-0:ethernet-container-capability": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedEthernetContainerCapabilityCausesReadingFromCache');
 }
 
 
@@ -623,17 +209,7 @@ exports.getCachedEthernetContainerCapability = function (requestUrl, mountName, 
  * returns inline_response_200_42
  **/
 exports.getCachedEthernetContainerConfiguration = function (requestUrl, mountName, uuid, localId, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "ethernet-container-2-0:ethernet-container-configuration": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedEthernetContainerConfigurationCausesReadingFromCache');
 }
 
 
@@ -647,17 +223,7 @@ exports.getCachedEthernetContainerConfiguration = function (requestUrl, mountNam
  * returns inline_response_200_44
  **/
 exports.getCachedEthernetContainerHistoricalPerformances = function (requestUrl, mountName, uuid, localId, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "ethernet-container-2-0:ethernet-container-historical-performances": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedEthernetContainerHistoricalPerformancesCausesReadingFromCache');
 }
 
 
@@ -671,17 +237,7 @@ exports.getCachedEthernetContainerHistoricalPerformances = function (requestUrl,
  * returns inline_response_200_43
  **/
 exports.getCachedEthernetContainerStatus = function (requestUrl, mountName, uuid, localId, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "ethernet-container-2-0:ethernet-container-status": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedEthernetContainerStatusCausesReadingFromCache');
 }
 
 
@@ -695,21 +251,7 @@ exports.getCachedEthernetContainerStatus = function (requestUrl, mountName, uuid
  * returns inline_response_200_12
  **/
 exports.getCachedExpectedEquipment = function (requestUrl, mountName, uuid, localId, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "core-model-1-4:expected-equipment": [{
-        "local-id": "local-id"
-      }, {
-        "local-id": "local-id"
-      }]
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedExpectedEquipmentCausesReadingFromCache');
 }
 
 
@@ -721,31 +263,7 @@ exports.getCachedExpectedEquipment = function (requestUrl, mountName, uuid, loca
  * returns inline_response_200_14
  **/
 exports.getCachedFirmwareCollection = function (requestUrl, mountName, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "firmware-1-0:firmware-collection": {
-        "firmware-component-list": [{
-          "local-id": "local-id",
-          "firmware-component-pac": {
-            "firmware-component-capability": {},
-            "firmware-component-status": {}
-          }
-        }, {
-          "local-id": "local-id",
-          "firmware-component-pac": {
-            "firmware-component-capability": {},
-            "firmware-component-status": {}
-          }
-        }]
-      }
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedFirmwareCollectionCausesReadingFromCache');
 }
 
 
@@ -758,17 +276,7 @@ exports.getCachedFirmwareCollection = function (requestUrl, mountName, fields) {
  * returns inline_response_200_16
  **/
 exports.getCachedFirmwareComponentCapability = function (requestUrl, mountName, localId, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "firmware-1-0:firmware-component-capability": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedFirmwareComponentCapabilityCausesReadingFromCache');
 }
 
 
@@ -781,29 +289,7 @@ exports.getCachedFirmwareComponentCapability = function (requestUrl, mountName, 
  * returns inline_response_200_15
  **/
 exports.getCachedFirmwareComponentList = function (requestUrl, mountName, localId, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "firmware-1-0:firmware-component-list": [{
-        "local-id": "local-id",
-        "firmware-component-pac": {
-          "firmware-component-capability": {},
-          "firmware-component-status": {}
-        }
-      }, {
-        "local-id": "local-id",
-        "firmware-component-pac": {
-          "firmware-component-capability": {},
-          "firmware-component-status": {}
-        }
-      }]
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedFirmwareComponentListCausesReadingFromCache');
 }
 
 
@@ -816,17 +302,7 @@ exports.getCachedFirmwareComponentList = function (requestUrl, mountName, localI
  * returns inline_response_200_17
  **/
 exports.getCachedFirmwareComponentStatus = function (requestUrl, mountName, localId, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "firmware-1-0:firmware-component-status": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedFirmwareComponentStatusCausesReadingFromCache');
 }
 
 
@@ -840,31 +316,7 @@ exports.getCachedFirmwareComponentStatus = function (requestUrl, mountName, loca
  * returns inline_response_200_33
  **/
 exports.getCachedForwardingConstruct = function (requestUrl, mountName, uuid, uuid1, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "core-model-1-4:forwarding-construct": [{
-        "fc-port": [{
-          "local-id": "local-id"
-        }, {
-          "local-id": "local-id"
-        }],
-        "uuid": "uuid"
-      }, {
-        "fc-port": [{
-          "local-id": "local-id"
-        }, {
-          "local-id": "local-id"
-        }],
-        "uuid": "uuid"
-      }]
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedForwardingConstructCausesReadingFromCache');
 }
 
 
@@ -879,21 +331,7 @@ exports.getCachedForwardingConstruct = function (requestUrl, mountName, uuid, uu
  * returns inline_response_200_34
  **/
 exports.getCachedForwardingConstructPort = function (requestUrl, mountName, uuid, uuid1, localId, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "core-model-1-4:fc-port": [{
-        "local-id": "local-id"
-      }, {
-        "local-id": "local-id"
-      }]
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedForwardingConstructPortCausesReadingFromCache');
 }
 
 
@@ -906,51 +344,7 @@ exports.getCachedForwardingConstructPort = function (requestUrl, mountName, uuid
  * returns inline_response_200_32
  **/
 exports.getCachedForwardingDomain = function (requestUrl, mountName, uuid, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "core-model-1-4:forwarding-domain": [{
-        "forwarding-construct": [{
-          "fc-port": [{
-            "local-id": "local-id"
-          }, {
-            "local-id": "local-id"
-          }],
-          "uuid": "uuid"
-        }, {
-          "fc-port": [{
-            "local-id": "local-id"
-          }, {
-            "local-id": "local-id"
-          }],
-          "uuid": "uuid"
-        }],
-        "uuid": "uuid"
-      }, {
-        "forwarding-construct": [{
-          "fc-port": [{
-            "local-id": "local-id"
-          }, {
-            "local-id": "local-id"
-          }],
-          "uuid": "uuid"
-        }, {
-          "fc-port": [{
-            "local-id": "local-id"
-          }, {
-            "local-id": "local-id"
-          }],
-          "uuid": "uuid"
-        }],
-        "uuid": "uuid"
-      }]
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedForwardingDomainCausesReadingFromCache');
 }
 
 
@@ -964,17 +358,7 @@ exports.getCachedForwardingDomain = function (requestUrl, mountName, uuid, field
  * returns inline_response_200_45
  **/
 exports.getCachedHybridMwStructureCapability = function (requestUrl, mountName, uuid, localId, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "hybrid-mw-structure-2-0:hybrid-mw-structure-capability": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedHybridMwStructureCapabilityCausesReadingFromCache');
 }
 
 
@@ -988,17 +372,7 @@ exports.getCachedHybridMwStructureCapability = function (requestUrl, mountName, 
  * returns inline_response_200_46
  **/
 exports.getCachedHybridMwStructureConfiguration = function (requestUrl, mountName, uuid, localId, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "hybrid-mw-structure-2-0:hybrid-mw-structure-configuration": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedHybridMwStructureConfigurationCausesReadingFromCache');
 }
 
 
@@ -1012,17 +386,7 @@ exports.getCachedHybridMwStructureConfiguration = function (requestUrl, mountNam
  * returns inline_response_200_48
  **/
 exports.getCachedHybridMwStructureHistoricalPerformances = function (requestUrl, mountName, uuid, localId, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "hybrid-mw-structure-2-0:hybrid-mw-structure-historical-performances": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedHybridMwStructureHistoricalPerformancesCausesReadingFromCache');
 }
 
 
@@ -1036,17 +400,7 @@ exports.getCachedHybridMwStructureHistoricalPerformances = function (requestUrl,
  * returns inline_response_200_47
  **/
 exports.getCachedHybridMwStructureStatus = function (requestUrl, mountName, uuid, localId, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "hybrid-mw-structure-2-0:hybrid-mw-structure-status": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedHybridMwStructureStatusCausesReadingFromCache');
 }
 
 
@@ -1058,31 +412,7 @@ exports.getCachedHybridMwStructureStatus = function (requestUrl, mountName, uuid
  * returns inline_response_200_35
  **/
 exports.getCachedLink = function (requestUrl, uuid, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "core-model-1-4:link": [{
-        "link-port": [{
-          "local-id": "local-id"
-        }, {
-          "local-id": "local-id"
-        }],
-        "uuid": "uuid"
-      }, {
-        "link-port": [{
-          "local-id": "local-id"
-        }, {
-          "local-id": "local-id"
-        }],
-        "uuid": "uuid"
-      }]
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedLinkCausesReadingFromCache');
 }
 
 
@@ -1095,21 +425,7 @@ exports.getCachedLink = function (requestUrl, uuid, fields) {
  * returns inline_response_200_36
  **/
 exports.getCachedLinkPort = function (requestUrl, uuid, localId, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "core-model-1-4:link-port": [{
-        "local-id": "local-id"
-      }, {
-        "local-id": "local-id"
-      }]
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedLinkPortCausesReadingFromCache');
 }
 
 
@@ -1122,27 +438,7 @@ exports.getCachedLinkPort = function (requestUrl, uuid, localId, fields) {
  * returns inline_response_200_30
  **/
 exports.getCachedLogicalTerminationPoint = function (requestUrl, mountName, uuid, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "core-model-1-4:logical-termination-point": [{
-        "ltp-augment-1-0:ltp-augment-pac": {},
-        "layer-protocol": ["", ""],
-        "embedded-clock": [{}, {}],
-        "uuid": "uuid"
-      }, {
-        "ltp-augment-1-0:ltp-augment-pac": {},
-        "layer-protocol": ["", ""],
-        "embedded-clock": [{}, {}],
-        "uuid": "uuid"
-      }]
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedLogicalTerminationPointCausesReadingFromCache');
 }
 
 
@@ -1155,17 +451,7 @@ exports.getCachedLogicalTerminationPoint = function (requestUrl, mountName, uuid
  * returns inline_response_200_31
  **/
 exports.getCachedLtpAugment = function (requestUrl, mountName, uuid, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "ltp-augment-1-0:ltp-augment-pac": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedLtpAugmentCausesReadingFromCache');
 }
 
 
@@ -1179,17 +465,7 @@ exports.getCachedLtpAugment = function (requestUrl, mountName, uuid, fields) {
  * returns inline_response_200_49
  **/
 exports.getCachedMacInterfaceCapability = function (requestUrl, mountName, uuid, localId, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "mac-interface-1-0:mac-interface-capability": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedMacInterfaceCapabilityCausesReadingFromCache');
 }
 
 
@@ -1203,17 +479,7 @@ exports.getCachedMacInterfaceCapability = function (requestUrl, mountName, uuid,
  * returns inline_response_200_50
  **/
 exports.getCachedMacInterfaceConfiguration = function (requestUrl, mountName, uuid, localId, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "mac-interface-1-0:mac-interface-configuration": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedMacInterfaceConfigurationCausesReadingFromCache');
 }
 
 
@@ -1227,17 +493,7 @@ exports.getCachedMacInterfaceConfiguration = function (requestUrl, mountName, uu
  * returns inline_response_200_52
  **/
 exports.getCachedMacInterfaceHistoricalPerformances = function (requestUrl, mountName, uuid, localId, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "mac-interface-1-0:mac-interface-historical-performances": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedMacInterfaceHistoricalPerformancesCausesReadingFromCache');
 }
 
 
@@ -1251,17 +507,7 @@ exports.getCachedMacInterfaceHistoricalPerformances = function (requestUrl, moun
  * returns inline_response_200_51
  **/
 exports.getCachedMacInterfaceStatus = function (requestUrl, mountName, uuid, localId, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "mac-interface-1-0:mac-interface-status": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedMacInterfaceStatusCausesReadingFromCache');
 }
 
 
@@ -1274,17 +520,7 @@ exports.getCachedMacInterfaceStatus = function (requestUrl, mountName, uuid, loc
  * returns inline_response_200_22
  **/
 exports.getCachedPolicingProfileCapability = function (requestUrl, mountName, uuid, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "policing-profile-1-0:policing-profile-capability": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedPolicingProfileCapabilityCausesReadingFromCache');
 }
 
 
@@ -1297,17 +533,7 @@ exports.getCachedPolicingProfileCapability = function (requestUrl, mountName, uu
  * returns inline_response_200_23
  **/
 exports.getCachedPolicingProfileConfiguration = function (requestUrl, mountName, uuid, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "policing-profile-1-0:policing-profile-configuration": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedPolicingProfileConfigurationCausesReadingFromCache');
 }
 
 
@@ -1320,17 +546,7 @@ exports.getCachedPolicingProfileConfiguration = function (requestUrl, mountName,
  * returns inline_response_200_19
  **/
 exports.getCachedProfile = function (requestUrl, mountName, uuid, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "core-model-1-4:profile": ["", ""]
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedProfileCausesReadingFromCache');
 }
 
 
@@ -1342,19 +558,7 @@ exports.getCachedProfile = function (requestUrl, mountName, uuid, fields) {
  * returns inline_response_200_18
  **/
 exports.getCachedProfileCollection = function (requestUrl, mountName, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "core-model-1-4:profile-collection": {
-        "profile": ["", ""]
-      }
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedProfileCollectionCausesReadingFromCache');
 }
 
 
@@ -1368,17 +572,7 @@ exports.getCachedProfileCollection = function (requestUrl, mountName, fields) {
  * returns inline_response_200_53
  **/
 exports.getCachedPureEthernetStructureCapability = function (requestUrl, mountName, uuid, localId, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "pure-ethernet-structure-2-0:pure-ethernet-structure-capability": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedPureEthernetStructureCapabilityCausesReadingFromCache');
 }
 
 
@@ -1392,17 +586,7 @@ exports.getCachedPureEthernetStructureCapability = function (requestUrl, mountNa
  * returns inline_response_200_54
  **/
 exports.getCachedPureEthernetStructureConfiguration = function (requestUrl, mountName, uuid, localId, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "pure-ethernet-structure-2-0:pure-ethernet-structure-configuration": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedPureEthernetStructureConfigurationCausesReadingFromCache');
 }
 
 
@@ -1416,17 +600,7 @@ exports.getCachedPureEthernetStructureConfiguration = function (requestUrl, moun
  * returns inline_response_200_56
  **/
 exports.getCachedPureEthernetStructureHistoricalPerformances = function (requestUrl, mountName, uuid, localId, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "pure-ethernet-structure-2-0:pure-ethernet-structure-historical-performances": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedPureEthernetStructureHistoricalPerformancesCausesReadingFromCache');
 }
 
 
@@ -1440,17 +614,7 @@ exports.getCachedPureEthernetStructureHistoricalPerformances = function (request
  * returns inline_response_200_55
  **/
 exports.getCachedPureEthernetStructureStatus = function (requestUrl, mountName, uuid, localId, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "pure-ethernet-structure-2-0:pure-ethernet-structure-status": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedPureEthernetStructureStatusCausesReadingFromCache');
 }
 
 
@@ -1463,17 +627,7 @@ exports.getCachedPureEthernetStructureStatus = function (requestUrl, mountName, 
  * returns inline_response_200_24
  **/
 exports.getCachedQosProfileCapability = function (requestUrl, mountName, uuid, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "qos-profile-1-0:qos-profile-capability": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedQosProfileCapabilityCausesReadingFromCache');
 }
 
 
@@ -1486,17 +640,7 @@ exports.getCachedQosProfileCapability = function (requestUrl, mountName, uuid, f
  * returns inline_response_200_25
  **/
 exports.getCachedQosProfileConfiguration = function (requestUrl, mountName, uuid, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "qos-profile-1-0:qos-profile-configuration": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedQosProfileConfigurationCausesReadingFromCache');
 }
 
 
@@ -1509,17 +653,7 @@ exports.getCachedQosProfileConfiguration = function (requestUrl, mountName, uuid
  * returns inline_response_200_26
  **/
 exports.getCachedSchedulerProfileCapability = function (requestUrl, mountName, uuid, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "scheduler-profile-1-0:scheduler-profile-capability": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedSchedulerProfileCapabilityCausesReadingFromCache');
 }
 
 
@@ -1532,17 +666,7 @@ exports.getCachedSchedulerProfileCapability = function (requestUrl, mountName, u
  * returns inline_response_200_27
  **/
 exports.getCachedSchedulerProfileConfiguration = function (requestUrl, mountName, uuid, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "scheduler-profile-1-0:scheduler-profile-configuration": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedSchedulerProfileConfigurationCausesReadingFromCache');
 }
 
 
@@ -1556,17 +680,7 @@ exports.getCachedSchedulerProfileConfiguration = function (requestUrl, mountName
  * returns inline_response_200_57
  **/
 exports.getCachedVlanInterfaceCapability = function (requestUrl, mountName, uuid, localId, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "vlan-interface-1-0:vlan-interface-capability": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedVlanInterfaceCapabilityCausesReadingFromCache');
 }
 
 
@@ -1580,17 +694,7 @@ exports.getCachedVlanInterfaceCapability = function (requestUrl, mountName, uuid
  * returns inline_response_200_58
  **/
 exports.getCachedVlanInterfaceConfiguration = function (requestUrl, mountName, uuid, localId, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "vlan-interface-1-0:vlan-interface-configuration": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedVlanInterfaceConfigurationCausesReadingFromCache');
 }
 
 
@@ -1604,17 +708,7 @@ exports.getCachedVlanInterfaceConfiguration = function (requestUrl, mountName, u
  * returns inline_response_200_59
  **/
 exports.getCachedVlanInterfaceHistoricalPerformances = function (requestUrl, mountName, uuid, localId, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "vlan-interface-1-0:vlan-interface-historical-performances": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedVlanInterfaceHistoricalPerformancesCausesReadingFromCache');
 }
 
 
@@ -1628,17 +722,7 @@ exports.getCachedVlanInterfaceHistoricalPerformances = function (requestUrl, mou
  * returns inline_response_200_60
  **/
 exports.getCachedWireInterfaceCapability = function (requestUrl, mountName, uuid, localId, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "wire-interface-2-0:wire-interface-capability": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedWireInterfaceCapabilityCausesReadingFromCache');
 }
 
 
@@ -1652,17 +736,7 @@ exports.getCachedWireInterfaceCapability = function (requestUrl, mountName, uuid
  * returns inline_response_200_61
  **/
 exports.getCachedWireInterfaceConfiguration = function (requestUrl, mountName, uuid, localId, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "wire-interface-2-0:wire-interface-configuration": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedWireInterfaceConfigurationCausesReadingFromCache');
 }
 
 
@@ -1676,17 +750,7 @@ exports.getCachedWireInterfaceConfiguration = function (requestUrl, mountName, u
  * returns inline_response_200_63
  **/
 exports.getCachedWireInterfaceHistoricalPerformances = function (requestUrl, mountName, uuid, localId, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "wire-interface-2-0:wire-interface-historical-performances": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedWireInterfaceHistoricalPerformancesCausesReadingFromCache');
 }
 
 
@@ -1700,17 +764,7 @@ exports.getCachedWireInterfaceHistoricalPerformances = function (requestUrl, mou
  * returns inline_response_200_62
  **/
 exports.getCachedWireInterfaceStatus = function (requestUrl, mountName, uuid, localId, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "wire-interface-2-0:wire-interface-status": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedWireInterfaceStatusCausesReadingFromCache');
 }
 
 
@@ -1723,17 +777,7 @@ exports.getCachedWireInterfaceStatus = function (requestUrl, mountName, uuid, lo
  * returns inline_response_200_28
  **/
 exports.getCachedWredProfileCapability = function (requestUrl, mountName, uuid, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "wred-profile-1-0:wred-profile-capability": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedWredProfileCapabilityCausesReadingFromCache');
 }
 
 
@@ -1746,15 +790,18 @@ exports.getCachedWredProfileCapability = function (requestUrl, mountName, uuid, 
  * returns inline_response_200_29
  **/
 exports.getCachedWredProfileConfiguration = function (requestUrl, mountName, uuid, fields) {
-  return new Promise(function (resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-      "wred-profile-1-0:wred-profile-configuration": {}
-    };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedWredProfileConfigurationCausesReadingFromCache');
+}
+
+
+/**
+ * Provides ActualEquipment from cache
+ *
+ * mountName String The mountName of the device that is addressed by the request
+ * uuid String Instance identifier that is unique within the device
+ * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
+ * returns inline_response_200_13
+ **/
+exports.getCachedActualEquipment = function (requestUrl, mountName, uuid, fields) {
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedActualEquipmentCausesReadingFromCache');
 }
