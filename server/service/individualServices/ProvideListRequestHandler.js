@@ -53,6 +53,8 @@ async function requestDataFromMWDI(requestUrl, payload) {
 
     let targetUrl = requestUtil.buildControllerTargetPath(opData.protocol, opData.address, opData.port) + requestUrl;
 
+    logger.debug("forwarding post data request to '" + targetUrl + "'");
+
     return await restClient.startPostDataRequest(targetUrl, payload, requestUrl, opData.operationKey);
 }
 
@@ -67,6 +69,8 @@ exports.getDataFromMWDI = async function (requestUrl, callbackName) {
     let opData = await controlContructUtils.getForwardingConstructOutputOperationData(callbackName);
 
     let targetUrl = requestUtil.buildControllerTargetPath(opData.protocol, opData.address, opData.port) + requestUrl;
+
+    logger.debug("forwarding get request to '" + targetUrl + "'");
 
     let ret = await restClient.startGetRequest(targetUrl, requestUrl, opData.operationKey);
 

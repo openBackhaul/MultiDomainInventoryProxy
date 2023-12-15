@@ -80,7 +80,7 @@ exports.startPostDataRequest = async function (targetUrl, payload, operationName
         }
     })
         .then((response) => {
-            logger.debug(operationName + " success. result from axios call: " + response.status);
+            logger.debug(operationName + " success. result from axios call: " + response.status + " with data " + response.data);
 
             executionAndTraceService.recordServiceRequestFromClient(
                 appInformation["application-name"],
