@@ -451,7 +451,7 @@ exports.getCachedLogicalTerminationPoint = function (requestUrl, mountName, uuid
  * returns inline_response_200_31
  **/
 exports.getCachedLtpAugment = function (requestUrl, mountName, uuid, fields) {
-    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedLtpAugmentCausesReadingFromCache');
+    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedLtpAugmentPacCausesReadingFromCache');
 }
 
 
