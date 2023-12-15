@@ -321,7 +321,7 @@ clients:
         individual:
 
   - http-client:
-      application-name: AdministratorAdministration
+      application-name: AccessAdministration
       release-number: 2.0.2
       uuid: mdip-1-0-0-http-c-aa-2-0-2-000
     tcp-client:
@@ -332,7 +332,7 @@ clients:
     operation-clients:
       own-oam:
         basic:
-          - operation-name: /v1/approve-oam-request
+          - operation-name: /v1/inquire-basic-auth-approvals
             uuid: mdip-1-0-0-op-c-bs-aa-2-0-2-000
         individual:
       service:
