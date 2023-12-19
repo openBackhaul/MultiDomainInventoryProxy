@@ -8,18 +8,20 @@ const responseCodeEnum = require('onf-core-model-ap/applicationPattern/rest/serv
 const restResponseHeader = require('onf-core-model-ap/applicationPattern/rest/server/ResponseHeader');
 const requestUtil = require("../service/individualServices/RequestUtil");
 const OnfAttributeFormatter = require("onf-core-model-ap/applicationPattern/onfModel/utility/OnfAttributeFormatter");
-var httpErrors = require('http-errors')
+const httpErrors = require('http-errors');
+const createHttpError = require("http-errors");
 
 
 /**
  * Build response in case of errors.
  @param error * @param req
+ * @param req
  * @param res
  * @param startTime
  * @param xCorrelator
  * @returns {Promise<void>}
  */
-const handleError = async function handleError(error, req, res, startTime, xCorrelator) {
+const handleError = async function handleError(error, req, res, startTime, xCorrelator = undefined) {
   let responseHeader = await restResponseHeader.createResponseHeader(xCorrelator, startTime, req.url);
   let errorResponse = buildErrorResponse(res, error, responseHeader);
 
@@ -35,15 +37,17 @@ const handleError = async function handleError(error, req, res, startTime, xCorr
  * @param res
  * @param ret
  * @param startTime
- * @returns {Promise<void>}
+ * @returns {Promise<{headers: Object, code: number, body: {code: number, message: (*|string)}}>}
  */
 const handleForwardedResult = async function handleForwardedResult(req, res, ret, startTime) {
   let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, ret.operationName);
-  buildForwardedResponse(res, ret.code, ret.data, responseHeader);
+  let forwardResponse = buildForwardedResponse(res, ret.code, ret.data, responseHeader);
 
   let requestHeader = requestUtil.createRequestHeader();
   executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, ret.code, req.body, ret.data);
-}
+
+  return forwardResponse;
+};
 
 /**
  * Build response from received response.
@@ -53,49 +57,27 @@ const handleForwardedResult = async function handleForwardedResult(req, res, ret
  * @param responseHeader
  */
 function buildForwardedResponse(response, responseCode, responseBody, responseHeader) {
-  if (responseCode == undefined || responseBody == undefined) {
+  if (createHttpError.isHttpError(responseBody)) {
+    responseCode = responseBody.statusCode;
+
+    responseBody = {
+      code: responseCode,
+      message: responseBody.message
+    }
+  }
+
+  if (responseCode === undefined || responseBody === undefined) {
     responseCode = 500;
 
     responseBody = {
       code: responseCode,
-      message: responseBody.message? responseBody.message: httpErrors.InternalServerError().message
+      message: responseBody?.message? responseBody.message: httpErrors.InternalServerError().message
     }
   }
 
   let headers;
 
-  if (responseHeader != undefined) {
-    headers = OnfAttributeFormatter.modifyJsonObjectKeysToKebabCase(responseHeader);
-    response.set(headers);
-  }
-
-  response.status(responseCode).json(responseBody);
-
-  return {
-    code: responseCode,
-    headers: headers,
-    body: responseBody,
-  }
-}
-
-/**
- * Build response from error.
- * @param response
- * @param error
- * @param responseHeader
- * @returns {{headers, code: integer, body: {code: integer, message}}}
- */
-function buildErrorResponse(response, error, responseHeader) {
-  let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-
-  let responseBody = {
-    code: responseCode,
-    message: error.message? error.message: error
-  }
-
-  let headers;
-
-  if (responseHeader != undefined) {
+  if (responseHeader !== undefined) {
     headers = OnfAttributeFormatter.modifyJsonObjectKeysToKebabCase(responseHeader);
     response.set(headers);
   }
@@ -107,7 +89,38 @@ function buildErrorResponse(response, error, responseHeader) {
     headers: headers,
     body: responseBody
   }
-}
+};
+
+/**
+ * Build response from error.
+ * @param response
+ * @param error
+ * @param responseHeader
+ * @returns {{headers, code: number, body: {code: number, message}}}
+ */
+function buildErrorResponse(response, error, responseHeader) {
+  let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
+
+  let responseBody = {
+    code: responseCode,
+    message: error?.message? error.message: error
+  }
+
+  let headers;
+
+  if (responseHeader !== undefined) {
+    headers = OnfAttributeFormatter.modifyJsonObjectKeysToKebabCase(responseHeader);
+    response.set(headers);
+  }
+
+  response.status(responseCode).json(responseBody);
+
+  return {
+    code: responseCode,
+    headers: headers,
+    body: responseBody
+  }
+};
 
 
 module.exports.bequeathYourDataAndDie = function bequeathYourDataAndDie(req, res, next, body, user, originator, xCorrelator, traceIndicator, customerJourney) {
@@ -118,10 +131,10 @@ module.exports.bequeathYourDataAndDie = function bequeathYourDataAndDie(req, res
       let responseCode = responseCodeEnum.code.OK;
       let responseHeader = await restResponseHeader.createResponseHeader(xCorrelator, startTime, ret.operationName);
       responseBuilder.buildResponse(res, response.code, response.data, responseHeader);
-      executionAndTraceService.recordServiceRequest(xCorrelator, traceIndicator, "MultiDomainInventoryProxy", xoriginator, req.url, responseCode, req.body, response);
+      return executionAndTraceService.recordServiceRequest(xCorrelator, traceIndicator, "MultiDomainInventoryProxy", xoriginator, req.url, responseCode, req.body, response);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime, xCorrelator);
+      return handleError(error, req, res, startTime, xCorrelator);
     });
 };
 
@@ -147,7 +160,7 @@ module.exports.getCachedControlConstruct = function getCachedControlConstruct(re
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -159,7 +172,7 @@ module.exports.getCachedAirInterfaceCapability = function getCachedAirInterfaceC
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -171,7 +184,7 @@ module.exports.getCachedAirInterfaceConfiguration = function getCachedAirInterfa
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -183,7 +196,7 @@ module.exports.getCachedAirInterfaceHistoricalPerformances = function getCachedA
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -195,7 +208,7 @@ module.exports.getCachedAirInterfaceStatus = function getCachedAirInterfaceStatu
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -207,7 +220,7 @@ module.exports.getCachedAlarmCapability = function getCachedAlarmCapability(req,
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -219,7 +232,7 @@ module.exports.getCachedAlarmConfiguration = function getCachedAlarmConfiguratio
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -231,7 +244,7 @@ module.exports.getCachedAlarmEventRecords = function getCachedAlarmEventRecords(
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -243,7 +256,7 @@ module.exports.getCachedCoChannelProfileCapability = function getCachedCoChannel
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -255,7 +268,7 @@ module.exports.getCachedCoChannelProfileConfiguration = function getCachedCoChan
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -267,7 +280,7 @@ module.exports.getCachedConnector = function getCachedConnector(req, res, next, 
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -279,7 +292,7 @@ module.exports.getCachedContainedHolder = function getCachedContainedHolder(req,
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -291,7 +304,7 @@ module.exports.getCachedCurrentAlarms = function getCachedCurrentAlarms(req, res
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -303,7 +316,7 @@ module.exports.getCachedEquipment = function getCachedEquipment(req, res, next, 
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -315,7 +328,7 @@ module.exports.getCachedEthernetContainerCapability = function getCachedEthernet
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -327,7 +340,7 @@ module.exports.getCachedEthernetContainerConfiguration = function getCachedEther
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -339,7 +352,7 @@ module.exports.getCachedEthernetContainerHistoricalPerformances = function getCa
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -351,7 +364,7 @@ module.exports.getCachedEthernetContainerStatus = function getCachedEthernetCont
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -363,7 +376,7 @@ module.exports.getCachedExpectedEquipment = function getCachedExpectedEquipment(
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -375,7 +388,7 @@ module.exports.getCachedFirmwareCollection = function getCachedFirmwareCollectio
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -387,7 +400,7 @@ module.exports.getCachedFirmwareComponentCapability = function getCachedFirmware
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -399,7 +412,7 @@ module.exports.getCachedFirmwareComponentList = function getCachedFirmwareCompon
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -411,7 +424,7 @@ module.exports.getCachedFirmwareComponentStatus = function getCachedFirmwareComp
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -423,7 +436,7 @@ module.exports.getCachedForwardingConstruct = function getCachedForwardingConstr
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -435,7 +448,7 @@ module.exports.getCachedForwardingConstructPort = function getCachedForwardingCo
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -447,7 +460,7 @@ module.exports.getCachedForwardingDomain = function getCachedForwardingDomain(re
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -459,7 +472,7 @@ module.exports.getCachedHybridMwStructureCapability = function getCachedHybridMw
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -471,7 +484,7 @@ module.exports.getCachedHybridMwStructureConfiguration = function getCachedHybri
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -483,7 +496,7 @@ module.exports.getCachedHybridMwStructureHistoricalPerformances = function getCa
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -495,7 +508,7 @@ module.exports.getCachedHybridMwStructureStatus = function getCachedHybridMwStru
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -507,7 +520,7 @@ module.exports.getCachedLink = function getCachedLink(req, res, next, uuid) {
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -519,7 +532,7 @@ module.exports.getCachedLinkPort = function getCachedLinkPort(req, res, next, uu
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -531,7 +544,7 @@ module.exports.getCachedLogicalTerminationPoint = function getCachedLogicalTermi
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -543,7 +556,7 @@ module.exports.getCachedLtpAugment = function getCachedLtpAugment(req, res, next
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -555,7 +568,7 @@ module.exports.getCachedMacInterfaceCapability = function getCachedMacInterfaceC
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -567,7 +580,7 @@ module.exports.getCachedMacInterfaceConfiguration = function getCachedMacInterfa
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -579,7 +592,7 @@ module.exports.getCachedMacInterfaceHistoricalPerformances = function getCachedM
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -591,7 +604,7 @@ module.exports.getCachedMacInterfaceStatus = function getCachedMacInterfaceStatu
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -603,7 +616,7 @@ module.exports.getCachedPolicingProfileCapability = function getCachedPolicingPr
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -615,7 +628,7 @@ module.exports.getCachedPolicingProfileConfiguration = function getCachedPolicin
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -627,7 +640,7 @@ module.exports.getCachedProfile = function getCachedProfile(req, res, next, fiel
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -639,7 +652,7 @@ module.exports.getCachedProfileCollection = function getCachedProfileCollection(
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -651,7 +664,7 @@ module.exports.getCachedPureEthernetStructureCapability = function getCachedPure
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -663,7 +676,7 @@ module.exports.getCachedPureEthernetStructureConfiguration = function getCachedP
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -675,7 +688,7 @@ module.exports.getCachedPureEthernetStructureHistoricalPerformances = function g
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -687,7 +700,7 @@ module.exports.getCachedPureEthernetStructureStatus = function getCachedPureEthe
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -699,7 +712,7 @@ module.exports.getCachedQosProfileCapability = function getCachedQosProfileCapab
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -711,7 +724,7 @@ module.exports.getCachedQosProfileConfiguration = function getCachedQosProfileCo
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -723,7 +736,7 @@ module.exports.getCachedSchedulerProfileCapability = function getCachedScheduler
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -735,7 +748,7 @@ module.exports.getCachedSchedulerProfileConfiguration = function getCachedSchedu
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -747,7 +760,7 @@ module.exports.getCachedVlanInterfaceCapability = function getCachedVlanInterfac
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -759,7 +772,7 @@ module.exports.getCachedVlanInterfaceConfiguration = function getCachedVlanInter
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -771,7 +784,7 @@ module.exports.getCachedVlanInterfaceHistoricalPerformances = function getCached
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -783,7 +796,7 @@ module.exports.getCachedWireInterfaceCapability = function getCachedWireInterfac
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -795,7 +808,7 @@ module.exports.getCachedWireInterfaceConfiguration = function getCachedWireInter
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -807,7 +820,7 @@ module.exports.getCachedWireInterfaceHistoricalPerformances = function getCached
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -819,7 +832,7 @@ module.exports.getCachedWireInterfaceStatus = function getCachedWireInterfaceSta
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -831,7 +844,7 @@ module.exports.getCachedWredProfileCapability = function getCachedWredProfileCap
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
@@ -843,79 +856,55 @@ module.exports.getCachedWredProfileConfiguration = function getCachedWredProfile
       return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      handleError(error, req, res, startTime);
+      return handleError(error, req, res, startTime);
     });
 };
 
 module.exports.provideListOfActualDeviceEquipment = function provideListOfActualDeviceEquipment(req, res, next, body) {
   let startTime = process.hrtime();
 
-  let requestHeader = requestUtil.createRequestHeader();
-
   IndividualPostServices.provideListOfActualDeviceEquipment(req.url, body)
     .then(async function (ret) {
-      let responseHeader = await restResponseHeader.createResponseHeader(null, startTime, req.url);
-      buildForwardedResponse(res, ret.code, ret.data, responseHeader);
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, ret.code, req.body, ret.data);
+      return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      let responseHeader = await restResponseHeader.createResponseHeader(requestHeader.xCorrelator, startTime, req.url);
-      let errorResponse = buildErrorResponse(res, error, responseHeader);
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, errorResponse.code, req.body, errorResponse.body);
+      return handleError(error, req, res, startTime);
     });
 };
 
 module.exports.provideListOfConnectedDevices = function provideListOfConnectedDevices(req, res, next, body) {
   let startTime = process.hrtime();
 
-  let requestHeader = requestUtil.createRequestHeader();
-
   IndividualPostServices.provideListOfConnectedDevices(req.url, body)
     .then(async function (ret) {
-      let responseHeader = await restResponseHeader.createResponseHeader(null, startTime, req.url);
-      buildForwardedResponse(res, ret.code, ret.data, responseHeader);
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, ret.code, req.body, ret.data);
+      return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      let responseHeader = await restResponseHeader.createResponseHeader(requestHeader.xCorrelator, startTime, req.url);
-      let errorResponse = buildErrorResponse(res, error, responseHeader);
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, errorResponse.code, req.body, errorResponse.body);
+      return handleError(error, req, res, startTime);
     });
 };
 
 module.exports.provideListOfDeviceInterfaces = function provideListOfDeviceInterfaces(req, res, next, body) {
   let startTime = process.hrtime();
 
-  let requestHeader = requestUtil.createRequestHeader();
-
   IndividualPostServices.provideListOfDeviceInterfaces(req.url, body)
     .then(async function (ret) {
-      let responseHeader = await restResponseHeader.createResponseHeader(null, startTime, req.url);
-      buildForwardedResponse(res, ret.code, ret.data, responseHeader);
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, ret.code, req.body, ret.data);
+      return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      let responseHeader = await restResponseHeader.createResponseHeader(requestHeader.xCorrelator, startTime, req.url);
-      let errorResponse = buildErrorResponse(res, error, responseHeader);
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, errorResponse.code, req.body, errorResponse.body);
+      return handleError(error, req, res, startTime);
     });
 };
 
 module.exports.provideListOfParallelLinks = function provideListOfParallelLinks(req, res, next, body) {
   let startTime = process.hrtime();
 
-  let requestHeader = requestUtil.createRequestHeader();
-
   IndividualPostServices.provideListOfParallelLinks(req.url, body)
     .then(async function (ret) {
-      let responseHeader = await restResponseHeader.createResponseHeader(null, startTime, req.url);
-      buildForwardedResponse(res, ret.code, ret.data, responseHeader);
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, ret.code, req.body, ret.data);
+      return handleForwardedResult(req, res, ret, startTime);
     })
     .catch(async function (error) {
-      let responseHeader = await restResponseHeader.createResponseHeader(requestHeader.xCorrelator, startTime, req.url);
-      let errorResponse = buildErrorResponse(res, error, responseHeader);
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, errorResponse.code, req.body, errorResponse.body);
+      return handleError(error, req, res, startTime);
     });
 };
 
