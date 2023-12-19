@@ -111,7 +111,7 @@ exports.startPostDataRequest = async function (targetUrl, payload, operationName
                 payload,
                 e);
 
-            return null;
+            throw e;
         });
 }
 
