@@ -17,7 +17,6 @@ const provideListRequestHandler = require('./individualServices/ProvideListReque
  **/
 exports.bequeathYourDataAndDie = function (requestUrl, body, user, originator, xCorrelator, traceIndicator, customerJourney) {
   return new Promise(async function (resolve, reject) {
-
     try {
       let success = await bequeathHandler.handleRequest(body, requestUrl);
 
@@ -40,14 +39,7 @@ exports.bequeathYourDataAndDie = function (requestUrl, body, user, originator, x
  * returns inline_response_200_2
  **/
 exports.provideListOfActualDeviceEquipment = function (requestUrl, body) {
-  return new Promise(async function (resolve, reject) {
-    let result = await provideListRequestHandler.provideListOfData(requestUrl, body);
-    if (result) {
-      resolve(result);
-    } else {
-      reject(result);
-    }
-  });
+  return provideListRequestHandler.provideListOfData(requestUrl, body);
 }
 
 
@@ -57,14 +49,7 @@ exports.provideListOfActualDeviceEquipment = function (requestUrl, body) {
  * returns inline_response_200
  **/
 exports.provideListOfConnectedDevices = function (requestUrl, body) {
-  return new Promise(async function (resolve, reject) {
-    let result = await provideListRequestHandler.provideListOfData(requestUrl, body);
-    if (result) {
-      resolve(result);
-    } else {
-      reject(result);
-    }
-  });
+  return provideListRequestHandler.provideListOfData(requestUrl, body);
 }
 
 
@@ -75,14 +60,7 @@ exports.provideListOfConnectedDevices = function (requestUrl, body) {
  * returns inline_response_200_1
  **/
 exports.provideListOfDeviceInterfaces = function (requestUrl, body) {
-  return new Promise(async function (resolve, reject) {
-    let result = await provideListRequestHandler.provideListOfData(requestUrl, body);
-    if (result) {
-      resolve(result);
-    } else {
-      reject(result);
-    }
-  });
+  return provideListRequestHandler.provideListOfData(requestUrl, body);
 }
 
 
@@ -93,12 +71,5 @@ exports.provideListOfDeviceInterfaces = function (requestUrl, body) {
  * returns inline_response_200_3
  **/
 exports.provideListOfParallelLinks = function (requestUrl, body) {
-  return new Promise(async function (resolve, reject) {
-    let result = await provideListRequestHandler.provideListOfData(requestUrl, body);
-    if (result) {
-      resolve(result);
-    } else {
-      reject(result);
-    }
-  });
+  return provideListRequestHandler.provideListOfData(requestUrl, body);
 }

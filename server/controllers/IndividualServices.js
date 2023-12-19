@@ -7,56 +7,136 @@ const responseBuilder = require('onf-core-model-ap/applicationPattern/rest/serve
 const responseCodeEnum = require('onf-core-model-ap/applicationPattern/rest/server/ResponseCode');
 const restResponseHeader = require('onf-core-model-ap/applicationPattern/rest/server/ResponseHeader');
 const requestUtil = require("../service/individualServices/RequestUtil");
+const OnfAttributeFormatter = require("onf-core-model-ap/applicationPattern/onfModel/utility/OnfAttributeFormatter");
+var httpErrors = require('http-errors')
+
+
+/**
+ * Build response in case of errors.
+ @param error * @param req
+ * @param res
+ * @param startTime
+ * @param xCorrelator
+ * @returns {Promise<void>}
+ */
+const handleError = async function handleError(error, req, res, startTime, xCorrelator) {
+  let responseHeader = await restResponseHeader.createResponseHeader(xCorrelator, startTime, req.url);
+  let errorResponse = buildErrorResponse(res, error, responseHeader);
+
+  if (responseHeader) {
+    let requestHeader = requestUtil.createRequestHeader();
+    executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, errorResponse.code, req.body, errorResponse.body);
+  }
+}
+
+/**
+ * Build response of forwarded calls.
+ * @param req
+ * @param res
+ * @param ret
+ * @param startTime
+ * @returns {Promise<void>}
+ */
+const handleForwardedResult = async function handleForwardedResult(req, res, ret, startTime) {
+  let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, ret.operationName);
+  buildForwardedResponse(res, ret.code, ret.data, responseHeader);
+
+  let requestHeader = requestUtil.createRequestHeader();
+  executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, ret.code, req.body, ret.data);
+}
+
+/**
+ * Build response from received response.
+ * @param response
+ * @param responseCode
+ * @param responseBody
+ * @param responseHeader
+ */
+function buildForwardedResponse(response, responseCode, responseBody, responseHeader) {
+  if (responseCode == undefined || responseBody == undefined) {
+    responseCode = 500;
+
+    responseBody = {
+      code: responseCode,
+      message: responseBody.message? responseBody.message: httpErrors.InternalServerError().message
+    }
+  }
+
+  let headers;
+
+  if (responseHeader != undefined) {
+    headers = OnfAttributeFormatter.modifyJsonObjectKeysToKebabCase(responseHeader);
+    response.set(headers);
+  }
+
+  response.status(responseCode).json(responseBody);
+
+  return {
+    code: responseCode,
+    headers: headers,
+    body: responseBody,
+  }
+}
+
+/**
+ * Build response from error.
+ * @param response
+ * @param error
+ * @param responseHeader
+ * @returns {{headers, code: integer, body: {code: integer, message}}}
+ */
+function buildErrorResponse(response, error, responseHeader) {
+  let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
+
+  let responseBody = {
+    code: responseCode,
+    message: error.message? error.message: error
+  }
+
+  let headers;
+
+  if (responseHeader != undefined) {
+    headers = OnfAttributeFormatter.modifyJsonObjectKeysToKebabCase(responseHeader);
+    response.set(headers);
+  }
+
+  response.status(responseCode).json(responseBody);
+
+  return {
+    code: responseCode,
+    headers: headers,
+    body: responseBody
+  }
+}
+
 
 module.exports.bequeathYourDataAndDie = function bequeathYourDataAndDie(req, res, next, body, user, originator, xCorrelator, traceIndicator, customerJourney) {
   let startTime = process.hrtime();
 
   IndividualPostServices.bequeathYourDataAndDie(req.url, body, user, originator, xCorrelator, traceIndicator, customerJourney)
     .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+      let responseCode = responseCodeEnum.code.OK;
+      let responseHeader = await restResponseHeader.createResponseHeader(xCorrelator, startTime, ret.operationName);
+      responseBuilder.buildResponse(res, response.code, response.data, responseHeader);
+      executionAndTraceService.recordServiceRequest(xCorrelator, traceIndicator, "MultiDomainInventoryProxy", xoriginator, req.url, responseCode, req.body, response);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime, xCorrelator);
     });
 };
+
 
 module.exports.getCachedActualEquipment = function getCachedActualEquipment(req, res, next, fields, mountName, uuid) {
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedActualEquipment(req.url, mountName, uuid, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      return handleError(error, req, res, startTime);
     });
 };
-
-
-function buildForwardedResponse(response, responseCode, responseBody, responseHeader) {
-  // avoid to overwrite the MWDI response message in case of HTTP-500
-  responseBuilder.buildResponse(response, responseCode === 500 ? 400 : responseCode, responseBody, responseHeader);
-}
 
 
 module.exports.getCachedControlConstruct = function getCachedControlConstruct(req, res, next, fields, mountName) {// fields, mountName: parameter order fixed
@@ -64,16 +144,10 @@ module.exports.getCachedControlConstruct = function getCachedControlConstruct(re
 
   IndividualGetServices.getCachedControlConstruct(req.url, mountName, fields)
     .then(async function (ret) {
-      let responseHeader = await restResponseHeader.createResponseHeader(ret.headers.xCorrelator, startTime, ret.operationName);
-      buildForwardedResponse(res, ret.code === 500 ? 400 : ret.code, ret.data, responseHeader);
-      executionAndTraceService.recordServiceRequest(ret.headers.xCorrelator, ret.headers.traceIndicator, ret.headers.user, ret.headers.originator, req.url, ret.code, req.body, ret.data);
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(response.headers.xCorrelator, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      executionAndTraceService.recordServiceRequest(response.headers.xCorrelator, response.headers.traceIndicator, response.headers.user, response.headers.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -81,21 +155,11 @@ module.exports.getCachedAirInterfaceCapability = function getCachedAirInterfaceC
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedAirInterfaceCapability(req.url, mountName, uuid, localId, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -103,21 +167,11 @@ module.exports.getCachedAirInterfaceConfiguration = function getCachedAirInterfa
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedAirInterfaceConfiguration(req.url, mountName, uuid, localId, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -125,21 +179,11 @@ module.exports.getCachedAirInterfaceHistoricalPerformances = function getCachedA
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedAirInterfaceHistoricalPerformances(req.url, mountName, uuid, localId, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -147,21 +191,11 @@ module.exports.getCachedAirInterfaceStatus = function getCachedAirInterfaceStatu
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedAirInterfaceStatus(req.url, mountName, uuid, localId, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -169,21 +203,11 @@ module.exports.getCachedAlarmCapability = function getCachedAlarmCapability(req,
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedAlarmCapability(req.url, mountName, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -191,21 +215,11 @@ module.exports.getCachedAlarmConfiguration = function getCachedAlarmConfiguratio
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedAlarmConfiguration(req.url, mountName, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -213,21 +227,11 @@ module.exports.getCachedAlarmEventRecords = function getCachedAlarmEventRecords(
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedAlarmEventRecords(req.url, mountName, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -235,21 +239,11 @@ module.exports.getCachedCoChannelProfileCapability = function getCachedCoChannel
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedCoChannelProfileCapability(req.url, mountName, uuid, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -257,21 +251,11 @@ module.exports.getCachedCoChannelProfileConfiguration = function getCachedCoChan
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedCoChannelProfileConfiguration(req.url, mountName, uuid, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -279,21 +263,11 @@ module.exports.getCachedConnector = function getCachedConnector(req, res, next, 
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedConnector(req.url, mountName, uuid, localId, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -301,21 +275,11 @@ module.exports.getCachedContainedHolder = function getCachedContainedHolder(req,
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedContainedHolder(req.url, mountName, uuid, localId, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -323,21 +287,11 @@ module.exports.getCachedCurrentAlarms = function getCachedCurrentAlarms(req, res
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedCurrentAlarms(req.url, mountName, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -345,21 +299,11 @@ module.exports.getCachedEquipment = function getCachedEquipment(req, res, next, 
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedEquipment(req.url, mountName, uuid, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -367,21 +311,11 @@ module.exports.getCachedEthernetContainerCapability = function getCachedEthernet
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedEthernetContainerCapability(req.url, mountName, uuid, localId, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -389,21 +323,11 @@ module.exports.getCachedEthernetContainerConfiguration = function getCachedEther
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedEthernetContainerConfiguration(req.url, mountName, uuid, localId, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -411,21 +335,11 @@ module.exports.getCachedEthernetContainerHistoricalPerformances = function getCa
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedEthernetContainerHistoricalPerformances(req.url, mountName, uuid, localId, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -433,21 +347,11 @@ module.exports.getCachedEthernetContainerStatus = function getCachedEthernetCont
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedEthernetContainerStatus(req.url, mountName, uuid, localId, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -455,21 +359,11 @@ module.exports.getCachedExpectedEquipment = function getCachedExpectedEquipment(
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedExpectedEquipment(req.url, mountName, uuid, localId, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -477,21 +371,11 @@ module.exports.getCachedFirmwareCollection = function getCachedFirmwareCollectio
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedFirmwareCollection(req.url, mountName, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -499,21 +383,11 @@ module.exports.getCachedFirmwareComponentCapability = function getCachedFirmware
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedFirmwareComponentCapability(req.url, mountName, localId, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -521,21 +395,11 @@ module.exports.getCachedFirmwareComponentList = function getCachedFirmwareCompon
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedFirmwareComponentList(req.url, mountName, localId, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -543,21 +407,11 @@ module.exports.getCachedFirmwareComponentStatus = function getCachedFirmwareComp
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedFirmwareComponentStatus(req.url, mountName, localId, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -565,21 +419,11 @@ module.exports.getCachedForwardingConstruct = function getCachedForwardingConstr
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedForwardingConstruct(req.url, mountName, uuid, uuid1, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -587,21 +431,11 @@ module.exports.getCachedForwardingConstructPort = function getCachedForwardingCo
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedForwardingConstructPort(req.url, mountName, uuid, uuid1, localId, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -609,21 +443,11 @@ module.exports.getCachedForwardingDomain = function getCachedForwardingDomain(re
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedForwardingDomain(req.url, mountName, uuid, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -631,21 +455,11 @@ module.exports.getCachedHybridMwStructureCapability = function getCachedHybridMw
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedHybridMwStructureCapability(req.url, mountName, uuid, localId, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -653,21 +467,11 @@ module.exports.getCachedHybridMwStructureConfiguration = function getCachedHybri
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedHybridMwStructureConfiguration(req.url, mountName, uuid, localId, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -675,21 +479,11 @@ module.exports.getCachedHybridMwStructureHistoricalPerformances = function getCa
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedHybridMwStructureHistoricalPerformances(req.url, mountName, uuid, localId, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -697,21 +491,11 @@ module.exports.getCachedHybridMwStructureStatus = function getCachedHybridMwStru
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedHybridMwStructureStatus(req.url, mountName, uuid, localId, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -719,21 +503,11 @@ module.exports.getCachedLink = function getCachedLink(req, res, next, uuid) {
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedLink(req.url, uuid, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -741,21 +515,11 @@ module.exports.getCachedLinkPort = function getCachedLinkPort(req, res, next, uu
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedLinkPort(req.url, uuid, localId, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -763,21 +527,11 @@ module.exports.getCachedLogicalTerminationPoint = function getCachedLogicalTermi
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedLogicalTerminationPoint(req.url, mountName, uuid, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -785,21 +539,11 @@ module.exports.getCachedLtpAugment = function getCachedLtpAugment(req, res, next
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedLtpAugment(req.url, mountName, uuid, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -807,21 +551,11 @@ module.exports.getCachedMacInterfaceCapability = function getCachedMacInterfaceC
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedMacInterfaceCapability(req.url, mountName, uuid, localId, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -829,21 +563,11 @@ module.exports.getCachedMacInterfaceConfiguration = function getCachedMacInterfa
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedMacInterfaceConfiguration(req.url, mountName, uuid, localId, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -851,21 +575,11 @@ module.exports.getCachedMacInterfaceHistoricalPerformances = function getCachedM
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedMacInterfaceHistoricalPerformances(req.url, mountName, uuid, localId, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -873,21 +587,11 @@ module.exports.getCachedMacInterfaceStatus = function getCachedMacInterfaceStatu
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedMacInterfaceStatus(req.url, mountName, uuid, localId, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -895,21 +599,11 @@ module.exports.getCachedPolicingProfileCapability = function getCachedPolicingPr
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedPolicingProfileCapability(req.url, mountName, uuid, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -917,21 +611,11 @@ module.exports.getCachedPolicingProfileConfiguration = function getCachedPolicin
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedPolicingProfileConfiguration(req.url, mountName, uuid, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -939,21 +623,11 @@ module.exports.getCachedProfile = function getCachedProfile(req, res, next, fiel
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedProfile(req.url, mountName, uuid, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -961,21 +635,11 @@ module.exports.getCachedProfileCollection = function getCachedProfileCollection(
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedProfileCollection(req.url, mountName, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -983,21 +647,11 @@ module.exports.getCachedPureEthernetStructureCapability = function getCachedPure
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedPureEthernetStructureCapability(req.url, mountName, uuid, localId, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -1005,21 +659,11 @@ module.exports.getCachedPureEthernetStructureConfiguration = function getCachedP
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedPureEthernetStructureConfiguration(req.url, mountName, uuid, localId, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -1027,21 +671,11 @@ module.exports.getCachedPureEthernetStructureHistoricalPerformances = function g
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedPureEthernetStructureHistoricalPerformances(req.url, mountName, uuid, localId, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -1049,21 +683,11 @@ module.exports.getCachedPureEthernetStructureStatus = function getCachedPureEthe
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedPureEthernetStructureStatus(req.url, mountName, uuid, localId, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -1071,21 +695,11 @@ module.exports.getCachedQosProfileCapability = function getCachedQosProfileCapab
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedQosProfileCapability(req.url, mountName, uuid, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -1093,21 +707,11 @@ module.exports.getCachedQosProfileConfiguration = function getCachedQosProfileCo
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedQosProfileConfiguration(req.url, mountName, uuid, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -1115,21 +719,11 @@ module.exports.getCachedSchedulerProfileCapability = function getCachedScheduler
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedSchedulerProfileCapability(req.url, mountName, uuid, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -1137,21 +731,11 @@ module.exports.getCachedSchedulerProfileConfiguration = function getCachedSchedu
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedSchedulerProfileConfiguration(req.url, mountName, uuid, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -1159,21 +743,11 @@ module.exports.getCachedVlanInterfaceCapability = function getCachedVlanInterfac
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedVlanInterfaceCapability(req.url, mountName, uuid, localId, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -1181,21 +755,11 @@ module.exports.getCachedVlanInterfaceConfiguration = function getCachedVlanInter
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedVlanInterfaceConfiguration(req.url, mountName, uuid, localId, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -1203,21 +767,11 @@ module.exports.getCachedVlanInterfaceHistoricalPerformances = function getCached
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedVlanInterfaceHistoricalPerformances(req.url, mountName, uuid, localId, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -1225,21 +779,11 @@ module.exports.getCachedWireInterfaceCapability = function getCachedWireInterfac
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedWireInterfaceCapability(req.url, mountName, uuid, localId, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -1247,21 +791,11 @@ module.exports.getCachedWireInterfaceConfiguration = function getCachedWireInter
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedWireInterfaceConfiguration(req.url, mountName, uuid, localId, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -1269,21 +803,11 @@ module.exports.getCachedWireInterfaceHistoricalPerformances = function getCached
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedWireInterfaceHistoricalPerformances(req.url, mountName, uuid, localId, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -1291,21 +815,11 @@ module.exports.getCachedWireInterfaceStatus = function getCachedWireInterfaceSta
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedWireInterfaceStatus(req.url, mountName, uuid, localId, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -1313,21 +827,11 @@ module.exports.getCachedWredProfileCapability = function getCachedWredProfileCap
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedWredProfileCapability(req.url, mountName, uuid, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -1335,21 +839,11 @@ module.exports.getCachedWredProfileConfiguration = function getCachedWredProfile
   let startTime = process.hrtime();
 
   IndividualGetServices.getCachedWredProfileConfiguration(req.url, mountName, uuid, fields)
-    .then(async function (response) {
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, response.operationName);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .then(async function (ret) {
+      return handleForwardedResult(req, res, ret, startTime);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
-      let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      let requestHeader = requestUtil.createRequestHeader();
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+    .catch(async function (error) {
+      handleError(error, req, res, startTime);
     });
 };
 
@@ -1359,19 +853,15 @@ module.exports.provideListOfActualDeviceEquipment = function provideListOfActual
   let requestHeader = requestUtil.createRequestHeader();
 
   IndividualPostServices.provideListOfActualDeviceEquipment(req.url, body)
-    .then(async function (response) {
+    .then(async function (ret) {
       let responseHeader = await restResponseHeader.createResponseHeader(null, startTime, req.url);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+      buildForwardedResponse(res, ret.code, ret.data, responseHeader);
+      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, ret.code, req.body, ret.data);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
+    .catch(async function (error) {
       let responseHeader = await restResponseHeader.createResponseHeader(requestHeader.xCorrelator, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+      let errorResponse = buildErrorResponse(res, error, responseHeader);
+      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, errorResponse.code, req.body, errorResponse.body);
     });
 };
 
@@ -1381,19 +871,15 @@ module.exports.provideListOfConnectedDevices = function provideListOfConnectedDe
   let requestHeader = requestUtil.createRequestHeader();
 
   IndividualPostServices.provideListOfConnectedDevices(req.url, body)
-    .then(async function (response) {
+    .then(async function (ret) {
       let responseHeader = await restResponseHeader.createResponseHeader(null, startTime, req.url);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+      buildForwardedResponse(res, ret.code, ret.data, responseHeader);
+      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, ret.code, req.body, ret.data);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
+    .catch(async function (error) {
       let responseHeader = await restResponseHeader.createResponseHeader(requestHeader.xCorrelator, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+      let errorResponse = buildErrorResponse(res, error, responseHeader);
+      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, errorResponse.code, req.body, errorResponse.body);
     });
 };
 
@@ -1403,19 +889,15 @@ module.exports.provideListOfDeviceInterfaces = function provideListOfDeviceInter
   let requestHeader = requestUtil.createRequestHeader();
 
   IndividualPostServices.provideListOfDeviceInterfaces(req.url, body)
-    .then(async function (response) {
+    .then(async function (ret) {
       let responseHeader = await restResponseHeader.createResponseHeader(null, startTime, req.url);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+      buildForwardedResponse(res, ret.code, ret.data, responseHeader);
+      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, ret.code, req.body, ret.data);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
+    .catch(async function (error) {
       let responseHeader = await restResponseHeader.createResponseHeader(requestHeader.xCorrelator, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+      let errorResponse = buildErrorResponse(res, error, responseHeader);
+      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, errorResponse.code, req.body, errorResponse.body);
     });
 };
 
@@ -1425,19 +907,15 @@ module.exports.provideListOfParallelLinks = function provideListOfParallelLinks(
   let requestHeader = requestUtil.createRequestHeader();
 
   IndividualPostServices.provideListOfParallelLinks(req.url, body)
-    .then(async function (response) {
+    .then(async function (ret) {
       let responseHeader = await restResponseHeader.createResponseHeader(null, startTime, req.url);
-      let responseCode = response.code;
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+      buildForwardedResponse(res, ret.code, ret.data, responseHeader);
+      executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, ret.code, req.body, ret.data);
     })
-    .catch(async function (response) {
-      let responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR;
+    .catch(async function (error) {
       let responseHeader = await restResponseHeader.createResponseHeader(requestHeader.xCorrelator, startTime, req.url);
-      let responseBody = response;
-      responseBuilder.buildResponse(res, responseCode, responseBody, responseHeader);
-      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, responseCode, req.body, responseBody);
+      let errorResponse = buildErrorResponse(res, error, responseHeader);
+      executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, errorResponse.code, req.body, errorResponse.body);
     });
 };
 
