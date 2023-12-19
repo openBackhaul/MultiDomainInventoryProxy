@@ -55,7 +55,9 @@ async function requestDataFromMWDI(requestUrl, payload) {
 
     logger.debug("forwarding post data request to '" + targetUrl + "'");
 
-    return await restClient.startPostDataRequest(targetUrl, payload, requestUrl, opData.operationKey);
+    const ret = await restClient.startPostDataRequest(targetUrl, payload, requestUrl, opData.operationKey);
+
+    return {code: ret.code, message: ret.message, headers: ret.headers, operationName: opData.operationName};
 }
 
 
@@ -72,7 +74,7 @@ exports.getDataFromMWDI = async function (requestUrl, callbackName) {
 
     logger.debug("forwarding get request to '" + targetUrl + "'");
 
-    let ret = await restClient.startGetRequest(targetUrl, requestUrl, opData.operationKey);
+    const ret = await restClient.startGetRequest(targetUrl, requestUrl, opData.operationKey);
 
-    return {code: ret.code, data: ret.data, headers: ret.headers, operationName: opData.operationName};
+    return {code: ret.code, message: ret.message, headers: ret.headers, operationName: opData.operationName};
 }

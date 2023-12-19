@@ -56,7 +56,7 @@ exports.startPostRequest = async function (targetUrl, payload, operationName, op
                 requestHeader.user,
                 requestHeader.originator,
                 operationName,
-                e.response.status ? e.response.status : responseCodeEnum.code.INTERNAL_SERVER_ERROR,
+                e.response.status? e.response.status: responseCodeEnum.code.INTERNAL_SERVER_ERROR,
                 payload,
                 e);
 
@@ -153,7 +153,7 @@ exports.startGetRequest = async function (targetUrl, operationName, operationKey
                 undefined,
                 response.data);
 
-            return {code: response.status, data: response.data, headers: requestHeader};
+            return {code: response.status, message: response.data, headers: requestHeader};
         })
         .catch(e => {
             logger.error(e, "error during " + operationName);
@@ -171,6 +171,6 @@ exports.startGetRequest = async function (targetUrl, operationName, operationKey
                 undefined,
                 response.data ? response.data : e);
 
-            return {code: response.status, data: response.data, headers: requestHeader};
+            return {code: response.status, message: response.data, headers: requestHeader};
         });
 }

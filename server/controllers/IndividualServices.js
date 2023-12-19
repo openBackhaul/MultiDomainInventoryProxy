@@ -13,7 +13,8 @@ const httpErrors = require('http-errors');
 
 /**
  * Build response in case of errors.
- @param error * @param req
+ * @param error
+ * @param req
  * @param req
  * @param res
  * @param startTime
@@ -40,13 +41,23 @@ const handleError = async function handleError(error, req, res, startTime, xCorr
  */
 const handleForwardedResult = async function handleForwardedResult(req, res, ret, startTime) {
   let responseHeader = await restResponseHeader.createResponseHeader(undefined, startTime, ret.operationName);
-  let forwardResponse = buildForwardedResponse(res, ret.code, ret.data, responseHeader);
+  let forwardResponse = buildForwardedResponse(res, ret.code, ret.message, responseHeader);
 
   let requestHeader = requestUtil.createRequestHeader();
-  executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, ret.code, req.body, ret.data);
+  executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, ret.code, req.body, ret.message);
 
   return forwardResponse;
 };
+
+function buildMessage(body) {
+  if (body?.message) {
+    return body.message;
+  } else if (body) {
+    return body;
+  } else {
+    return httpErrors.InternalServerError().message;
+  }
+}
 
 /**
  * Build response from received response.
@@ -63,14 +74,14 @@ function buildForwardedResponse(response, responseCode, responseBody, responseHe
       code: responseCode,
       message: responseBody.message
     }
-  }
-
-  if (responseCode === undefined || responseBody === undefined) {
-    responseCode = 500;
+  } else {
+    if (responseCode === undefined) {
+      responseCode = 500;
+    }
 
     responseBody = {
       code: responseCode,
-      message: responseBody?.message? responseBody.message: httpErrors.InternalServerError().message
+      message: buildMessage(responseBody)
     }
   }
 
@@ -129,7 +140,7 @@ module.exports.bequeathYourDataAndDie = function bequeathYourDataAndDie(req, res
     .then(async function (response) {
       let responseCode = responseCodeEnum.code.OK;
       let responseHeader = await restResponseHeader.createResponseHeader(xCorrelator, startTime, ret.operationName);
-      responseBuilder.buildResponse(res, response.code, response.data, responseHeader);
+      responseBuilder.buildResponse(res, response.code, response.message, responseHeader);
       return executionAndTraceService.recordServiceRequest(xCorrelator, traceIndicator, "MultiDomainInventoryProxy", xoriginator, req.url, responseCode, req.body, response);
     })
     .catch(async function (error) {
