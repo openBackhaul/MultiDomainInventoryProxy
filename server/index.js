@@ -17,7 +17,7 @@ const serverPort = 9093;
 // swaggerRouter configuration
 const options = new Oas3AppOptions(
     {controllers: path.join(__dirname, './controllers')},
-    appCommons.openApiValidatorOptions, undefined, undefined
+//    appCommons.openApiValidatorOptions, undefined, undefined  // disable OpenAPI validation for control construct responses
 );
 
 
