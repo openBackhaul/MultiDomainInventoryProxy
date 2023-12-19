@@ -27,7 +27,8 @@ const handleError = async function handleError(error, req, res, startTime, xCorr
 
   if (responseHeader) {
     let requestHeader = requestUtil.createRequestHeader();
-    executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, errorResponse.code, req.body, errorResponse.body);
+    executionAndTraceService.recordServiceRequest(requestHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy",
+            requestHeader.originator, req.url, errorResponse.code, req.body, errorResponse.body);
   }
 }
 
@@ -44,7 +45,8 @@ const handleForwardedResult = async function handleForwardedResult(req, res, ret
   let forwardResponse = buildForwardedResponse(res, ret.code, ret.message, responseHeader);
 
   let requestHeader = requestUtil.createRequestHeader();
-  executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy", requestHeader.originator, req.url, ret.code, req.body, ret.message);
+  executionAndTraceService.recordServiceRequest(responseHeader.xCorrelator, requestHeader.traceIndicator, "MultiDomainInventoryProxy",
+          requestHeader.originator, req.url, ret.code, req.body, ret.message);
 
   return forwardResponse;
 };
@@ -79,9 +81,12 @@ function buildForwardedResponse(response, responseCode, responseBody, responseHe
       responseCode = 500;
     }
 
-    responseBody = {
-      code: responseCode,
-      message: buildMessage(responseBody)
+    // In error cases we return code/message objects as response.
+    if (responseCode !== 200) {
+      responseBody = {
+        code: responseCode,
+        message: buildMessage(responseBody)
+      }
     }
   }
 
