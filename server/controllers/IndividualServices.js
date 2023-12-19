@@ -9,7 +9,6 @@ const restResponseHeader = require('onf-core-model-ap/applicationPattern/rest/se
 const requestUtil = require("../service/individualServices/RequestUtil");
 const OnfAttributeFormatter = require("onf-core-model-ap/applicationPattern/onfModel/utility/OnfAttributeFormatter");
 const httpErrors = require('http-errors');
-const createHttpError = require("http-errors");
 
 
 /**
@@ -57,7 +56,7 @@ const handleForwardedResult = async function handleForwardedResult(req, res, ret
  * @param responseHeader
  */
 function buildForwardedResponse(response, responseCode, responseBody, responseHeader) {
-  if (createHttpError.isHttpError(responseBody)) {
+  if (responseBody?.statusCode && typeof responseBody.statusCode==='number' && responseBody?.message) {
     responseCode = responseBody.statusCode;
 
     responseBody = {
