@@ -5,7 +5,6 @@ const fileOperation = require('onf-core-model-ap/applicationPattern/databaseDriv
 /**
  * Returns application name
  *
- * returns inline_response_200_83
  * url String
  **/
 exports.getHttpServerApplicationName = async function (url) {
@@ -22,7 +21,6 @@ exports.getHttpServerApplicationName = async function (url) {
 /**
  * Returns application purpose
  *
- * returns inline_response_200_85
  * url String
  **/
 exports.getHttpServerApplicationPurpose = async function (url) {
@@ -39,7 +37,6 @@ exports.getHttpServerApplicationPurpose = async function (url) {
 /**
  * Returns update period
  *
- * returns inline_response_200_86
  * url String
  **/
 exports.getHttpServerDataUpdatePeriode = async function (url) {
@@ -56,7 +53,6 @@ exports.getHttpServerDataUpdatePeriode = async function (url) {
 /**
  * Returns owner email address
  *
- * returns inline_response_200_88
  * url String
  **/
 exports.getHttpServerOwnerEmailAddress = async function (url) {
@@ -73,7 +69,6 @@ exports.getHttpServerOwnerEmailAddress = async function (url) {
 /**
  * Returns owner name
  *
- * returns inline_response_200_87
  * url String
  **/
 exports.getHttpServerOwnerName = async function (url) {
@@ -90,7 +85,6 @@ exports.getHttpServerOwnerName = async function (url) {
 /**
  * Returns list of releases
  *
- * returns inline_response_200_89
  * url String
  **/
 exports.getHttpServerReleaseList = async function (url) {
@@ -107,7 +101,6 @@ exports.getHttpServerReleaseList = async function (url) {
 /**
  * Returns release number
  *
- * returns inline_response_200_84
  * url String
  **/
 exports.getHttpServerReleaseNumber = async function (url) {

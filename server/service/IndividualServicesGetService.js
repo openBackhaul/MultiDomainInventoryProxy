@@ -7,7 +7,6 @@ const provideListRequestHandler = require('./individualServices/ProvideListReque
  *
  * mountName String The mountName of the device that is addressed by the request
  * fields String Query parameter to filter resources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_4
  **/
 exports.getCachedControlConstruct = function (requestUrl, mountName, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedControlConstructCausesReadingFromCache');
@@ -21,7 +20,6 @@ exports.getCachedControlConstruct = function (requestUrl, mountName, fields) {
  * uuid String Instance identifier that is unique within the device
  * localId String Instance identifier that is unique within its list
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_37
  **/
 exports.getCachedAirInterfaceCapability = function (requestUrl, mountName, uuid, localId, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedAirInterfaceCapabilityCausesReadingFromCache');
@@ -35,7 +33,6 @@ exports.getCachedAirInterfaceCapability = function (requestUrl, mountName, uuid,
  * uuid String Instance identifier that is unique within the device
  * localId String Instance identifier that is unique within its list
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_38
  **/
 exports.getCachedAirInterfaceConfiguration = function (requestUrl, mountName, uuid, localId, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedAirInterfaceConfigurationCausesReadingFromCache');
@@ -49,7 +46,6 @@ exports.getCachedAirInterfaceConfiguration = function (requestUrl, mountName, uu
  * uuid String Instance identifier that is unique within the device
  * localId String Instance identifier that is unique within its list
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_40
  **/
 exports.getCachedAirInterfaceHistoricalPerformances = function (requestUrl, mountName, uuid, localId, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedAirInterfaceHistoricalPerformancesCausesReadingFromCache');
@@ -63,7 +59,6 @@ exports.getCachedAirInterfaceHistoricalPerformances = function (requestUrl, moun
  * uuid String Instance identifier that is unique within the device
  * localId String Instance identifier that is unique within its list
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_39
  **/
 exports.getCachedAirInterfaceStatus = function (requestUrl, mountName, uuid, localId, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedAirInterfaceStatusCausesReadingFromCache');
@@ -75,7 +70,6 @@ exports.getCachedAirInterfaceStatus = function (requestUrl, mountName, uuid, loc
  *
  * mountName String The mountName of the device that is addressed by the request
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_5
  **/
 exports.getCachedAlarmCapability = function (requestUrl, mountName, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedAlarmCapabilityCausesReadingFromCache');
@@ -87,7 +81,6 @@ exports.getCachedAlarmCapability = function (requestUrl, mountName, fields) {
  *
  * mountName String The mountName of the device that is addressed by the request
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_6
  **/
 exports.getCachedAlarmConfiguration = function (requestUrl, mountName, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedAlarmConfigurationCausesReadingFromCache');
@@ -99,7 +92,6 @@ exports.getCachedAlarmConfiguration = function (requestUrl, mountName, fields) {
  *
  * mountName String The mountName of the device that is addressed by the request
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_8
  **/
 exports.getCachedAlarmEventRecords = function (requestUrl, mountName, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedAlarmEventRecordsCausesReadingFromCache');
@@ -112,7 +104,6 @@ exports.getCachedAlarmEventRecords = function (requestUrl, mountName, fields) {
  * mountName String The mountName of the device that is addressed by the request
  * uuid String Instance identifier that is unique within the device
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_20
  **/
 exports.getCachedCoChannelProfileCapability = function (requestUrl, mountName, uuid, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedCoChannelProfileCapabilityCausesReadingFromCache');
@@ -125,7 +116,6 @@ exports.getCachedCoChannelProfileCapability = function (requestUrl, mountName, u
  * mountName String The mountName of the device that is addressed by the request
  * uuid String Instance identifier that is unique within the device
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_21
  **/
 exports.getCachedCoChannelProfileConfiguration = function (requestUrl, mountName, uuid, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedCoChannelProfileConfigurationCausesReadingFromCache');
@@ -139,7 +129,6 @@ exports.getCachedCoChannelProfileConfiguration = function (requestUrl, mountName
  * uuid String Instance identifier that is unique within the device
  * localId String Instance identifier that is unique within its list
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_10
  **/
 exports.getCachedConnector = function (requestUrl, mountName, uuid, localId, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedConnectorCausesReadingFromCache');
@@ -153,7 +142,6 @@ exports.getCachedConnector = function (requestUrl, mountName, uuid, localId, fie
  * uuid String Instance identifier that is unique within the device
  * localId String Instance identifier that is unique within its list
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_11
  **/
 exports.getCachedContainedHolder = function (requestUrl, mountName, uuid, localId, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedContainedHolderCausesReadingFromCache');
@@ -165,7 +153,6 @@ exports.getCachedContainedHolder = function (requestUrl, mountName, uuid, localI
  *
  * mountName String The mountName of the device that is addressed by the request
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_7
  **/
 exports.getCachedCurrentAlarms = function (requestUrl, mountName, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedCurrentAlarmsCausesReadingFromCache');
@@ -178,7 +165,6 @@ exports.getCachedCurrentAlarms = function (requestUrl, mountName, fields) {
  * mountName String The mountName of the device that is addressed by the request
  * uuid String Instance identifier that is unique within the device
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_9
  **/
 exports.getCachedEquipment = function (requestUrl, mountName, uuid, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedEquipmentCausesReadingFromCache');
@@ -192,7 +178,6 @@ exports.getCachedEquipment = function (requestUrl, mountName, uuid, fields) {
  * uuid String Instance identifier that is unique within the device
  * localId String Instance identifier that is unique within its list
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_41
  **/
 exports.getCachedEthernetContainerCapability = function (requestUrl, mountName, uuid, localId, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedEthernetContainerCapabilityCausesReadingFromCache');
@@ -206,7 +191,6 @@ exports.getCachedEthernetContainerCapability = function (requestUrl, mountName, 
  * uuid String Instance identifier that is unique within the device
  * localId String Instance identifier that is unique within its list
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_42
  **/
 exports.getCachedEthernetContainerConfiguration = function (requestUrl, mountName, uuid, localId, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedEthernetContainerConfigurationCausesReadingFromCache');
@@ -220,7 +204,6 @@ exports.getCachedEthernetContainerConfiguration = function (requestUrl, mountNam
  * uuid String Instance identifier that is unique within the device
  * localId String Instance identifier that is unique within its list
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_44
  **/
 exports.getCachedEthernetContainerHistoricalPerformances = function (requestUrl, mountName, uuid, localId, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedEthernetContainerHistoricalPerformancesCausesReadingFromCache');
@@ -234,7 +217,6 @@ exports.getCachedEthernetContainerHistoricalPerformances = function (requestUrl,
  * uuid String Instance identifier that is unique within the device
  * localId String Instance identifier that is unique within its list
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_43
  **/
 exports.getCachedEthernetContainerStatus = function (requestUrl, mountName, uuid, localId, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedEthernetContainerStatusCausesReadingFromCache');
@@ -248,7 +230,6 @@ exports.getCachedEthernetContainerStatus = function (requestUrl, mountName, uuid
  * uuid String Instance identifier that is unique within the device
  * localId String Instance identifier that is unique within its list
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_12
  **/
 exports.getCachedExpectedEquipment = function (requestUrl, mountName, uuid, localId, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedExpectedEquipmentCausesReadingFromCache');
@@ -260,7 +241,6 @@ exports.getCachedExpectedEquipment = function (requestUrl, mountName, uuid, loca
  *
  * mountName String The mountName of the device that is addressed by the request
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_14
  **/
 exports.getCachedFirmwareCollection = function (requestUrl, mountName, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedFirmwareCollectionCausesReadingFromCache');
@@ -273,7 +253,6 @@ exports.getCachedFirmwareCollection = function (requestUrl, mountName, fields) {
  * mountName String The mountName of the device that is addressed by the request
  * localId String Instance identifier that is unique within its list
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_16
  **/
 exports.getCachedFirmwareComponentCapability = function (requestUrl, mountName, localId, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedFirmwareComponentCapabilityCausesReadingFromCache');
@@ -286,7 +265,6 @@ exports.getCachedFirmwareComponentCapability = function (requestUrl, mountName, 
  * mountName String The mountName of the device that is addressed by the request
  * localId String Instance identifier that is unique within its list
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_15
  **/
 exports.getCachedFirmwareComponentList = function (requestUrl, mountName, localId, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedFirmwareComponentListCausesReadingFromCache');
@@ -299,7 +277,6 @@ exports.getCachedFirmwareComponentList = function (requestUrl, mountName, localI
  * mountName String The mountName of the device that is addressed by the request
  * localId String Instance identifier that is unique within its list
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_17
  **/
 exports.getCachedFirmwareComponentStatus = function (requestUrl, mountName, localId, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedFirmwareComponentStatusCausesReadingFromCache');
@@ -313,7 +290,6 @@ exports.getCachedFirmwareComponentStatus = function (requestUrl, mountName, loca
  * uuid String Instance identifier that is unique within the device
  * uuid1 String Another instance identifier that is unique within the device
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_33
  **/
 exports.getCachedForwardingConstruct = function (requestUrl, mountName, uuid, uuid1, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedForwardingConstructCausesReadingFromCache');
@@ -328,7 +304,6 @@ exports.getCachedForwardingConstruct = function (requestUrl, mountName, uuid, uu
  * uuid1 String Another instance identifier that is unique within the device
  * localId String Instance identifier that is unique within its list
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_34
  **/
 exports.getCachedForwardingConstructPort = function (requestUrl, mountName, uuid, uuid1, localId, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedForwardingConstructPortCausesReadingFromCache');
@@ -341,7 +316,6 @@ exports.getCachedForwardingConstructPort = function (requestUrl, mountName, uuid
  * mountName String The mountName of the device that is addressed by the request
  * uuid String Instance identifier that is unique within the device
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_32
  **/
 exports.getCachedForwardingDomain = function (requestUrl, mountName, uuid, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedForwardingDomainCausesReadingFromCache');
@@ -355,7 +329,6 @@ exports.getCachedForwardingDomain = function (requestUrl, mountName, uuid, field
  * uuid String Instance identifier that is unique within the device
  * localId String Instance identifier that is unique within its list
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_45
  **/
 exports.getCachedHybridMwStructureCapability = function (requestUrl, mountName, uuid, localId, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedHybridMwStructureCapabilityCausesReadingFromCache');
@@ -369,7 +342,6 @@ exports.getCachedHybridMwStructureCapability = function (requestUrl, mountName, 
  * uuid String Instance identifier that is unique within the device
  * localId String Instance identifier that is unique within its list
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_46
  **/
 exports.getCachedHybridMwStructureConfiguration = function (requestUrl, mountName, uuid, localId, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedHybridMwStructureConfigurationCausesReadingFromCache');
@@ -383,7 +355,6 @@ exports.getCachedHybridMwStructureConfiguration = function (requestUrl, mountNam
  * uuid String Instance identifier that is unique within the device
  * localId String Instance identifier that is unique within its list
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_48
  **/
 exports.getCachedHybridMwStructureHistoricalPerformances = function (requestUrl, mountName, uuid, localId, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedHybridMwStructureHistoricalPerformancesCausesReadingFromCache');
@@ -397,7 +368,6 @@ exports.getCachedHybridMwStructureHistoricalPerformances = function (requestUrl,
  * uuid String Instance identifier that is unique within the device
  * localId String Instance identifier that is unique within its list
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_47
  **/
 exports.getCachedHybridMwStructureStatus = function (requestUrl, mountName, uuid, localId, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedHybridMwStructureStatusCausesReadingFromCache');
@@ -409,7 +379,6 @@ exports.getCachedHybridMwStructureStatus = function (requestUrl, mountName, uuid
  *
  * uuid String Instance identifier that is unique within the device
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_35
  **/
 exports.getCachedLink = function (requestUrl, uuid, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedLinkCausesReadingFromCache');
@@ -422,7 +391,6 @@ exports.getCachedLink = function (requestUrl, uuid, fields) {
  * uuid String Instance identifier that is unique within the device
  * localId String Instance identifier that is unique within its list
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_36
  **/
 exports.getCachedLinkPort = function (requestUrl, uuid, localId, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedLinkPortCausesReadingFromCache');
@@ -435,7 +403,6 @@ exports.getCachedLinkPort = function (requestUrl, uuid, localId, fields) {
  * mountName String The mountName of the device that is addressed by the request
  * uuid String Instance identifier that is unique within the device
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_30
  **/
 exports.getCachedLogicalTerminationPoint = function (requestUrl, mountName, uuid, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedLogicalTerminationPointCausesReadingFromCache');
@@ -448,7 +415,6 @@ exports.getCachedLogicalTerminationPoint = function (requestUrl, mountName, uuid
  * mountName String The mountName of the device that is addressed by the request
  * uuid String Instance identifier that is unique within the device
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_31
  **/
 exports.getCachedLtpAugment = function (requestUrl, mountName, uuid, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedLtpAugmentPacCausesReadingFromCache');
@@ -462,7 +428,6 @@ exports.getCachedLtpAugment = function (requestUrl, mountName, uuid, fields) {
  * uuid String Instance identifier that is unique within the device
  * localId String Instance identifier that is unique within its list
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_49
  **/
 exports.getCachedMacInterfaceCapability = function (requestUrl, mountName, uuid, localId, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedMacInterfaceCapabilityCausesReadingFromCache');
@@ -476,7 +441,6 @@ exports.getCachedMacInterfaceCapability = function (requestUrl, mountName, uuid,
  * uuid String Instance identifier that is unique within the device
  * localId String Instance identifier that is unique within its list
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_50
  **/
 exports.getCachedMacInterfaceConfiguration = function (requestUrl, mountName, uuid, localId, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedMacInterfaceConfigurationCausesReadingFromCache');
@@ -490,7 +454,6 @@ exports.getCachedMacInterfaceConfiguration = function (requestUrl, mountName, uu
  * uuid String Instance identifier that is unique within the device
  * localId String Instance identifier that is unique within its list
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_52
  **/
 exports.getCachedMacInterfaceHistoricalPerformances = function (requestUrl, mountName, uuid, localId, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedMacInterfaceHistoricalPerformancesCausesReadingFromCache');
@@ -504,7 +467,6 @@ exports.getCachedMacInterfaceHistoricalPerformances = function (requestUrl, moun
  * uuid String Instance identifier that is unique within the device
  * localId String Instance identifier that is unique within its list
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_51
  **/
 exports.getCachedMacInterfaceStatus = function (requestUrl, mountName, uuid, localId, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedMacInterfaceStatusCausesReadingFromCache');
@@ -517,7 +479,6 @@ exports.getCachedMacInterfaceStatus = function (requestUrl, mountName, uuid, loc
  * mountName String The mountName of the device that is addressed by the request
  * uuid String Instance identifier that is unique within the device
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_22
  **/
 exports.getCachedPolicingProfileCapability = function (requestUrl, mountName, uuid, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedPolicingProfileCapabilityCausesReadingFromCache');
@@ -530,7 +491,6 @@ exports.getCachedPolicingProfileCapability = function (requestUrl, mountName, uu
  * mountName String The mountName of the device that is addressed by the request
  * uuid String Instance identifier that is unique within the device
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_23
  **/
 exports.getCachedPolicingProfileConfiguration = function (requestUrl, mountName, uuid, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedPolicingProfileConfigurationCausesReadingFromCache');
@@ -543,7 +503,6 @@ exports.getCachedPolicingProfileConfiguration = function (requestUrl, mountName,
  * mountName String The mountName of the device that is addressed by the request
  * uuid String Instance identifier that is unique within the device
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_19
  **/
 exports.getCachedProfile = function (requestUrl, mountName, uuid, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedProfileCausesReadingFromCache');
@@ -555,7 +514,6 @@ exports.getCachedProfile = function (requestUrl, mountName, uuid, fields) {
  *
  * mountName String The mountName of the device that is addressed by the request
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_18
  **/
 exports.getCachedProfileCollection = function (requestUrl, mountName, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedProfileCollectionCausesReadingFromCache');
@@ -569,7 +527,6 @@ exports.getCachedProfileCollection = function (requestUrl, mountName, fields) {
  * uuid String Instance identifier that is unique within the device
  * localId String Instance identifier that is unique within its list
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_53
  **/
 exports.getCachedPureEthernetStructureCapability = function (requestUrl, mountName, uuid, localId, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedPureEthernetStructureCapabilityCausesReadingFromCache');
@@ -583,7 +540,6 @@ exports.getCachedPureEthernetStructureCapability = function (requestUrl, mountNa
  * uuid String Instance identifier that is unique within the device
  * localId String Instance identifier that is unique within its list
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_54
  **/
 exports.getCachedPureEthernetStructureConfiguration = function (requestUrl, mountName, uuid, localId, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedPureEthernetStructureConfigurationCausesReadingFromCache');
@@ -597,7 +553,6 @@ exports.getCachedPureEthernetStructureConfiguration = function (requestUrl, moun
  * uuid String Instance identifier that is unique within the device
  * localId String Instance identifier that is unique within its list
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_56
  **/
 exports.getCachedPureEthernetStructureHistoricalPerformances = function (requestUrl, mountName, uuid, localId, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedPureEthernetStructureHistoricalPerformancesCausesReadingFromCache');
@@ -611,7 +566,6 @@ exports.getCachedPureEthernetStructureHistoricalPerformances = function (request
  * uuid String Instance identifier that is unique within the device
  * localId String Instance identifier that is unique within its list
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_55
  **/
 exports.getCachedPureEthernetStructureStatus = function (requestUrl, mountName, uuid, localId, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedPureEthernetStructureStatusCausesReadingFromCache');
@@ -624,7 +578,6 @@ exports.getCachedPureEthernetStructureStatus = function (requestUrl, mountName, 
  * mountName String The mountName of the device that is addressed by the request
  * uuid String Instance identifier that is unique within the device
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_24
  **/
 exports.getCachedQosProfileCapability = function (requestUrl, mountName, uuid, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedQosProfileCapabilityCausesReadingFromCache');
@@ -637,7 +590,6 @@ exports.getCachedQosProfileCapability = function (requestUrl, mountName, uuid, f
  * mountName String The mountName of the device that is addressed by the request
  * uuid String Instance identifier that is unique within the device
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_25
  **/
 exports.getCachedQosProfileConfiguration = function (requestUrl, mountName, uuid, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedQosProfileConfigurationCausesReadingFromCache');
@@ -650,7 +602,6 @@ exports.getCachedQosProfileConfiguration = function (requestUrl, mountName, uuid
  * mountName String The mountName of the device that is addressed by the request
  * uuid String Instance identifier that is unique within the device
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_26
  **/
 exports.getCachedSchedulerProfileCapability = function (requestUrl, mountName, uuid, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedSchedulerProfileCapabilityCausesReadingFromCache');
@@ -663,7 +614,6 @@ exports.getCachedSchedulerProfileCapability = function (requestUrl, mountName, u
  * mountName String The mountName of the device that is addressed by the request
  * uuid String Instance identifier that is unique within the device
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_27
  **/
 exports.getCachedSchedulerProfileConfiguration = function (requestUrl, mountName, uuid, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedSchedulerProfileConfigurationCausesReadingFromCache');
@@ -677,7 +627,6 @@ exports.getCachedSchedulerProfileConfiguration = function (requestUrl, mountName
  * uuid String Instance identifier that is unique within the device
  * localId String Instance identifier that is unique within its list
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_57
  **/
 exports.getCachedVlanInterfaceCapability = function (requestUrl, mountName, uuid, localId, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedVlanInterfaceCapabilityCausesReadingFromCache');
@@ -691,7 +640,6 @@ exports.getCachedVlanInterfaceCapability = function (requestUrl, mountName, uuid
  * uuid String Instance identifier that is unique within the device
  * localId String Instance identifier that is unique within its list
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_58
  **/
 exports.getCachedVlanInterfaceConfiguration = function (requestUrl, mountName, uuid, localId, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedVlanInterfaceConfigurationCausesReadingFromCache');
@@ -705,7 +653,6 @@ exports.getCachedVlanInterfaceConfiguration = function (requestUrl, mountName, u
  * uuid String Instance identifier that is unique within the device
  * localId String Instance identifier that is unique within its list
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_59
  **/
 exports.getCachedVlanInterfaceHistoricalPerformances = function (requestUrl, mountName, uuid, localId, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedVlanInterfaceHistoricalPerformancesCausesReadingFromCache');
@@ -719,7 +666,6 @@ exports.getCachedVlanInterfaceHistoricalPerformances = function (requestUrl, mou
  * uuid String Instance identifier that is unique within the device
  * localId String Instance identifier that is unique within its list
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_60
  **/
 exports.getCachedWireInterfaceCapability = function (requestUrl, mountName, uuid, localId, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedWireInterfaceCapabilityCausesReadingFromCache');
@@ -733,7 +679,6 @@ exports.getCachedWireInterfaceCapability = function (requestUrl, mountName, uuid
  * uuid String Instance identifier that is unique within the device
  * localId String Instance identifier that is unique within its list
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_61
  **/
 exports.getCachedWireInterfaceConfiguration = function (requestUrl, mountName, uuid, localId, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedWireInterfaceConfigurationCausesReadingFromCache');
@@ -747,7 +692,6 @@ exports.getCachedWireInterfaceConfiguration = function (requestUrl, mountName, u
  * uuid String Instance identifier that is unique within the device
  * localId String Instance identifier that is unique within its list
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_63
  **/
 exports.getCachedWireInterfaceHistoricalPerformances = function (requestUrl, mountName, uuid, localId, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedWireInterfaceHistoricalPerformancesCausesReadingFromCache');
@@ -761,7 +705,6 @@ exports.getCachedWireInterfaceHistoricalPerformances = function (requestUrl, mou
  * uuid String Instance identifier that is unique within the device
  * localId String Instance identifier that is unique within its list
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_62
  **/
 exports.getCachedWireInterfaceStatus = function (requestUrl, mountName, uuid, localId, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedWireInterfaceStatusCausesReadingFromCache');
@@ -774,7 +717,6 @@ exports.getCachedWireInterfaceStatus = function (requestUrl, mountName, uuid, lo
  * mountName String The mountName of the device that is addressed by the request
  * uuid String Instance identifier that is unique within the device
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_28
  **/
 exports.getCachedWredProfileCapability = function (requestUrl, mountName, uuid, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedWredProfileCapabilityCausesReadingFromCache');
@@ -787,7 +729,6 @@ exports.getCachedWredProfileCapability = function (requestUrl, mountName, uuid, 
  * mountName String The mountName of the device that is addressed by the request
  * uuid String Instance identifier that is unique within the device
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_29
  **/
 exports.getCachedWredProfileConfiguration = function (requestUrl, mountName, uuid, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedWredProfileConfigurationCausesReadingFromCache');
@@ -800,7 +741,6 @@ exports.getCachedWredProfileConfiguration = function (requestUrl, mountName, uui
  * mountName String The mountName of the device that is addressed by the request
  * uuid String Instance identifier that is unique within the device
  * fields String Query parameter to filter ressources according to RFC8040 fields filter spec (optional)
- * returns inline_response_200_13
  **/
 exports.getCachedActualEquipment = function (requestUrl, mountName, uuid, fields) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedActualEquipmentCausesReadingFromCache');

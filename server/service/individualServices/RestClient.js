@@ -56,7 +56,7 @@ exports.startPostRequest = async function (targetUrl, payload, operationName, op
                 requestHeader.user,
                 requestHeader.originator,
                 operationName,
-                e.response.status? e.response.status: responseCodeEnum.code.INTERNAL_SERVER_ERROR,
+                e.response && e.response.status? e.response.status: responseCodeEnum.code.INTERNAL_SERVER_ERROR,
                 payload,
                 e);
 
