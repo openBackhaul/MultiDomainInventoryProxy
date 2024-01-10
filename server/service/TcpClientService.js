@@ -8,7 +8,6 @@ const ForwardingAutomationService = require('onf-core-model-ap/applicationPatter
  * Returns remote address
  *
  * url String
- * returns inline_response_200_102
  **/
 exports.getTcpClientRemoteAddress = async function (url) {
   var value = await fileOperation.readFromDatabaseAsync(url);
@@ -25,7 +24,6 @@ exports.getTcpClientRemoteAddress = async function (url) {
  * Returns target TCP port at server
  *
  * url String
- * returns inline_response_200_103
  **/
 exports.getTcpClientRemotePort = async function (url) {
   var value = await fileOperation.readFromDatabaseAsync(url);
@@ -42,7 +40,6 @@ exports.getTcpClientRemotePort = async function (url) {
  * Returns protocol for addressing remote side
  *
  * url String
- * returns inline_response_200_101
  **/
 exports.getTcpClientRemoteProtocol = async function (url) {
   var value = await fileOperation.readFromDatabaseAsync(url);

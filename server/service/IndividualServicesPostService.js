@@ -36,7 +36,6 @@ exports.bequeathYourDataAndDie = function (requestUrl, body, user, originator, x
  * Provides list of actual equipment UUIDs inside a device
  *
  * body V1_providelistofactualdeviceequipment_body
- * returns inline_response_200_2
  **/
 exports.provideListOfActualDeviceEquipment = function (requestUrl, body) {
   return provideListRequestHandler.provideListOfData(requestUrl, body);
@@ -46,7 +45,6 @@ exports.provideListOfActualDeviceEquipment = function (requestUrl, body) {
 /**
  * Provides list of devices that are connected to the controller
  *
- * returns inline_response_200
  **/
 exports.provideListOfConnectedDevices = function (requestUrl, body) {
   return provideListRequestHandler.provideListOfData(requestUrl, body);
@@ -57,7 +55,6 @@ exports.provideListOfConnectedDevices = function (requestUrl, body) {
  * Provides list of LTP UUIDs at a device
  *
  * body V1_providelistofdeviceinterfaces_body
- * returns inline_response_200_1
  **/
 exports.provideListOfDeviceInterfaces = function (requestUrl, body) {
   return provideListRequestHandler.provideListOfData(requestUrl, body);
@@ -68,7 +65,6 @@ exports.provideListOfDeviceInterfaces = function (requestUrl, body) {
  * Provides list of Links between the same ControlConstructs
  *
  * body V1_providelistofparallellinks_body
- * returns inline_response_200_3
  **/
 exports.provideListOfParallelLinks = function (requestUrl, body) {
   return provideListRequestHandler.provideListOfData(requestUrl, body);

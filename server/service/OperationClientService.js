@@ -8,7 +8,6 @@ const operationClientInterface = require('onf-core-model-ap/applicationPattern/o
 /**
  * Returns detailed logging configuration.
  *
- * returns inline_response_200_98
  * url String
  **/
 exports.getOperationClientDetailedLoggingIsOn = async function (url) {
@@ -25,7 +24,6 @@ exports.getOperationClientDetailedLoggingIsOn = async function (url) {
 /**
  * Returns life cycle state of the operation
  *
- * returns inline_response_200_97
  * url String
  **/
 exports.getOperationClientLifeCycleState = async function (url) {
@@ -42,7 +40,6 @@ exports.getOperationClientLifeCycleState = async function (url) {
 /**
  * Returns key used for connecting to server.
  *
- * returns inline_response_200_95
  * url String
  **/
 exports.getOperationClientOperationKey = async function (url) {
@@ -59,7 +56,6 @@ exports.getOperationClientOperationKey = async function (url) {
 /**
  * Returns operation name
  *
- * returns inline_response_200_94
  * url String
  **/
 exports.getOperationClientOperationName = async function (url) {
@@ -76,7 +72,6 @@ exports.getOperationClientOperationName = async function (url) {
 /**
  * Returns operational state of the operation
  *
- * returns inline_response_200_96
  * url String
  **/
 exports.getOperationClientOperationalState = async function (url) {
