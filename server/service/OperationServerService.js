@@ -8,8 +8,8 @@ const fileOperation = require('onf-core-model-ap/applicationPattern/databaseDriv
  * url String
  **/
 exports.getOperationServerLifeCycleState = async function (url) {
-  var value = await fileOperation.readFromDatabaseAsync(url);
-  var response = {};
+  const value = await fileOperation.readFromDatabaseAsync(url);
+  const response = {};
   response['application/json'] = {
     "operation-server-interface-1-0:life-cycle-state": value
   };
@@ -24,8 +24,8 @@ exports.getOperationServerLifeCycleState = async function (url) {
  * url String
  **/
 exports.getOperationServerOperationKey = async function (url) {
-  var value = await fileOperation.readFromDatabaseAsync(url);
-  var response = {};
+  const value = await fileOperation.readFromDatabaseAsync(url);
+  const response = {};
   response['application/json'] = {
     "operation-server-interface-1-0:operation-key": value
   };
@@ -40,8 +40,8 @@ exports.getOperationServerOperationKey = async function (url) {
  * url String
  **/
 exports.getOperationServerOperationName = async function (url) {
-  var value = await fileOperation.readFromDatabaseAsync(url);
-  var response = {};
+  const value = await fileOperation.readFromDatabaseAsync(url);
+  const response = {};
   response['application/json'] = {
     "operation-server-interface-1-0:operation-name": value
   };
