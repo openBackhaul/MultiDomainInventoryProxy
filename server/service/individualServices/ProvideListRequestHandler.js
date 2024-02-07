@@ -5,18 +5,18 @@ const logger = require('../LoggingService.js').getLogger();
 
 exports.provideListOfData = async function (requestUrl, body) {
 
-    let payload = null;
-    //convert mount-name to mountName
-    if (body && body['mount-name']) {
-        payload = {
-            "mountName" : body['mount-name']
-        };
-    } else {
-        payload = body;
-    }
+    // let payload = null;
+    // //convert mount-name to mountName
+    // if (body && body['mount-name']) {
+    //     payload = {
+    //         "mountName" : body['mount-name']
+    //     };
+    // } else {
+    //     payload = body;
+    // }
 
     //forward request to MWDI
-    return await requestDataFromMWDI(requestUrl, payload);
+    return await requestDataFromMWDI(requestUrl, body);
 }
 
 
