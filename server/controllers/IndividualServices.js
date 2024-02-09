@@ -23,6 +23,13 @@ const httpErrors = require('http-errors');
  */
 const handleError = async function handleError(error, req, res, startTime, xCorrelator = undefined) {
   let responseHeader = await restResponseHeader.createResponseHeader(xCorrelator, startTime, req.url);
+  if (!responseHeader) {
+    responseHeader = { // new ResponseHeader(xCorrelator, startTime)
+      contentType: 'application/json',
+      xCorrelator: xCorrelator,
+      execTime: startTime
+    };
+  }
   let errorResponse = buildErrorResponse(res, error, responseHeader);
 
   if (responseHeader) {
