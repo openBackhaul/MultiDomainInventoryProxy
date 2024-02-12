@@ -3,6 +3,7 @@ const executionAndTraceService = require("onf-core-model-ap/applicationPattern/s
 const logger = require('../LoggingService.js').getLogger();
 const responseCodeEnum = require('onf-core-model-ap/applicationPattern/rest/server/ResponseCode');
 const requestUtil = require("./RequestUtil");
+const {HTTP_SERVER} = require("onf-core-model-ap/applicationPattern/onfModel/constants/OnfAttributes");
 
 /**
  * start sync post request and await success return value
@@ -158,7 +159,7 @@ exports.startGetRequest = async function (targetUrl, operationName, operationKey
         })
         .catch(e => {
             logger.error(e, "error during " + operationName);
-            let response = e.response;
+            let response = e.response ?? {status: responseCodeEnum.code.INTERNAL_SERVER_ERROR, data: e};
 
             executionAndTraceService.recordServiceRequestFromClient(
                 appInformation["application-name"],
@@ -168,10 +169,10 @@ exports.startGetRequest = async function (targetUrl, operationName, operationKey
                 requestHeader.user,
                 requestHeader.originator,
                 operationName,
-                response.status ? response.status : responseCodeEnum.code.INTERNAL_SERVER_ERROR,
+                response.status ?? responseCodeEnum.code.INTERNAL_SERVER_ERROR,
                 undefined,
-                response.data ? response.data : e);
+                response.data ?? e);
 
-            return {code: response.status, message: response.data, headers: requestHeader};
+            return {code: response?.status, message: response?.data, headers: requestHeader};
         });
 }

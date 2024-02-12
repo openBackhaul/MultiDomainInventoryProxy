@@ -23,6 +23,13 @@ const httpErrors = require('http-errors');
  */
 const handleError = async function handleError(error, req, res, startTime, xCorrelator = undefined) {
   let responseHeader = await restResponseHeader.createResponseHeader(xCorrelator, startTime, req.url);
+  if (!responseHeader) {
+    responseHeader = { // new ResponseHeader(xCorrelator, startTime)
+      contentType: 'application/json',
+      xCorrelator: xCorrelator,
+      execTime: startTime
+    };
+  }
   let errorResponse = buildErrorResponse(res, error, responseHeader);
 
   if (responseHeader) {
@@ -104,7 +111,7 @@ function buildForwardedResponse(response, responseCode, responseBody, responseHe
     headers: headers,
     body: responseBody
   }
-};
+}
 
 /**
  * Build response from error.
@@ -135,7 +142,7 @@ function buildErrorResponse(response, error, responseHeader) {
     headers: headers,
     body: responseBody
   }
-};
+}
 
 
 module.exports.bequeathYourDataAndDie = function bequeathYourDataAndDie(req, res, next, body, user, originator, xCorrelator, traceIndicator, customerJourney) {
@@ -157,7 +164,7 @@ module.exports.bequeathYourDataAndDie = function bequeathYourDataAndDie(req, res
 module.exports.getCachedActualEquipment = function getCachedActualEquipment(req, res, next, fields, mountName, uuid) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedActualEquipment(req.url, mountName, uuid, fields)
+  IndividualGetServices.getCachedActualEquipment(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -170,7 +177,7 @@ module.exports.getCachedActualEquipment = function getCachedActualEquipment(req,
 module.exports.getCachedControlConstruct = function getCachedControlConstruct(req, res, next, fields, mountName) {// fields, mountName: parameter order fixed
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedControlConstruct(req.url, mountName, fields)
+  IndividualGetServices.getCachedControlConstruct(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -182,7 +189,7 @@ module.exports.getCachedControlConstruct = function getCachedControlConstruct(re
 module.exports.getCachedAirInterfaceCapability = function getCachedAirInterfaceCapability(req, res, next, fields, mountName, uuid, localId) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedAirInterfaceCapability(req.url, mountName, uuid, localId, fields)
+  IndividualGetServices.getCachedAirInterfaceCapability(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -194,7 +201,7 @@ module.exports.getCachedAirInterfaceCapability = function getCachedAirInterfaceC
 module.exports.getCachedAirInterfaceConfiguration = function getCachedAirInterfaceConfiguration(req, res, next, fields, mountName, uuid, localId) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedAirInterfaceConfiguration(req.url, mountName, uuid, localId, fields)
+  IndividualGetServices.getCachedAirInterfaceConfiguration(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -206,7 +213,7 @@ module.exports.getCachedAirInterfaceConfiguration = function getCachedAirInterfa
 module.exports.getCachedAirInterfaceHistoricalPerformances = function getCachedAirInterfaceHistoricalPerformances(req, res, next, fields, mountName, uuid, localId) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedAirInterfaceHistoricalPerformances(req.url, mountName, uuid, localId, fields)
+  IndividualGetServices.getCachedAirInterfaceHistoricalPerformances(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -218,7 +225,7 @@ module.exports.getCachedAirInterfaceHistoricalPerformances = function getCachedA
 module.exports.getCachedAirInterfaceStatus = function getCachedAirInterfaceStatus(req, res, next, fields, mountName, uuid, localId) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedAirInterfaceStatus(req.url, mountName, uuid, localId, fields)
+  IndividualGetServices.getCachedAirInterfaceStatus(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -230,7 +237,7 @@ module.exports.getCachedAirInterfaceStatus = function getCachedAirInterfaceStatu
 module.exports.getCachedAlarmCapability = function getCachedAlarmCapability(req, res, next, fields, mountName) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedAlarmCapability(req.url, mountName, fields)
+  IndividualGetServices.getCachedAlarmCapability(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -242,7 +249,7 @@ module.exports.getCachedAlarmCapability = function getCachedAlarmCapability(req,
 module.exports.getCachedAlarmConfiguration = function getCachedAlarmConfiguration(req, res, next, fields, mountName) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedAlarmConfiguration(req.url, mountName, fields)
+  IndividualGetServices.getCachedAlarmConfiguration(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -254,7 +261,7 @@ module.exports.getCachedAlarmConfiguration = function getCachedAlarmConfiguratio
 module.exports.getCachedAlarmEventRecords = function getCachedAlarmEventRecords(req, res, next, fields, mountName) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedAlarmEventRecords(req.url, mountName, fields)
+  IndividualGetServices.getCachedAlarmEventRecords(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -266,7 +273,7 @@ module.exports.getCachedAlarmEventRecords = function getCachedAlarmEventRecords(
 module.exports.getCachedCoChannelProfileCapability = function getCachedCoChannelProfileCapability(req, res, next, fields, mountName, uuid) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedCoChannelProfileCapability(req.url, mountName, uuid, fields)
+  IndividualGetServices.getCachedCoChannelProfileCapability(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -278,7 +285,7 @@ module.exports.getCachedCoChannelProfileCapability = function getCachedCoChannel
 module.exports.getCachedCoChannelProfileConfiguration = function getCachedCoChannelProfileConfiguration(req, res, next, fields, mountName, uuid) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedCoChannelProfileConfiguration(req.url, mountName, uuid, fields)
+  IndividualGetServices.getCachedCoChannelProfileConfiguration(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -290,7 +297,7 @@ module.exports.getCachedCoChannelProfileConfiguration = function getCachedCoChan
 module.exports.getCachedConnector = function getCachedConnector(req, res, next, fields, mountName, uuid, localId) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedConnector(req.url, mountName, uuid, localId, fields)
+  IndividualGetServices.getCachedConnector(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -302,7 +309,7 @@ module.exports.getCachedConnector = function getCachedConnector(req, res, next, 
 module.exports.getCachedContainedHolder = function getCachedContainedHolder(req, res, next, fields, mountName, uuid, localId) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedContainedHolder(req.url, mountName, uuid, localId, fields)
+  IndividualGetServices.getCachedContainedHolder(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -314,7 +321,7 @@ module.exports.getCachedContainedHolder = function getCachedContainedHolder(req,
 module.exports.getCachedCurrentAlarms = function getCachedCurrentAlarms(req, res, next, fields, mountName) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedCurrentAlarms(req.url, mountName, fields)
+  IndividualGetServices.getCachedCurrentAlarms(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -326,7 +333,7 @@ module.exports.getCachedCurrentAlarms = function getCachedCurrentAlarms(req, res
 module.exports.getCachedEquipment = function getCachedEquipment(req, res, next, fields, mountName, uuid) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedEquipment(req.url, mountName, uuid, fields)
+  IndividualGetServices.getCachedEquipment(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -338,7 +345,7 @@ module.exports.getCachedEquipment = function getCachedEquipment(req, res, next, 
 module.exports.getCachedEthernetContainerCapability = function getCachedEthernetContainerCapability(req, res, next, fields, mountName, uuid, localId) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedEthernetContainerCapability(req.url, mountName, uuid, localId, fields)
+  IndividualGetServices.getCachedEthernetContainerCapability(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -350,7 +357,7 @@ module.exports.getCachedEthernetContainerCapability = function getCachedEthernet
 module.exports.getCachedEthernetContainerConfiguration = function getCachedEthernetContainerConfiguration(req, res, next, fields, mountName, uuid, localId) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedEthernetContainerConfiguration(req.url, mountName, uuid, localId, fields)
+  IndividualGetServices.getCachedEthernetContainerConfiguration(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -362,7 +369,7 @@ module.exports.getCachedEthernetContainerConfiguration = function getCachedEther
 module.exports.getCachedEthernetContainerHistoricalPerformances = function getCachedEthernetContainerHistoricalPerformances(req, res, next, fields, mountName, uuid, localId) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedEthernetContainerHistoricalPerformances(req.url, mountName, uuid, localId, fields)
+  IndividualGetServices.getCachedEthernetContainerHistoricalPerformances(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -374,7 +381,7 @@ module.exports.getCachedEthernetContainerHistoricalPerformances = function getCa
 module.exports.getCachedEthernetContainerStatus = function getCachedEthernetContainerStatus(req, res, next, fields, mountName, uuid, localId) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedEthernetContainerStatus(req.url, mountName, uuid, localId, fields)
+  IndividualGetServices.getCachedEthernetContainerStatus(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -386,7 +393,7 @@ module.exports.getCachedEthernetContainerStatus = function getCachedEthernetCont
 module.exports.getCachedExpectedEquipment = function getCachedExpectedEquipment(req, res, next, fields, mountName, uuid, localId) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedExpectedEquipment(req.url, mountName, uuid, localId, fields)
+  IndividualGetServices.getCachedExpectedEquipment(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -398,7 +405,7 @@ module.exports.getCachedExpectedEquipment = function getCachedExpectedEquipment(
 module.exports.getCachedFirmwareCollection = function getCachedFirmwareCollection(req, res, next, fields, mountName) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedFirmwareCollection(req.url, mountName, fields)
+  IndividualGetServices.getCachedFirmwareCollection(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -410,7 +417,7 @@ module.exports.getCachedFirmwareCollection = function getCachedFirmwareCollectio
 module.exports.getCachedFirmwareComponentCapability = function getCachedFirmwareComponentCapability(req, res, next, fields, mountName, localId) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedFirmwareComponentCapability(req.url, mountName, localId, fields)
+  IndividualGetServices.getCachedFirmwareComponentCapability(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -422,7 +429,7 @@ module.exports.getCachedFirmwareComponentCapability = function getCachedFirmware
 module.exports.getCachedFirmwareComponentList = function getCachedFirmwareComponentList(req, res, next, fields, mountName, localId) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedFirmwareComponentList(req.url, mountName, localId, fields)
+  IndividualGetServices.getCachedFirmwareComponentList(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -434,7 +441,7 @@ module.exports.getCachedFirmwareComponentList = function getCachedFirmwareCompon
 module.exports.getCachedFirmwareComponentStatus = function getCachedFirmwareComponentStatus(req, res, next, fields, mountName, localId) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedFirmwareComponentStatus(req.url, mountName, localId, fields)
+  IndividualGetServices.getCachedFirmwareComponentStatus(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -446,7 +453,7 @@ module.exports.getCachedFirmwareComponentStatus = function getCachedFirmwareComp
 module.exports.getCachedForwardingConstruct = function getCachedForwardingConstruct(req, res, next, fields, mountName, uuid, uuid1) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedForwardingConstruct(req.url, mountName, uuid, uuid1, fields)
+  IndividualGetServices.getCachedForwardingConstruct(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -458,7 +465,7 @@ module.exports.getCachedForwardingConstruct = function getCachedForwardingConstr
 module.exports.getCachedForwardingConstructPort = function getCachedForwardingConstructPort(req, res, next, fields, mountName, uuid, uuid1, localId) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedForwardingConstructPort(req.url, mountName, uuid, uuid1, localId, fields)
+  IndividualGetServices.getCachedForwardingConstructPort(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -470,7 +477,7 @@ module.exports.getCachedForwardingConstructPort = function getCachedForwardingCo
 module.exports.getCachedForwardingDomain = function getCachedForwardingDomain(req, res, next, fields, mountName, uuid) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedForwardingDomain(req.url, mountName, uuid, fields)
+  IndividualGetServices.getCachedForwardingDomain(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -482,7 +489,7 @@ module.exports.getCachedForwardingDomain = function getCachedForwardingDomain(re
 module.exports.getCachedHybridMwStructureCapability = function getCachedHybridMwStructureCapability(req, res, next, fields, mountName, uuid, localId) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedHybridMwStructureCapability(req.url, mountName, uuid, localId, fields)
+  IndividualGetServices.getCachedHybridMwStructureCapability(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -494,7 +501,7 @@ module.exports.getCachedHybridMwStructureCapability = function getCachedHybridMw
 module.exports.getCachedHybridMwStructureConfiguration = function getCachedHybridMwStructureConfiguration(req, res, next, fields, mountName, uuid, localId) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedHybridMwStructureConfiguration(req.url, mountName, uuid, localId, fields)
+  IndividualGetServices.getCachedHybridMwStructureConfiguration(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -506,7 +513,7 @@ module.exports.getCachedHybridMwStructureConfiguration = function getCachedHybri
 module.exports.getCachedHybridMwStructureHistoricalPerformances = function getCachedHybridMwStructureHistoricalPerformances(req, res, next, fields, mountName, uuid, localId) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedHybridMwStructureHistoricalPerformances(req.url, mountName, uuid, localId, fields)
+  IndividualGetServices.getCachedHybridMwStructureHistoricalPerformances(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -518,7 +525,7 @@ module.exports.getCachedHybridMwStructureHistoricalPerformances = function getCa
 module.exports.getCachedHybridMwStructureStatus = function getCachedHybridMwStructureStatus(req, res, next, fields, mountName, uuid, localId) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedHybridMwStructureStatus(req.url, mountName, uuid, localId, fields)
+  IndividualGetServices.getCachedHybridMwStructureStatus(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -527,10 +534,10 @@ module.exports.getCachedHybridMwStructureStatus = function getCachedHybridMwStru
     });
 };
 
-module.exports.getCachedLink = function getCachedLink(req, res, next, uuid) {
+module.exports.getCachedLink = function getCachedLink(req, res, next, fields, uuid) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedLink(req.url, uuid, fields)
+  IndividualGetServices.getCachedLink(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -539,10 +546,10 @@ module.exports.getCachedLink = function getCachedLink(req, res, next, uuid) {
     });
 };
 
-module.exports.getCachedLinkPort = function getCachedLinkPort(req, res, next, uuid, localId) {
+module.exports.getCachedLinkPort = function getCachedLinkPort(req, res, next, fields, uuid, localId) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedLinkPort(req.url, uuid, localId, fields)
+  IndividualGetServices.getCachedLinkPort(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -554,7 +561,7 @@ module.exports.getCachedLinkPort = function getCachedLinkPort(req, res, next, uu
 module.exports.getCachedLogicalTerminationPoint = function getCachedLogicalTerminationPoint(req, res, next, fields, mountName, uuid) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedLogicalTerminationPoint(req.url, mountName, uuid, fields)
+  IndividualGetServices.getCachedLogicalTerminationPoint(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -566,7 +573,7 @@ module.exports.getCachedLogicalTerminationPoint = function getCachedLogicalTermi
 module.exports.getCachedLtpAugment = function getCachedLtpAugment(req, res, next, fields, mountName, uuid) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedLtpAugment(req.url, mountName, uuid, fields)
+  IndividualGetServices.getCachedLtpAugment(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -578,7 +585,7 @@ module.exports.getCachedLtpAugment = function getCachedLtpAugment(req, res, next
 module.exports.getCachedMacInterfaceCapability = function getCachedMacInterfaceCapability(req, res, next, fields, mountName, uuid, localId) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedMacInterfaceCapability(req.url, mountName, uuid, localId, fields)
+  IndividualGetServices.getCachedMacInterfaceCapability(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -590,7 +597,7 @@ module.exports.getCachedMacInterfaceCapability = function getCachedMacInterfaceC
 module.exports.getCachedMacInterfaceConfiguration = function getCachedMacInterfaceConfiguration(req, res, next, fields, mountName, uuid, localId) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedMacInterfaceConfiguration(req.url, mountName, uuid, localId, fields)
+  IndividualGetServices.getCachedMacInterfaceConfiguration(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -602,7 +609,7 @@ module.exports.getCachedMacInterfaceConfiguration = function getCachedMacInterfa
 module.exports.getCachedMacInterfaceHistoricalPerformances = function getCachedMacInterfaceHistoricalPerformances(req, res, next, fields, mountName, uuid, localId) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedMacInterfaceHistoricalPerformances(req.url, mountName, uuid, localId, fields)
+  IndividualGetServices.getCachedMacInterfaceHistoricalPerformances(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -614,7 +621,7 @@ module.exports.getCachedMacInterfaceHistoricalPerformances = function getCachedM
 module.exports.getCachedMacInterfaceStatus = function getCachedMacInterfaceStatus(req, res, next, fields, mountName, uuid, localId) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedMacInterfaceStatus(req.url, mountName, uuid, localId, fields)
+  IndividualGetServices.getCachedMacInterfaceStatus(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -626,7 +633,7 @@ module.exports.getCachedMacInterfaceStatus = function getCachedMacInterfaceStatu
 module.exports.getCachedPolicingProfileCapability = function getCachedPolicingProfileCapability(req, res, next, fields, mountName, uuid) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedPolicingProfileCapability(req.url, mountName, uuid, fields)
+  IndividualGetServices.getCachedPolicingProfileCapability(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -638,7 +645,7 @@ module.exports.getCachedPolicingProfileCapability = function getCachedPolicingPr
 module.exports.getCachedPolicingProfileConfiguration = function getCachedPolicingProfileConfiguration(req, res, next, fields, mountName, uuid) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedPolicingProfileConfiguration(req.url, mountName, uuid, fields)
+  IndividualGetServices.getCachedPolicingProfileConfiguration(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -650,7 +657,7 @@ module.exports.getCachedPolicingProfileConfiguration = function getCachedPolicin
 module.exports.getCachedProfile = function getCachedProfile(req, res, next, fields, mountName, uuid) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedProfile(req.url, mountName, uuid, fields)
+  IndividualGetServices.getCachedProfile(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -662,7 +669,7 @@ module.exports.getCachedProfile = function getCachedProfile(req, res, next, fiel
 module.exports.getCachedProfileCollection = function getCachedProfileCollection(req, res, next, fields, mountName) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedProfileCollection(req.url, mountName, fields)
+  IndividualGetServices.getCachedProfileCollection(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -674,7 +681,7 @@ module.exports.getCachedProfileCollection = function getCachedProfileCollection(
 module.exports.getCachedPureEthernetStructureCapability = function getCachedPureEthernetStructureCapability(req, res, next, fields, mountName, uuid, localId) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedPureEthernetStructureCapability(req.url, mountName, uuid, localId, fields)
+  IndividualGetServices.getCachedPureEthernetStructureCapability(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -686,7 +693,7 @@ module.exports.getCachedPureEthernetStructureCapability = function getCachedPure
 module.exports.getCachedPureEthernetStructureConfiguration = function getCachedPureEthernetStructureConfiguration(req, res, next, fields, mountName, uuid, localId) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedPureEthernetStructureConfiguration(req.url, mountName, uuid, localId, fields)
+  IndividualGetServices.getCachedPureEthernetStructureConfiguration(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -698,7 +705,7 @@ module.exports.getCachedPureEthernetStructureConfiguration = function getCachedP
 module.exports.getCachedPureEthernetStructureHistoricalPerformances = function getCachedPureEthernetStructureHistoricalPerformances(req, res, next, fields, mountName, uuid, localId) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedPureEthernetStructureHistoricalPerformances(req.url, mountName, uuid, localId, fields)
+  IndividualGetServices.getCachedPureEthernetStructureHistoricalPerformances(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -710,7 +717,7 @@ module.exports.getCachedPureEthernetStructureHistoricalPerformances = function g
 module.exports.getCachedPureEthernetStructureStatus = function getCachedPureEthernetStructureStatus(req, res, next, fields, mountName, uuid, localId) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedPureEthernetStructureStatus(req.url, mountName, uuid, localId, fields)
+  IndividualGetServices.getCachedPureEthernetStructureStatus(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -722,7 +729,7 @@ module.exports.getCachedPureEthernetStructureStatus = function getCachedPureEthe
 module.exports.getCachedQosProfileCapability = function getCachedQosProfileCapability(req, res, next, fields, mountName, uuid) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedQosProfileCapability(req.url, mountName, uuid, fields)
+  IndividualGetServices.getCachedQosProfileCapability(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -734,7 +741,7 @@ module.exports.getCachedQosProfileCapability = function getCachedQosProfileCapab
 module.exports.getCachedQosProfileConfiguration = function getCachedQosProfileConfiguration(req, res, next, fields, mountName, uuid) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedQosProfileConfiguration(req.url, mountName, uuid, fields)
+  IndividualGetServices.getCachedQosProfileConfiguration(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -746,7 +753,7 @@ module.exports.getCachedQosProfileConfiguration = function getCachedQosProfileCo
 module.exports.getCachedSchedulerProfileCapability = function getCachedSchedulerProfileCapability(req, res, next, fields, mountName, uuid) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedSchedulerProfileCapability(req.url, mountName, uuid, fields)
+  IndividualGetServices.getCachedSchedulerProfileCapability(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -758,7 +765,7 @@ module.exports.getCachedSchedulerProfileCapability = function getCachedScheduler
 module.exports.getCachedSchedulerProfileConfiguration = function getCachedSchedulerProfileConfiguration(req, res, next, fields, mountName, uuid) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedSchedulerProfileConfiguration(req.url, mountName, uuid, fields)
+  IndividualGetServices.getCachedSchedulerProfileConfiguration(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -770,7 +777,7 @@ module.exports.getCachedSchedulerProfileConfiguration = function getCachedSchedu
 module.exports.getCachedVlanInterfaceCapability = function getCachedVlanInterfaceCapability(req, res, next, fields, mountName, uuid, localId) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedVlanInterfaceCapability(req.url, mountName, uuid, localId, fields)
+  IndividualGetServices.getCachedVlanInterfaceCapability(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -782,7 +789,7 @@ module.exports.getCachedVlanInterfaceCapability = function getCachedVlanInterfac
 module.exports.getCachedVlanInterfaceConfiguration = function getCachedVlanInterfaceConfiguration(req, res, next, fields, mountName, uuid, localId) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedVlanInterfaceConfiguration(req.url, mountName, uuid, localId, fields)
+  IndividualGetServices.getCachedVlanInterfaceConfiguration(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -794,7 +801,7 @@ module.exports.getCachedVlanInterfaceConfiguration = function getCachedVlanInter
 module.exports.getCachedVlanInterfaceHistoricalPerformances = function getCachedVlanInterfaceHistoricalPerformances(req, res, next, fields, mountName, uuid, localId) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedVlanInterfaceHistoricalPerformances(req.url, mountName, uuid, localId, fields)
+  IndividualGetServices.getCachedVlanInterfaceHistoricalPerformances(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -806,7 +813,7 @@ module.exports.getCachedVlanInterfaceHistoricalPerformances = function getCached
 module.exports.getCachedWireInterfaceCapability = function getCachedWireInterfaceCapability(req, res, next, fields, mountName, uuid, localId) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedWireInterfaceCapability(req.url, mountName, uuid, localId, fields)
+  IndividualGetServices.getCachedWireInterfaceCapability(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -818,7 +825,7 @@ module.exports.getCachedWireInterfaceCapability = function getCachedWireInterfac
 module.exports.getCachedWireInterfaceConfiguration = function getCachedWireInterfaceConfiguration(req, res, next, fields, mountName, uuid, localId) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedWireInterfaceConfiguration(req.url, mountName, uuid, localId, fields)
+  IndividualGetServices.getCachedWireInterfaceConfiguration(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -830,7 +837,7 @@ module.exports.getCachedWireInterfaceConfiguration = function getCachedWireInter
 module.exports.getCachedWireInterfaceHistoricalPerformances = function getCachedWireInterfaceHistoricalPerformances(req, res, next, fields, mountName, uuid, localId) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedWireInterfaceHistoricalPerformances(req.url, mountName, uuid, localId, fields)
+  IndividualGetServices.getCachedWireInterfaceHistoricalPerformances(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -842,7 +849,7 @@ module.exports.getCachedWireInterfaceHistoricalPerformances = function getCached
 module.exports.getCachedWireInterfaceStatus = function getCachedWireInterfaceStatus(req, res, next, fields, mountName, uuid, localId) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedWireInterfaceStatus(req.url, mountName, uuid, localId, fields)
+  IndividualGetServices.getCachedWireInterfaceStatus(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -854,7 +861,7 @@ module.exports.getCachedWireInterfaceStatus = function getCachedWireInterfaceSta
 module.exports.getCachedWredProfileCapability = function getCachedWredProfileCapability(req, res, next, fields, mountName, uuid) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedWredProfileCapability(req.url, mountName, uuid, fields)
+  IndividualGetServices.getCachedWredProfileCapability(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
@@ -866,7 +873,7 @@ module.exports.getCachedWredProfileCapability = function getCachedWredProfileCap
 module.exports.getCachedWredProfileConfiguration = function getCachedWredProfileConfiguration(req, res, next, fields, mountName, uuid) {
   let startTime = process.hrtime();
 
-  IndividualGetServices.getCachedWredProfileConfiguration(req.url, mountName, uuid, fields)
+  IndividualGetServices.getCachedWredProfileConfiguration(req.url)
     .then(async function (ret) {
       return handleForwardedResult(req, res, ret, startTime);
     })
