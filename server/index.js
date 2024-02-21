@@ -14,10 +14,13 @@ const serverPort = 9093;
 // uncomment if you do not want to validate security e.g. operation-key, basic auth, etc
 //appCommons.openApiValidatorOptions.validateSecurity = false;
 
+//disable response validation because mwdi responses are currently not valid against mdip openApi-Spec
+appCommons.openApiValidatorOptions.validateResponses = false;
+
 // swaggerRouter configuration
 const options = new Oas3AppOptions(
     {controllers: path.join(__dirname, './controllers')},
-//    appCommons.openApiValidatorOptions, undefined, undefined  // disable OpenAPI validation for control construct responses
+    appCommons.openApiValidatorOptions
 );
 
 
