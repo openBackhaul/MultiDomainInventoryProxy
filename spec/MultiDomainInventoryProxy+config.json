@@ -1444,7 +1444,7 @@
             "layer-protocol-name": "operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER",
             "operation-server-interface-1-0:operation-server-interface-pac": {
               "operation-server-interface-capability": {
-                "operation-name": "/core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct{uuid1}"
+                "operation-name": "/core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct={uuid1}"
               },
               "operation-server-interface-configuration": {
                 "life-cycle-state": "operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_EXPERIMENTAL",
@@ -1468,7 +1468,7 @@
             "layer-protocol-name": "operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER",
             "operation-server-interface-1-0:operation-server-interface-pac": {
               "operation-server-interface-capability": {
-                "operation-name": "/core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct{uuid1}/fc-port{localId}"
+                "operation-name": "/core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct={uuid1}/fc-port={localId}"
               },
               "operation-server-interface-configuration": {
                 "life-cycle-state": "operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_EXPERIMENTAL",
@@ -1516,7 +1516,7 @@
             "layer-protocol-name": "operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER",
             "operation-server-interface-1-0:operation-server-interface-pac": {
               "operation-server-interface-capability": {
-                "operation-name": "/core-model-1-4:network-control-domain=cache/link={uuid}/link-port{localId}"
+                "operation-name": "/core-model-1-4:network-control-domain=cache/link={uuid}/link-port={localId}"
               },
               "operation-server-interface-configuration": {
                 "life-cycle-state": "operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_EXPERIMENTAL",
@@ -3917,7 +3917,7 @@
             "layer-protocol-name": "operation-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER",
             "operation-client-interface-1-0:operation-client-interface-pac": {
               "operation-client-interface-configuration": {
-                "operation-name": "/core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct{uuid1}",
+                "operation-name": "/core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct={uuid1}",
                 "operation-key": "Operation key not yet provided."
               },
               "operation-client-interface-status": {
@@ -3942,7 +3942,7 @@
             "layer-protocol-name": "operation-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER",
             "operation-client-interface-1-0:operation-client-interface-pac": {
               "operation-client-interface-configuration": {
-                "operation-name": "/core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct{uuid1}/fc-port{localId}",
+                "operation-name": "/core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct={uuid1}/fc-port={localId}",
                 "operation-key": "Operation key not yet provided."
               },
               "operation-client-interface-status": {
@@ -3992,7 +3992,7 @@
             "layer-protocol-name": "operation-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER",
             "operation-client-interface-1-0:operation-client-interface-pac": {
               "operation-client-interface-configuration": {
-                "operation-name": "/core-model-1-4:network-control-domain=cache/link={uuid}/link-port{localId}",
+                "operation-name": "/core-model-1-4:network-control-domain=cache/link={uuid}/link-port={localId}",
                 "operation-key": "Operation key not yet provided."
               },
               "operation-client-interface-status": {
