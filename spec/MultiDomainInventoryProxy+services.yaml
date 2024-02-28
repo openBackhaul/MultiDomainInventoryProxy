@@ -159,8 +159,6 @@ servers:
           uuid: mdip-1-0-0-op-s-is-241
         - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/mac-interface-1-0:mac-interface-pac/mac-interface-status
           uuid: mdip-1-0-0-op-s-is-242
-        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/mac-interface-1-0:mac-interface-pac/mac-interface-historical-performances
-          uuid: mdip-1-0-0-op-s-is-244
 
         - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/pure-ethernet-structure-2-0:pure-ethernet-structure-pac/pure-ethernet-structure-capability
           uuid: mdip-1-0-0-op-s-is-250
@@ -508,8 +506,6 @@ clients:
         uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-241
       - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/mac-interface-1-0:mac-interface-pac/mac-interface-status
         uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-242
-      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/mac-interface-1-0:mac-interface-pac/mac-interface-historical-performances
-        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-244
 
       - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/pure-ethernet-structure-2-0:pure-ethernet-structure-pac/pure-ethernet-structure-capability
         uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-250

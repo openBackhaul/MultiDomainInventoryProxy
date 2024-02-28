@@ -188,8 +188,6 @@ forwardings:
         uuid: mdip-1-0-0-op-s-is-241
       - server-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/mac-interface-1-0:mac-interface-pac/mac-interface-status
         uuid: mdip-1-0-0-op-s-is-242
-      - server-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/mac-interface-1-0:mac-interface-pac/mac-interface-historical-performances
-        uuid: mdip-1-0-0-op-s-is-244
       - server-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/pure-ethernet-structure-2-0:pure-ethernet-structure-pac/pure-ethernet-structure-capability
         uuid: mdip-1-0-0-op-s-is-250
       - server-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/pure-ethernet-structure-2-0:pure-ethernet-structure-pac/pure-ethernet-structure-configuration
@@ -348,8 +346,6 @@ forwardings:
         uuid: mdip-1-0-0-op-s-is-241
       - server-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/mac-interface-1-0:mac-interface-pac/mac-interface-status
         uuid: mdip-1-0-0-op-s-is-242
-      - server-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/mac-interface-1-0:mac-interface-pac/mac-interface-historical-performances
-        uuid: mdip-1-0-0-op-s-is-244
       - server-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/pure-ethernet-structure-2-0:pure-ethernet-structure-pac/pure-ethernet-structure-capability
         uuid: mdip-1-0-0-op-s-is-250
       - server-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/pure-ethernet-structure-2-0:pure-ethernet-structure-pac/pure-ethernet-structure-configuration
@@ -1417,21 +1413,6 @@ forwardings:
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/mac-interface-1-0:mac-interface-pac/mac-interface-status
         uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-242
-
-  - forwarding-name: RequestForCachedMacInterfaceHistoricalPerformancesCausesReadingFromCache
-    uuid: mdip-1-0-0-op-fc-is-244
-    forwarding-type: InvariantProcessSnippet
-    management-requests:
-      operation-client-update:
-      fc-port-update:
-      fc-port-deletion:
-      operation-client-deletion:
-    initiating-requests:
-      - server-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/mac-interface-1-0:mac-interface-pac/mac-interface-historical-performances
-        uuid: mdip-1-0-0-op-s-is-244
-    consequent-requests:
-      - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/mac-interface-1-0:mac-interface-pac/mac-interface-historical-performances
-        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-244
 
   - forwarding-name: RequestForCachedPureEthernetStructureCapabilityCausesReadingFromCache
     uuid: mdip-1-0-0-op-fc-is-250
