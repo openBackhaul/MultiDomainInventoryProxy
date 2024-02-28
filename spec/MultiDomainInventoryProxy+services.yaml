@@ -117,13 +117,13 @@ servers:
           uuid: mdip-1-0-0-op-s-is-201
         - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}
           uuid: mdip-1-0-0-op-s-is-202
-        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct{uuid1}
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct={uuid1}
           uuid: mdip-1-0-0-op-s-is-203
-        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct{uuid1}/fc-port{localId}
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct={uuid1}/fc-port={localId}
           uuid: mdip-1-0-0-op-s-is-204
         - operation-name: /core-model-1-4:network-control-domain=cache/link={uuid}
           uuid: mdip-1-0-0-op-s-is-205
-        - operation-name: /core-model-1-4:network-control-domain=cache/link={uuid}/link-port{localId}
+        - operation-name: /core-model-1-4:network-control-domain=cache/link={uuid}/link-port={localId}
           uuid: mdip-1-0-0-op-s-is-206
 
         - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/air-interface-2-0:air-interface-pac/air-interface-capability
@@ -464,13 +464,13 @@ clients:
         uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-201
       - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}
         uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-202
-      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct{uuid1}
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct={uuid1}
         uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-203
-      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct{uuid1}/fc-port{localId}
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct={uuid1}/fc-port={localId}
         uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-204
       - operation-name: /core-model-1-4:network-control-domain=cache/link={uuid}
         uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-205
-      - operation-name: /core-model-1-4:network-control-domain=cache/link={uuid}/link-port{localId}
+      - operation-name: /core-model-1-4:network-control-domain=cache/link={uuid}/link-port={localId}
         uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-206
 
       - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/air-interface-2-0:air-interface-pac/air-interface-capability
