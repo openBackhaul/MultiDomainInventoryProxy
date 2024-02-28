@@ -1451,7 +1451,7 @@
                 "layer-protocol-name": "operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER",
                 "operation-server-interface-1-0:operation-server-interface-pac": {
                   "operation-server-interface-capability": {
-                    "operation-name": "/core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct{uuid1}"
+                    "operation-name": "/core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct={uuid1}"
                   },
                   "operation-server-interface-configuration": {
                     "life-cycle-state": "operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_EXPERIMENTAL",
@@ -1475,7 +1475,7 @@
                 "layer-protocol-name": "operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER",
                 "operation-server-interface-1-0:operation-server-interface-pac": {
                   "operation-server-interface-capability": {
-                    "operation-name": "/core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct{uuid1}/fc-port{localId}"
+                    "operation-name": "/core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct={uuid1}/fc-port={localId}"
                   },
                   "operation-server-interface-configuration": {
                     "life-cycle-state": "operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_EXPERIMENTAL",
@@ -1523,7 +1523,7 @@
                 "layer-protocol-name": "operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER",
                 "operation-server-interface-1-0:operation-server-interface-pac": {
                   "operation-server-interface-capability": {
-                    "operation-name": "/core-model-1-4:network-control-domain=cache/link={uuid}/link-port{localId}"
+                    "operation-name": "/core-model-1-4:network-control-domain=cache/link={uuid}/link-port={localId}"
                   },
                   "operation-server-interface-configuration": {
                     "life-cycle-state": "operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_EXPERIMENTAL",
@@ -1894,30 +1894,6 @@
             ]
           },
           {
-            "uuid": "mdip-1-0-0-op-s-is-244",
-            "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
-            "client-ltp": [
-            ],
-            "server-ltp": [
-              "mdip-1-0-0-http-s-000"
-            ],
-            "layer-protocol": [
-              {
-                "local-id": "0",
-                "layer-protocol-name": "operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER",
-                "operation-server-interface-1-0:operation-server-interface-pac": {
-                  "operation-server-interface-capability": {
-                    "operation-name": "/core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/mac-interface-1-0:mac-interface-pac/mac-interface-historical-performances"
-                  },
-                  "operation-server-interface-configuration": {
-                    "life-cycle-state": "operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_EXPERIMENTAL",
-                    "operation-key": "n.a."
-                  }
-                }
-              }
-            ]
-          },
-          {
             "uuid": "mdip-1-0-0-op-s-is-250",
             "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
             "client-ltp": [
@@ -2052,30 +2028,6 @@
                 "operation-server-interface-1-0:operation-server-interface-pac": {
                   "operation-server-interface-capability": {
                     "operation-name": "/core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/vlan-interface-1-0:vlan-interface-pac/vlan-interface-configuration"
-                  },
-                  "operation-server-interface-configuration": {
-                    "life-cycle-state": "operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_EXPERIMENTAL",
-                    "operation-key": "n.a."
-                  }
-                }
-              }
-            ]
-          },
-          {
-            "uuid": "mdip-1-0-0-op-s-is-264",
-            "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
-            "client-ltp": [
-            ],
-            "server-ltp": [
-              "mdip-1-0-0-http-s-000"
-            ],
-            "layer-protocol": [
-              {
-                "local-id": "0",
-                "layer-protocol-name": "operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER",
-                "operation-server-interface-1-0:operation-server-interface-pac": {
-                  "operation-server-interface-capability": {
-                    "operation-name": "/core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/vlan-interface-1-0:vlan-interface-pac/vlan-interface-historical-performances"
                   },
                   "operation-server-interface-configuration": {
                     "life-cycle-state": "operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_EXPERIMENTAL",
@@ -2255,21 +2207,20 @@
               "mdip-1-0-0-op-s-is-240",
               "mdip-1-0-0-op-s-is-241",
               "mdip-1-0-0-op-s-is-242",
-              "mdip-1-0-0-op-s-is-244",
               "mdip-1-0-0-op-s-is-250",
               "mdip-1-0-0-op-s-is-251",
               "mdip-1-0-0-op-s-is-252",
               "mdip-1-0-0-op-s-is-254",
               "mdip-1-0-0-op-s-is-260",
               "mdip-1-0-0-op-s-is-261",
-              "mdip-1-0-0-op-s-is-264",
               "mdip-1-0-0-op-s-is-270",
               "mdip-1-0-0-op-s-is-271",
               "mdip-1-0-0-op-s-is-272",
               "mdip-1-0-0-op-s-is-274"
             ],
             "server-ltp": [
-              "mdip-1-0-0-tcp-s-000"
+              "mdip-1-0-0-tcp-s-000",
+              "mdip-1-0-0-tcp-s-001"
             ],
             "layer-protocol": [
               {
@@ -2316,6 +2267,31 @@
                       "ipv-4-address": "1.1.4.16"
                     },
                     "local-port": 4016
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "uuid": "mdip-1-0-0-tcp-s-001",
+            "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
+            "client-ltp": [
+              "mdip-1-0-0-http-s-000"
+            ],
+            "server-ltp": [
+            ],
+            "layer-protocol": [
+              {
+                "local-id": "0",
+                "layer-protocol-name": "tcp-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_TCP_LAYER",
+                "tcp-server-interface-1-0:tcp-server-interface-pac": {
+                  "tcp-server-interface-configuration": {
+                    "description": "With TLS layer",
+                    "local-protocol": "tcp-server-interface-1-0:PROTOCOL_TYPE_HTTPS",
+                    "local-address": {
+                      "ipv-4-address": "1.2.4.16"
+                    },
+                    "local-port": 4216
                   }
                 }
               }
@@ -3948,7 +3924,7 @@
                 "layer-protocol-name": "operation-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER",
                 "operation-client-interface-1-0:operation-client-interface-pac": {
                   "operation-client-interface-configuration": {
-                    "operation-name": "/core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct{uuid1}",
+                    "operation-name": "/core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct={uuid1}",
                     "operation-key": "Operation key not yet provided."
                   },
                   "operation-client-interface-status": {
@@ -3973,7 +3949,7 @@
                 "layer-protocol-name": "operation-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER",
                 "operation-client-interface-1-0:operation-client-interface-pac": {
                   "operation-client-interface-configuration": {
-                    "operation-name": "/core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct{uuid1}/fc-port{localId}",
+                    "operation-name": "/core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct={uuid1}/fc-port={localId}",
                     "operation-key": "Operation key not yet provided."
                   },
                   "operation-client-interface-status": {
@@ -4023,7 +3999,7 @@
                 "layer-protocol-name": "operation-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER",
                 "operation-client-interface-1-0:operation-client-interface-pac": {
                   "operation-client-interface-configuration": {
-                    "operation-name": "/core-model-1-4:network-control-domain=cache/link={uuid}/link-port{localId}",
+                    "operation-name": "/core-model-1-4:network-control-domain=cache/link={uuid}/link-port={localId}",
                     "operation-key": "Operation key not yet provided."
                   },
                   "operation-client-interface-status": {
@@ -4410,31 +4386,6 @@
             ]
           },
           {
-            "uuid": "mdip-1-0-0-op-c-is-mwdi-1-1-1-244",
-            "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
-            "client-ltp": [
-            ],
-            "server-ltp": [
-              "mdip-1-0-0-http-c-mwdi-1-1-1-000"
-            ],
-            "layer-protocol": [
-              {
-                "local-id": "0",
-                "layer-protocol-name": "operation-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER",
-                "operation-client-interface-1-0:operation-client-interface-pac": {
-                  "operation-client-interface-configuration": {
-                    "operation-name": "/core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/mac-interface-1-0:mac-interface-pac/mac-interface-historical-performances",
-                    "operation-key": "Operation key not yet provided."
-                  },
-                  "operation-client-interface-status": {
-                    "operational-state": "operation-client-interface-1-0:OPERATIONAL_STATE_TYPE_NOT_YET_DEFINED",
-                    "life-cycle-state": "operation-client-interface-1-0:LIFE_CYCLE_STATE_TYPE_NOT_YET_DEFINED"
-                  }
-                }
-              }
-            ]
-          },
-          {
             "uuid": "mdip-1-0-0-op-c-is-mwdi-1-1-1-250",
             "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
             "client-ltp": [
@@ -4574,31 +4525,6 @@
                 "operation-client-interface-1-0:operation-client-interface-pac": {
                   "operation-client-interface-configuration": {
                     "operation-name": "/core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/vlan-interface-1-0:vlan-interface-pac/vlan-interface-configuration",
-                    "operation-key": "Operation key not yet provided."
-                  },
-                  "operation-client-interface-status": {
-                    "operational-state": "operation-client-interface-1-0:OPERATIONAL_STATE_TYPE_NOT_YET_DEFINED",
-                    "life-cycle-state": "operation-client-interface-1-0:LIFE_CYCLE_STATE_TYPE_NOT_YET_DEFINED"
-                  }
-                }
-              }
-            ]
-          },
-          {
-            "uuid": "mdip-1-0-0-op-c-is-mwdi-1-1-1-264",
-            "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
-            "client-ltp": [
-            ],
-            "server-ltp": [
-              "mdip-1-0-0-http-c-mwdi-1-1-1-000"
-            ],
-            "layer-protocol": [
-              {
-                "local-id": "0",
-                "layer-protocol-name": "operation-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER",
-                "operation-client-interface-1-0:operation-client-interface-pac": {
-                  "operation-client-interface-configuration": {
-                    "operation-name": "/core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/vlan-interface-1-0:vlan-interface-pac/vlan-interface-historical-performances",
                     "operation-key": "Operation key not yet provided."
                   },
                   "operation-client-interface-status": {
@@ -4765,14 +4691,12 @@
               "mdip-1-0-0-op-c-is-mwdi-1-1-1-240",
               "mdip-1-0-0-op-c-is-mwdi-1-1-1-241",
               "mdip-1-0-0-op-c-is-mwdi-1-1-1-242",
-              "mdip-1-0-0-op-c-is-mwdi-1-1-1-244",
               "mdip-1-0-0-op-c-is-mwdi-1-1-1-250",
               "mdip-1-0-0-op-c-is-mwdi-1-1-1-251",
               "mdip-1-0-0-op-c-is-mwdi-1-1-1-252",
               "mdip-1-0-0-op-c-is-mwdi-1-1-1-254",
               "mdip-1-0-0-op-c-is-mwdi-1-1-1-260",
               "mdip-1-0-0-op-c-is-mwdi-1-1-1-261",
-              "mdip-1-0-0-op-c-is-mwdi-1-1-1-264",
               "mdip-1-0-0-op-c-is-mwdi-1-1-1-270",
               "mdip-1-0-0-op-c-is-mwdi-1-1-1-271",
               "mdip-1-0-0-op-c-is-mwdi-1-1-1-272",
@@ -5249,11 +5173,6 @@
                     "logical-termination-point": "mdip-1-0-0-op-s-is-242"
                   },
                   {
-                    "local-id": "1262",
-                    "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
-                    "logical-termination-point": "mdip-1-0-0-op-s-is-244"
-                  },
-                  {
                     "local-id": "1268",
                     "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
                     "logical-termination-point": "mdip-1-0-0-op-s-is-250"
@@ -5282,11 +5201,6 @@
                     "local-id": "1279",
                     "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
                     "logical-termination-point": "mdip-1-0-0-op-s-is-261"
-                  },
-                  {
-                    "local-id": "1282",
-                    "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
-                    "logical-termination-point": "mdip-1-0-0-op-s-is-264"
                   },
                   {
                     "local-id": "1288",
@@ -5619,11 +5533,6 @@
                     "logical-termination-point": "mdip-1-0-0-op-s-is-242"
                   },
                   {
-                    "local-id": "1262",
-                    "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
-                    "logical-termination-point": "mdip-1-0-0-op-s-is-244"
-                  },
-                  {
                     "local-id": "1268",
                     "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
                     "logical-termination-point": "mdip-1-0-0-op-s-is-250"
@@ -5652,11 +5561,6 @@
                     "local-id": "1279",
                     "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
                     "logical-termination-point": "mdip-1-0-0-op-s-is-261"
-                  },
-                  {
-                    "local-id": "1282",
-                    "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
-                    "logical-termination-point": "mdip-1-0-0-op-s-is-264"
                   },
                   {
                     "local-id": "1288",
@@ -6146,7 +6050,7 @@
                   {
                     "local-id": "2000",
                     "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                    "logical-termination-point": "mmdip-1-0-0-op-c-is-mwdi-1-1-1-011"
+                    "logical-termination-point": "mdip-1-0-0-op-c-is-mwdi-1-1-1-011"
                   }
                 ]
               },
@@ -7401,31 +7305,6 @@
                 ]
               },
               {
-                "uuid": "mdip-1-0-0-op-fc-is-244",
-                "name": [
-                  {
-                    "value-name": "ForwardingKind",
-                    "value": "core-model-1-4:FORWARDING_KIND_TYPE_INVARIANT_PROCESS_SNIPPET"
-                  },
-                  {
-                    "value-name": "ForwardingName",
-                    "value": "RequestForCachedMacInterfaceHistoricalPerformancesCausesReadingFromCache"
-                  }
-                ],
-                "fc-port": [
-                  {
-                    "local-id": "1000",
-                    "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
-                    "logical-termination-point": "mdip-1-0-0-op-s-is-244"
-                  },
-                  {
-                    "local-id": "2000",
-                    "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                    "logical-termination-point": "mdip-1-0-0-op-c-is-mwdi-1-1-1-244"
-                  }
-                ]
-              },
-              {
                 "uuid": "mdip-1-0-0-op-fc-is-250",
                 "name": [
                   {
@@ -7572,31 +7451,6 @@
                     "local-id": "2000",
                     "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
                     "logical-termination-point": "mdip-1-0-0-op-c-is-mwdi-1-1-1-261"
-                  }
-                ]
-              },
-              {
-                "uuid": "mdip-1-0-0-op-fc-is-264",
-                "name": [
-                  {
-                    "value-name": "ForwardingKind",
-                    "value": "core-model-1-4:FORWARDING_KIND_TYPE_INVARIANT_PROCESS_SNIPPET"
-                  },
-                  {
-                    "value-name": "ForwardingName",
-                    "value": "RequestForCachedVlanInterfaceHistoricalPerformancesCausesReadingFromCache"
-                  }
-                ],
-                "fc-port": [
-                  {
-                    "local-id": "1000",
-                    "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
-                    "logical-termination-point": "mdip-1-0-0-op-s-is-264"
-                  },
-                  {
-                    "local-id": "2000",
-                    "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                    "logical-termination-point": "mdip-1-0-0-op-c-is-mwdi-1-1-1-264"
                   }
                 ]
               },
