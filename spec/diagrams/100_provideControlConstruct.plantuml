@@ -13,10 +13,10 @@ all resource path might include a ?fields= filter
 to retrieve just specific components of the addressed class
 end note
 
-requestor -> MdipResourcePath: {mount-name} (BasicAuth)
+requestor -> MdipResourcePath: {mountName} (BasicAuth)
 activate MdipResourcePath
 
-MdipResourcePath -> MwdiResourcePath : {mount-name} (apiKeyAuth)
+MdipResourcePath -> MwdiResourcePath : {mountName} (apiKeyAuth)
 MwdiResourcePath --> MdipResourcePath
 
 MdipResourcePath --> requestor
