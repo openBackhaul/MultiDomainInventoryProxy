@@ -175,8 +175,6 @@ servers:
           uuid: mdip-1-0-0-op-s-is-260
         - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/vlan-interface-1-0:vlan-interface-pac/vlan-interface-configuration
           uuid: mdip-1-0-0-op-s-is-261
-        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/vlan-interface-1-0:vlan-interface-pac/vlan-interface-historical-performances
-          uuid: mdip-1-0-0-op-s-is-264
 
         - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/wire-interface-2-0:wire-interface-pac/wire-interface-capability
           uuid: mdip-1-0-0-op-s-is-270
@@ -526,8 +524,6 @@ clients:
         uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-260
       - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/vlan-interface-1-0:vlan-interface-pac/vlan-interface-configuration
         uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-261
-      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/vlan-interface-1-0:vlan-interface-pac/vlan-interface-historical-performances
-        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-264
 
       - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/wire-interface-2-0:wire-interface-pac/wire-interface-capability
         uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-270
