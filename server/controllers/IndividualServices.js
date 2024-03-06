@@ -606,18 +606,6 @@ module.exports.getCachedMacInterfaceConfiguration = function getCachedMacInterfa
     });
 };
 
-module.exports.getCachedMacInterfaceHistoricalPerformances = function getCachedMacInterfaceHistoricalPerformances(req, res, next, fields, mountName, uuid, localId) {
-  let startTime = process.hrtime();
-
-  IndividualGetServices.getCachedMacInterfaceHistoricalPerformances(req.url)
-    .then(async function (ret) {
-      return handleForwardedResult(req, res, ret, startTime);
-    })
-    .catch(async function (error) {
-      return handleError(error, req, res, startTime);
-    });
-};
-
 module.exports.getCachedMacInterfaceStatus = function getCachedMacInterfaceStatus(req, res, next, fields, mountName, uuid, localId) {
   let startTime = process.hrtime();
 
@@ -798,17 +786,6 @@ module.exports.getCachedVlanInterfaceConfiguration = function getCachedVlanInter
     });
 };
 
-module.exports.getCachedVlanInterfaceHistoricalPerformances = function getCachedVlanInterfaceHistoricalPerformances(req, res, next, fields, mountName, uuid, localId) {
-  let startTime = process.hrtime();
-
-  IndividualGetServices.getCachedVlanInterfaceHistoricalPerformances(req.url)
-    .then(async function (ret) {
-      return handleForwardedResult(req, res, ret, startTime);
-    })
-    .catch(async function (error) {
-      return handleError(error, req, res, startTime);
-    });
-};
 
 module.exports.getCachedWireInterfaceCapability = function getCachedWireInterfaceCapability(req, res, next, fields, mountName, uuid, localId) {
   let startTime = process.hrtime();

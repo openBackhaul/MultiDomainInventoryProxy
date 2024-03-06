@@ -475,20 +475,6 @@ exports.getCachedMacInterfaceConfiguration = function (requestUrl) {
 
 
 /**
- * Provides MacInterfaceHistoricalPerformances from cache
- *
- * contained in requestUrl:
- * mountName String The mountName of the device that is addressed by the request
- * uuid String Instance identifier that is unique within the device
- * localId String Instance identifier that is unique within its list
- * fields String Query parameter to filter resources according to RFC8040 fields filter spec (optional)
- **/
-exports.getCachedMacInterfaceHistoricalPerformances = function (requestUrl) {
-    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedMacInterfaceHistoricalPerformancesCausesReadingFromCache');
-}
-
-
-/**
  * Provides MacInterfaceStatus from cache
  *
  * contained in requestUrl:
@@ -686,20 +672,6 @@ exports.getCachedVlanInterfaceCapability = function (requestUrl) {
  **/
 exports.getCachedVlanInterfaceConfiguration = function (requestUrl) {
     return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedVlanInterfaceConfigurationCausesReadingFromCache');
-}
-
-
-/**
- * Provides VlanInterfaceHistoricalPerformances from cache
- *
- * contained in requestUrl:
- * mountName String The mountName of the device that is addressed by the request
- * uuid String Instance identifier that is unique within the device
- * localId String Instance identifier that is unique within its list
- * fields String Query parameter to filter resources according to RFC8040 fields filter spec (optional)
- **/
-exports.getCachedVlanInterfaceHistoricalPerformances = function (requestUrl) {
-    return provideListRequestHandler.getDataFromMWDI(requestUrl, 'RequestForCachedVlanInterfaceHistoricalPerformancesCausesReadingFromCache');
 }
 
 
