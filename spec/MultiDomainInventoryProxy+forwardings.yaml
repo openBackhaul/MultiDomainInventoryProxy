@@ -150,9 +150,9 @@ forwardings:
         uuid: mdip-1-0-0-op-s-is-201
       - server-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}
         uuid: mdip-1-0-0-op-s-is-202
-      - server-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct={uuid1}
+      - server-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/fc={uuid1}
         uuid: mdip-1-0-0-op-s-is-203
-      - server-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct={uuid1}/fc-port={localId}
+      - server-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/fc={uuid1}/fc-port={localId}
         uuid: mdip-1-0-0-op-s-is-204
       - server-name: /core-model-1-4:network-control-domain=cache/link={uuid}
         uuid: mdip-1-0-0-op-s-is-205
@@ -308,9 +308,9 @@ forwardings:
         uuid: mdip-1-0-0-op-s-is-201
       - server-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}
         uuid: mdip-1-0-0-op-s-is-202
-      - server-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct={uuid1}
+      - server-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/fc={uuid1}
         uuid: mdip-1-0-0-op-s-is-203
-      - server-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct={uuid1}/fc-port={localId}
+      - server-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/fc={uuid1}/fc-port={localId}
         uuid: mdip-1-0-0-op-s-is-204
       - server-name: /core-model-1-4:network-control-domain=cache/link={uuid}
         uuid: mdip-1-0-0-op-s-is-205
@@ -1138,10 +1138,10 @@ forwardings:
       fc-port-deletion:
       operation-client-deletion:
     initiating-requests:
-      - server-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct={uuid1}
+      - server-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/fc={uuid1}
         uuid: mdip-1-0-0-op-s-is-203
     consequent-requests:
-      - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct={uuid1}
+      - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/fc={uuid1}
         uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-203
 
   - forwarding-name: RequestForCachedForwardingConstructPortCausesReadingFromCache
@@ -1153,10 +1153,10 @@ forwardings:
       fc-port-deletion:
       operation-client-deletion:
     initiating-requests:
-      - server-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct={uuid1}/fc-port={localId}
+      - server-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/fc={uuid1}/fc-port={localId}
         uuid: mdip-1-0-0-op-s-is-204
     consequent-requests:
-      - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct={uuid1}/fc-port={localId}
+      - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/fc={uuid1}/fc-port={localId}
         uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-204
 
   - forwarding-name: RequestForCachedLinkCausesReadingFromCache
