@@ -1,7 +1,7 @@
 # MultiDomainInventoryProxy Testing
 
 ### Test Cases (Postman Export)
-- to be provided
+- [MultiDomainInventoryProxy+test](./MultiDomainInventoryProxy+test.json)
 
 ### DATAfile
 - [MultiDomainInventoryProxy+data](./MultiDomainInventoryProxy+data.json)
