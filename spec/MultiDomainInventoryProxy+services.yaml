@@ -117,13 +117,13 @@ servers:
           uuid: mdip-1-0-0-op-s-is-201
         - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}
           uuid: mdip-1-0-0-op-s-is-202
-        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct{uuid1}
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/fc={uuid1}
           uuid: mdip-1-0-0-op-s-is-203
-        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct{uuid1}/fc-port{localId}
+        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/fc={uuid1}/fc-port={localId}
           uuid: mdip-1-0-0-op-s-is-204
         - operation-name: /core-model-1-4:network-control-domain=cache/link={uuid}
           uuid: mdip-1-0-0-op-s-is-205
-        - operation-name: /core-model-1-4:network-control-domain=cache/link={uuid}/link-port{localId}
+        - operation-name: /core-model-1-4:network-control-domain=cache/link={uuid}/link-port={localId}
           uuid: mdip-1-0-0-op-s-is-206
 
         - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/air-interface-2-0:air-interface-pac/air-interface-capability
@@ -159,8 +159,6 @@ servers:
           uuid: mdip-1-0-0-op-s-is-241
         - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/mac-interface-1-0:mac-interface-pac/mac-interface-status
           uuid: mdip-1-0-0-op-s-is-242
-        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/mac-interface-1-0:mac-interface-pac/mac-interface-historical-performances
-          uuid: mdip-1-0-0-op-s-is-244
 
         - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/pure-ethernet-structure-2-0:pure-ethernet-structure-pac/pure-ethernet-structure-capability
           uuid: mdip-1-0-0-op-s-is-250
@@ -175,8 +173,6 @@ servers:
           uuid: mdip-1-0-0-op-s-is-260
         - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/vlan-interface-1-0:vlan-interface-pac/vlan-interface-configuration
           uuid: mdip-1-0-0-op-s-is-261
-        - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/vlan-interface-1-0:vlan-interface-pac/vlan-interface-historical-performances
-          uuid: mdip-1-0-0-op-s-is-264
 
         - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/wire-interface-2-0:wire-interface-pac/wire-interface-capability
           uuid: mdip-1-0-0-op-s-is-270
@@ -468,13 +464,13 @@ clients:
         uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-201
       - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}
         uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-202
-      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct{uuid1}
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/fc={uuid1}
         uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-203
-      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/forwarding-construct{uuid1}/fc-port{localId}
+      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/fc={uuid1}/fc-port={localId}
         uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-204
       - operation-name: /core-model-1-4:network-control-domain=cache/link={uuid}
         uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-205
-      - operation-name: /core-model-1-4:network-control-domain=cache/link={uuid}/link-port{localId}
+      - operation-name: /core-model-1-4:network-control-domain=cache/link={uuid}/link-port={localId}
         uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-206
 
       - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/air-interface-2-0:air-interface-pac/air-interface-capability
@@ -510,8 +506,6 @@ clients:
         uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-241
       - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/mac-interface-1-0:mac-interface-pac/mac-interface-status
         uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-242
-      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/mac-interface-1-0:mac-interface-pac/mac-interface-historical-performances
-        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-244
 
       - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/pure-ethernet-structure-2-0:pure-ethernet-structure-pac/pure-ethernet-structure-capability
         uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-250
@@ -526,8 +520,6 @@ clients:
         uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-260
       - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/vlan-interface-1-0:vlan-interface-pac/vlan-interface-configuration
         uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-261
-      - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/vlan-interface-1-0:vlan-interface-pac/vlan-interface-historical-performances
-        uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-264
 
       - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/wire-interface-2-0:wire-interface-pac/wire-interface-capability
         uuid: mdip-1-0-0-op-c-is-mwdi-1-1-1-270
