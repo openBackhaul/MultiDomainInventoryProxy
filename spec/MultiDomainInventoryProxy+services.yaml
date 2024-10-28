@@ -189,7 +189,7 @@ servers:
   tcp-server:
     - description: Without TLS layer
       local-protocol: http
-      own-ip-address: 1.1.4.16
+      own-ip-address: 127.0.0.1
       own-tcp-port: 4016
 
 clients:
@@ -200,7 +200,7 @@ clients:
       uuid: mdip-1-0-2-http-c-or-1-0-0-000
     tcp-client:
       remote-protocol: http
-      ip-address: 1.1.4.16
+      ip-address: 127.0.0.1
       tcp-port: 4016
       uuid: mdip-1-0-2-tcp-c-or-1-0-0-000
     operation-clients:
@@ -219,7 +219,7 @@ clients:
       uuid: mdip-1-0-2-http-c-nr-1-0-0-000
     tcp-client:
       remote-protocol: http
-      ip-address: 1.1.4.16
+      ip-address: 127.0.0.1
       tcp-port: 4016
       uuid: mdip-1-0-2-tcp-c-nr-1-0-0-000
     operation-clients:
