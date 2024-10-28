@@ -116,8 +116,8 @@ paths:
                 new-application-protocol: 'HTTP'
                 new-application-address:
                   ip-address:
-                    ipv-4-address: '1.1.3.17'
-                new-application-port: 3017
+                    ipv-4-address: '127.0.0.1'
+                new-application-port: 3031
       responses:
         '204':
           description: 'Process of embedding a new release initiated'
@@ -242,8 +242,8 @@ paths:
                         future-protocol: 'HTTP'
                         future-address:
                           ip-address:
-                            ipv-4-address: '1.1.3.17'
-                        future-port: 3017
+                            ipv-4-address: '127.0.0.1'
+                        future-port: 3031
               responses:
                 '204':
                   description: 'Will broadcast server replacement'
@@ -9434,12 +9434,12 @@ paths:
               registry-office-protocol: 'HTTP'
               registry-office-address:
                 ip-address:
-                  ipv-4-address: '1.1.3.17'
-              registry-office-port: 3017
+                  ipv-4-address: '127.0.0.1'
+              registry-office-port: 3031
               http-address:
                 ip-address:
-                  ipv-4-address: '1.1.3.18'
-              http-port: 3018
+                  ipv-4-address: '127.0.0.1'
+              http-port: 3032
               preceding-application-name: 'TypeApprovalRegister'
               preceding-release-number: '1.0.0'
       responses:
@@ -9597,8 +9597,8 @@ paths:
                           - protocol: 'HTTP'
                             address:
                               ip-address:
-                                ipv-4-address: '1.1.3.18'
-                            port: 3018
+                                ipv-4-address: '127.0.0.1'
+                            port: 3032
               responses:
                 '204':
                   description: 'Application registered'
@@ -9784,8 +9784,8 @@ paths:
                 registry-office-protocol: 'HTTP'
                 registry-office-address:
                   ip-address:
-                    ipv-4-address: '1.1.3.17'
-                registry-office-port: 3017
+                    ipv-4-address: '127.0.0.1'
+                registry-office-port: 3031
                 old-release-protocol: 'HTTP'
                 old-release-address:
                   ip-address:
@@ -10037,8 +10037,8 @@ paths:
                 service-log-protocol: 'HTTP'
                 service-log-address:
                   ip-address:
-                    ipv-4-address: '1.1.3.19'
-                service-log-port: 3019
+                    ipv-4-address: '127.0.0.1'
+                service-log-port: 3033
       responses:
         '204':
           description: 'Information about service requests will be send to the new target'
@@ -10319,8 +10319,8 @@ paths:
                 oam-log-protocol: 'HTTP'
                 oam-log-address:
                   ip-address:
-                    ipv-4-address: '1.1.3.20'
-                oam-log-port: 3020
+                    ipv-4-address: '127.0.0.1'
+                oam-log-port: 3034
       responses:
         '204':
           description: 'Information about OaM requests will be send to the new target'
@@ -10653,8 +10653,8 @@ paths:
                 oam-approval-protocol: 'HTTP'
                 oam-approval-address:
                   ip-address:
-                    ipv-4-address: '1.1.3.21'
-                oam-approval-port: 3021
+                    ipv-4-address: '127.0.0.1'
+                oam-approval-port: 3035
       responses:
         '204':
           description: 'Informed about where to inquire for approval of OaM requests'
@@ -10918,8 +10918,8 @@ paths:
                 future-protocol: 'HTTP'
                 future-address:
                   ip-address:
-                    ipv-4-address: '1.1.3.17'
-                future-port: 3017
+                    ipv-4-address: '127.0.0.1'
+                future-port: 3031
       responses:
         '204':
           description: 'Will update connection information'
@@ -11227,8 +11227,8 @@ paths:
                 topology-application-protocol: 'HTTP'
                 topology-application-address:
                   ip-address:
-                    ipv-4-address: '1.1.3.22'
-                topology-application-port: 3022
+                    ipv-4-address: '127.0.0.1'
+                topology-application-port: 3036
       responses:
         '200':
           description: 'Client side for sending information about topology changes has been updated and current data tree has been provided'
