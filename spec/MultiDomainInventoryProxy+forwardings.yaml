@@ -367,7 +367,7 @@ forwardings:
       - server-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/wire-interface-2-0:wire-interface-pac/wire-interface-historical-performances
         uuid: mdip-1-0-2-op-s-is-274
     consequent-requests:
-      - client-name: AdministratorAdministration://v1/approve-oam-request
+      - client-name: AccessAdministration://v1/approve-oam-request
         uuid: mdip-1-0-2-op-c-bs-aa-2-1-2-000
 
   - forwarding-name: OamRequestCausesInquiryForAuthentication
@@ -384,7 +384,7 @@ forwardings:
       operation-client-deletion:
     initiating-requests:
     consequent-requests:
-      - client-name: AdministratorAdministration://v1/approve-oam-request
+      - client-name: AccessAdministration://v1/approve-oam-request
         uuid: mdip-1-0-2-op-c-bs-aa-2-1-2-000
 
   - forwarding-name: PromptForBequeathingDataCausesRequestForBroadcastingInfoAboutServerReplacement

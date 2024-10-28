@@ -311,7 +311,7 @@ clients:
         individual:
 
   - http-client:
-      application-name: AdministratorAdministration
+      application-name: AccessAdministration
       release-number: 2.1.2
       uuid: mdip-1-0-2-http-c-aa-2-1-2-000
     tcp-client:
