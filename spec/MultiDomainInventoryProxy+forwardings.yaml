@@ -646,7 +646,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-010
     consequent-requests:
       - client-name: MWDI://v1/provide-list-of-connected-devices
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-010
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-010
 
   - forwarding-name: RequestForListOfDeviceInterfacesCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-011
@@ -661,7 +661,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-011
     consequent-requests:
       - client-name: MWDI://v1/provide-list-of-device-interfaces
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-011
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-011
 
   - forwarding-name: RequestForListOfActualDeviceEquipmentCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-012
@@ -676,7 +676,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-012
     consequent-requests:
       - client-name: MWDI://v1/provide-list-of-actual-device-equipment
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-012
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-012
 
   - forwarding-name: RequestForListOfParallelLinksCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-013
@@ -691,7 +691,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-013
     consequent-requests:
       - client-name: MWDI://v1/provide-list-of-parallel-links
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-013
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-013
 
 
   - forwarding-name: RequestForCachedControlConstructCausesReadingFromCache
@@ -707,7 +707,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-100
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-100
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-100
 
   - forwarding-name: RequestForCachedAlarmCapabilityCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-105
@@ -722,7 +722,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-105
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/alarms-1-0:alarm-pac/alarm-capability
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-105
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-105
 
   - forwarding-name: RequestForCachedAlarmConfigurationCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-106
@@ -737,7 +737,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-106
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/alarms-1-0:alarm-pac/alarm-configuration
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-106
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-106
 
   - forwarding-name: RequestForCachedCurrentAlarmsCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-107
@@ -752,7 +752,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-107
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/alarms-1-0:alarm-pac/current-alarms
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-107
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-107
 
   - forwarding-name: RequestForCachedAlarmEventRecordsCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-108
@@ -767,7 +767,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-108
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/alarms-1-0:alarm-pac/alarm-event-records
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-108
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-108
 
   - forwarding-name: RequestForCachedEquipmentCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-110
@@ -782,7 +782,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-110
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/equipment={uuid}
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-110
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-110
 
   - forwarding-name: RequestForCachedConnectorCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-111
@@ -797,7 +797,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-111
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/equipment={uuid}/connector={localId}
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-111
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-111
 
   - forwarding-name: RequestForCachedContainedHolderCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-112
@@ -812,7 +812,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-112
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/equipment={uuid}/contained-holder={localId}
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-112
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-112
 
   - forwarding-name: RequestForCachedExpectedEquipmentCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-113
@@ -827,7 +827,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-113
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/equipment={uuid}/expected-equipment={localId}
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-113
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-113
 
   - forwarding-name: RequestForCachedActualEquipmentCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-114
@@ -842,7 +842,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-114
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/equipment={uuid}/actual-equipment
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-114
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-114
 
   - forwarding-name: RequestForCachedFirmwareCollectionCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-120
@@ -857,7 +857,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-120
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/firmware-1-0:firmware-collection
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-120
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-120
 
   - forwarding-name: RequestForCachedFirmwareComponentListCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-121
@@ -872,7 +872,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-121
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/firmware-1-0:firmware-collection/firmware-component-list={localId}
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-121
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-121
 
   - forwarding-name: RequestForCachedFirmwareComponentCapabilityCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-122
@@ -887,7 +887,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-122
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/firmware-1-0:firmware-collection/firmware-component-list={localId}/firmware-component-pac/firmware-component-capability
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-122
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-122
 
   - forwarding-name: RequestForCachedFirmwareComponentStatusCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-123
@@ -902,7 +902,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-123
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/firmware-1-0:firmware-collection/firmware-component-list={localId}/firmware-component-pac/firmware-component-status
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-123
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-123
 
   - forwarding-name: RequestForCachedProfileCollectionCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-130
@@ -917,7 +917,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-130
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/profile-collection
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-130
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-130
 
   - forwarding-name: RequestForCachedProfileCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-131
@@ -932,7 +932,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-131
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/profile-collection/profile={uuid}
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-131
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-131
 
   - forwarding-name: RequestForCachedCoChannelProfileCapabilityCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-135
@@ -947,7 +947,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-135
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/profile-collection/profile={uuid}/co-channel-profile-1-0:co-channel-profile-pac/co-channel-profile-capability
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-135
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-135
 
   - forwarding-name: RequestForCachedCoChannelProfileConfigurationCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-136
@@ -962,7 +962,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-136
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/profile-collection/profile={uuid}/co-channel-profile-1-0:co-channel-profile-pac/co-channel-profile-configuration
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-136
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-136
 
   - forwarding-name: RequestForCachedPolicingProfileCapabilityCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-145
@@ -977,7 +977,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-145
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/profile-collection/profile={uuid}/policing-profile-1-0:policing-profile-pac/policing-profile-capability
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-145
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-145
 
   - forwarding-name: RequestForCachedPolicingProfileConfigurationCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-146
@@ -992,7 +992,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-146
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/profile-collection/profile={uuid}/policing-profile-1-0:policing-profile-pac/policing-profile-configuration
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-146
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-146
 
   - forwarding-name: RequestForCachedQosProfileCapabilityCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-150
@@ -1007,7 +1007,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-150
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/profile-collection/profile={uuid}/qos-profile-1-0:qos-profile-pac/qos-profile-capability
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-150
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-150
 
   - forwarding-name: RequestForCachedQosProfileConfigurationCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-151
@@ -1022,7 +1022,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-151
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/profile-collection/profile={uuid}/qos-profile-1-0:qos-profile-pac/qos-profile-configuration
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-151
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-151
 
   - forwarding-name: RequestForCachedSchedulerProfileCapabilityCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-155
@@ -1037,7 +1037,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-155
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/profile-collection/profile={uuid}/scheduler-profile-1-0:scheduler-profile-pac/scheduler-profile-capability
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-155
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-155
 
   - forwarding-name: RequestForCachedSchedulerProfileConfigurationCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-156
@@ -1052,7 +1052,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-156
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/profile-collection/profile={uuid}/scheduler-profile-1-0:scheduler-profile-pac/scheduler-profile-configuration
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-156
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-156
 
   - forwarding-name: RequestForCachedWredProfileCapabilityCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-160
@@ -1067,7 +1067,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-160
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/profile-collection/profile={uuid}/wred-profile-1-0:wred-profile-pac/wred-profile-capability
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-160
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-160
 
   - forwarding-name: RequestForCachedWredProfileConfigurationCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-161
@@ -1082,7 +1082,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-161
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/profile-collection/profile={uuid}/wred-profile-1-0:wred-profile-pac/wred-profile-configuration
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-161
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-161
 
   - forwarding-name: RequestForCachedLogicalTerminationPointCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-200
@@ -1097,7 +1097,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-200
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-200
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-200
 
   - forwarding-name: RequestForCachedLtpAugmentPacCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-201
@@ -1112,7 +1112,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-201
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/ltp-augment-1-0:ltp-augment-pac
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-201
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-201
 
   - forwarding-name: RequestForCachedForwardingDomainCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-202
@@ -1127,7 +1127,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-202
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-202
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-202
 
   - forwarding-name: RequestForCachedForwardingConstructCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-203
@@ -1142,7 +1142,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-203
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/fc={uuid1}
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-203
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-203
 
   - forwarding-name: RequestForCachedForwardingConstructPortCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-204
@@ -1157,7 +1157,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-204
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/forwarding-domain={uuid}/fc={uuid1}/fc-port={localId}
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-204
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-204
 
   - forwarding-name: RequestForCachedLinkCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-205
@@ -1172,7 +1172,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-205
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/link={uuid}
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-205
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-205
 
   - forwarding-name: RequestForCachedLinkPortCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-206
@@ -1187,7 +1187,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-206
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/link={uuid}/link-port={localId}
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-206
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-206
 
   - forwarding-name: RequestForCachedAirInterfaceCapabilityCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-210
@@ -1202,7 +1202,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-210
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/air-interface-2-0:air-interface-pac/air-interface-capability
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-210
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-210
 
   - forwarding-name: RequestForCachedAirInterfaceConfigurationCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-211
@@ -1217,7 +1217,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-211
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/air-interface-2-0:air-interface-pac/air-interface-configuration
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-211
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-211
 
   - forwarding-name: RequestForCachedAirInterfaceStatusCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-212
@@ -1232,7 +1232,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-212
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/air-interface-2-0:air-interface-pac/air-interface-status
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-212
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-212
 
   - forwarding-name: RequestForCachedAirInterfaceHistoricalPerformancesCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-214
@@ -1247,7 +1247,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-214
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/air-interface-2-0:air-interface-pac/air-interface-historical-performances
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-214
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-214
 
   - forwarding-name: RequestForCachedEthernetContainerCapabilityCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-220
@@ -1262,7 +1262,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-220
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/ethernet-container-2-0:ethernet-container-pac/ethernet-container-capability
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-220
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-220
 
   - forwarding-name: RequestForCachedEthernetContainerConfigurationCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-221
@@ -1277,7 +1277,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-221
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/ethernet-container-2-0:ethernet-container-pac/ethernet-container-configuration
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-221
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-221
 
   - forwarding-name: RequestForCachedEthernetContainerStatusCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-222
@@ -1292,7 +1292,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-222
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/ethernet-container-2-0:ethernet-container-pac/ethernet-container-status
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-222
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-222
 
   - forwarding-name: RequestForCachedEthernetContainerHistoricalPerformancesCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-224
@@ -1307,7 +1307,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-224
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/ethernet-container-2-0:ethernet-container-pac/ethernet-container-historical-performances
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-224
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-224
 
   - forwarding-name: RequestForCachedHybridMwStructureCapabilityCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-230
@@ -1322,7 +1322,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-230
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/hybrid-mw-structure-2-0:hybrid-mw-structure-pac/hybrid-mw-structure-capability
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-230
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-230
 
   - forwarding-name: RequestForCachedHybridMwStructureConfigurationCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-231
@@ -1337,7 +1337,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-231
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/hybrid-mw-structure-2-0:hybrid-mw-structure-pac/hybrid-mw-structure-configuration
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-231
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-231
 
   - forwarding-name: RequestForCachedHybridMwStructureStatusCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-232
@@ -1352,7 +1352,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-232
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/hybrid-mw-structure-2-0:hybrid-mw-structure-pac/hybrid-mw-structure-status
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-232
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-232
 
   - forwarding-name: RequestForCachedHybridMwStructureHistoricalPerformancesCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-234
@@ -1367,7 +1367,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-234
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/hybrid-mw-structure-2-0:hybrid-mw-structure-pac/hybrid-mw-structure-historical-performances
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-234
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-234
 
   - forwarding-name: RequestForCachedMacInterfaceCapabilityCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-240
@@ -1382,7 +1382,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-240
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/mac-interface-1-0:mac-interface-pac/mac-interface-capability
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-240
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-240
 
   - forwarding-name: RequestForCachedMacInterfaceConfigurationCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-241
@@ -1397,7 +1397,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-241
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/mac-interface-1-0:mac-interface-pac/mac-interface-configuration
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-241
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-241
 
   - forwarding-name: RequestForCachedMacInterfaceStatusCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-242
@@ -1412,7 +1412,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-242
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/mac-interface-1-0:mac-interface-pac/mac-interface-status
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-242
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-242
 
   - forwarding-name: RequestForCachedPureEthernetStructureCapabilityCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-250
@@ -1427,7 +1427,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-250
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/pure-ethernet-structure-2-0:pure-ethernet-structure-pac/pure-ethernet-structure-capability
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-250
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-250
 
   - forwarding-name: RequestForCachedPureEthernetStructureConfigurationCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-251
@@ -1442,7 +1442,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-251
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/pure-ethernet-structure-2-0:pure-ethernet-structure-pac/pure-ethernet-structure-configuration
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-251
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-251
 
   - forwarding-name: RequestForCachedPureEthernetStructureStatusCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-252
@@ -1457,7 +1457,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-252
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/pure-ethernet-structure-2-0:pure-ethernet-structure-pac/pure-ethernet-structure-status
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-252
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-252
 
   - forwarding-name: RequestForCachedPureEthernetStructureHistoricalPerformancesCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-254
@@ -1472,7 +1472,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-254
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/pure-ethernet-structure-2-0:pure-ethernet-structure-pac/pure-ethernet-structure-historical-performances
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-254
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-254
 
   - forwarding-name: RequestForCachedVlanInterfaceCapabilityCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-260
@@ -1487,7 +1487,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-260
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/vlan-interface-1-0:vlan-interface-pac/vlan-interface-capability
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-260
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-260
 
   - forwarding-name: RequestForCachedVlanInterfaceConfigurationCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-261
@@ -1502,7 +1502,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-261
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/vlan-interface-1-0:vlan-interface-pac/vlan-interface-configuration
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-261
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-261
 
   - forwarding-name: RequestForCachedWireInterfaceCapabilityCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-270
@@ -1517,7 +1517,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-270
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/wire-interface-2-0:wire-interface-pac/wire-interface-capability
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-270
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-270
 
   - forwarding-name: RequestForCachedWireInterfaceConfigurationCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-271
@@ -1532,7 +1532,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-271
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/wire-interface-2-0:wire-interface-pac/wire-interface-configuration
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-271
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-271
 
   - forwarding-name: RequestForCachedWireInterfaceStatusCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-272
@@ -1547,7 +1547,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-272
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/wire-interface-2-0:wire-interface-pac/wire-interface-status
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-272
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-272
 
   - forwarding-name: RequestForCachedWireInterfaceHistoricalPerformancesCausesReadingFromCache
     uuid: mdip-1-0-2-op-fc-is-274
@@ -1562,4 +1562,4 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-274
     consequent-requests:
       - client-name: MWDI://core-model-1-4:network-control-domain=cache/control-construct={mountName}/logical-termination-point={uuid}/layer-protocol={localId}/wire-interface-2-0:wire-interface-pac/wire-interface-historical-performances
-        uuid: mdip-1-0-2-op-c-is-mwdi-1-1-1-274
+        uuid: mdip-1-0-2-op-c-is-mwdi-1-2-0-274
