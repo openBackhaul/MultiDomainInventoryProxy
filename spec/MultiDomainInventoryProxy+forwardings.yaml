@@ -32,7 +32,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-bm-001
     consequent-requests:
       - client-name: OldRelease://v1/bequeath-your-data-and-die
-        uuid: mdip-1-0-2-op-c-bm-or-1-0-0-000
+        uuid: mdip-1-0-2-op-c-bm-or-1-0-1-000
 
 
   - forwarding-name: ServiceRequestCausesLoggingRequest
