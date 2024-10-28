@@ -2423,12 +2423,12 @@
         ]
       },
       {
-        "uuid": "mdip-1-0-2-op-c-bm-ro-2-0-2-000",
+        "uuid": "mdip-1-0-2-op-c-bm-ro-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
         ],
         "server-ltp": [
-          "mdip-1-0-2-http-c-ro-2-0-2-000"
+          "mdip-1-0-2-http-c-ro-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -2448,12 +2448,12 @@
         ]
       },
       {
-        "uuid": "mdip-1-0-2-op-c-bm-ro-2-0-2-001",
+        "uuid": "mdip-1-0-2-op-c-bm-ro-2-1-2-001",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
         ],
         "server-ltp": [
-          "mdip-1-0-2-http-c-ro-2-0-2-000"
+          "mdip-1-0-2-http-c-ro-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -2473,12 +2473,12 @@
         ]
       },
       {
-        "uuid": "mdip-1-0-2-op-c-bm-ro-2-0-2-002",
+        "uuid": "mdip-1-0-2-op-c-bm-ro-2-1-2-002",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
         ],
         "server-ltp": [
-          "mdip-1-0-2-http-c-ro-2-0-2-000"
+          "mdip-1-0-2-http-c-ro-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -2498,12 +2498,12 @@
         ]
       },
       {
-        "uuid": "mdip-1-0-2-op-c-bm-ro-2-0-2-003",
+        "uuid": "mdip-1-0-2-op-c-bm-ro-2-1-2-003",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
         ],
         "server-ltp": [
-          "mdip-1-0-2-http-c-ro-2-0-2-000"
+          "mdip-1-0-2-http-c-ro-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -2523,16 +2523,16 @@
         ]
       },
       {
-        "uuid": "mdip-1-0-2-http-c-ro-2-0-2-000",
+        "uuid": "mdip-1-0-2-http-c-ro-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
-          "mdip-1-0-2-op-c-bm-ro-2-0-2-000",
-          "mdip-1-0-2-op-c-bm-ro-2-0-2-001",
-          "mdip-1-0-2-op-c-bm-ro-2-0-2-002",
-          "mdip-1-0-2-op-c-bm-ro-2-0-2-003"
+          "mdip-1-0-2-op-c-bm-ro-2-1-2-000",
+          "mdip-1-0-2-op-c-bm-ro-2-1-2-001",
+          "mdip-1-0-2-op-c-bm-ro-2-1-2-002",
+          "mdip-1-0-2-op-c-bm-ro-2-1-2-003"
         ],
         "server-ltp": [
-          "mdip-1-0-2-tcp-c-ro-2-0-2-000"
+          "mdip-1-0-2-tcp-c-ro-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -2541,17 +2541,17 @@
             "http-client-interface-1-0:http-client-interface-pac": {
               "http-client-interface-configuration": {
                 "application-name": "RegistryOffice",
-                "release-number": "2.0.2"
+                "release-number": "2.1.2"
               }
             }
           }
         ]
       },
       {
-        "uuid": "mdip-1-0-2-tcp-c-ro-2-0-2-000",
+        "uuid": "mdip-1-0-2-tcp-c-ro-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
-          "mdip-1-0-2-http-c-ro-2-0-2-000"
+          "mdip-1-0-2-http-c-ro-2-1-2-000"
         ],
         "server-ltp": [
         ],
@@ -2574,12 +2574,12 @@
         ]
       },
       {
-        "uuid": "mdip-1-0-2-http-c-tar-2-0-2-000",
+        "uuid": "mdip-1-0-2-http-c-tar-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
         ],
         "server-ltp": [
-          "mdip-1-0-2-tcp-c-tar-2-0-2-000"
+          "mdip-1-0-2-tcp-c-tar-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -2588,17 +2588,17 @@
             "http-client-interface-1-0:http-client-interface-pac": {
               "http-client-interface-configuration": {
                 "application-name": "TypeApprovalRegister",
-                "release-number": "2.0.2"
+                "release-number": "2.1.2"
               }
             }
           }
         ]
       },
       {
-        "uuid": "mdip-1-0-2-tcp-c-tar-2-0-2-000",
+        "uuid": "mdip-1-0-2-tcp-c-tar-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
-          "mdip-1-0-2-http-c-tar-2-0-2-000"
+          "mdip-1-0-2-http-c-tar-2-1-2-000"
         ],
         "server-ltp": [
         ],
@@ -2621,12 +2621,12 @@
         ]
       },
       {
-        "uuid": "mdip-1-0-2-op-c-bs-eatl-2-0-2-000",
+        "uuid": "mdip-1-0-2-op-c-bs-eatl-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
         ],
         "server-ltp": [
-          "mdip-1-0-2-http-c-eatl-2-0-2-000"
+          "mdip-1-0-2-http-c-eatl-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -2647,13 +2647,13 @@
         ]
       },
       {
-        "uuid": "mdip-1-0-2-http-c-eatl-2-0-2-000",
+        "uuid": "mdip-1-0-2-http-c-eatl-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
-          "mdip-1-0-2-op-c-bs-eatl-2-0-2-000"
+          "mdip-1-0-2-op-c-bs-eatl-2-1-2-000"
         ],
         "server-ltp": [
-          "mdip-1-0-2-tcp-c-eatl-2-0-2-000"
+          "mdip-1-0-2-tcp-c-eatl-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -2662,17 +2662,17 @@
             "http-client-interface-1-0:http-client-interface-pac": {
               "http-client-interface-configuration": {
                 "application-name": "ExecutionAndTraceLog",
-                "release-number": "2.0.2"
+                "release-number": "2.1.2"
               }
             }
           }
         ]
       },
       {
-        "uuid": "mdip-1-0-2-tcp-c-eatl-2-0-2-000",
+        "uuid": "mdip-1-0-2-tcp-c-eatl-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
-          "mdip-1-0-2-http-c-eatl-2-0-2-000"
+          "mdip-1-0-2-http-c-eatl-2-1-2-000"
         ],
         "server-ltp": [
         ],
@@ -2695,12 +2695,12 @@
         ]
       },
       {
-        "uuid": "mdip-1-0-2-op-c-bs-ol-2-0-2-000",
+        "uuid": "mdip-1-0-2-op-c-bs-ol-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
         ],
         "server-ltp": [
-          "mdip-1-0-2-http-c-ol-2-0-2-000"
+          "mdip-1-0-2-http-c-ol-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -2720,13 +2720,13 @@
         ]
       },
       {
-        "uuid": "mdip-1-0-2-http-c-ol-2-0-2-000",
+        "uuid": "mdip-1-0-2-http-c-ol-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
-          "mdip-1-0-2-op-c-bs-ol-2-0-2-000"
+          "mdip-1-0-2-op-c-bs-ol-2-1-2-000"
         ],
         "server-ltp": [
-          "mdip-1-0-2-tcp-c-ol-2-0-2-000"
+          "mdip-1-0-2-tcp-c-ol-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -2735,17 +2735,17 @@
             "http-client-interface-1-0:http-client-interface-pac": {
               "http-client-interface-configuration": {
                 "application-name": "OamLog",
-                "release-number": "2.0.2"
+                "release-number": "2.1.2"
               }
             }
           }
         ]
       },
       {
-        "uuid": "mdip-1-0-2-tcp-c-ol-2-0-2-000",
+        "uuid": "mdip-1-0-2-tcp-c-ol-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
-          "mdip-1-0-2-http-c-ol-2-0-2-000"
+          "mdip-1-0-2-http-c-ol-2-1-2-000"
         ],
         "server-ltp": [
         ],
@@ -2768,12 +2768,12 @@
         ]
       },
       {
-        "uuid": "mdip-1-0-2-op-c-bs-aa-2-0-2-000",
+        "uuid": "mdip-1-0-2-op-c-bs-aa-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
         ],
         "server-ltp": [
-          "mdip-1-0-2-http-c-aa-2-0-2-000"
+          "mdip-1-0-2-http-c-aa-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -2793,13 +2793,13 @@
         ]
       },
       {
-        "uuid": "mdip-1-0-2-http-c-aa-2-0-2-000",
+        "uuid": "mdip-1-0-2-http-c-aa-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
-          "mdip-1-0-2-op-c-bs-aa-2-0-2-000"
+          "mdip-1-0-2-op-c-bs-aa-2-1-2-000"
         ],
         "server-ltp": [
-          "mdip-1-0-2-tcp-c-aa-2-0-2-000"
+          "mdip-1-0-2-tcp-c-aa-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -2808,17 +2808,17 @@
             "http-client-interface-1-0:http-client-interface-pac": {
               "http-client-interface-configuration": {
                 "application-name": "AdministratorAdministration",
-                "release-number": "2.0.2"
+                "release-number": "2.1.2"
               }
             }
           }
         ]
       },
       {
-        "uuid": "mdip-1-0-2-tcp-c-aa-2-0-2-000",
+        "uuid": "mdip-1-0-2-tcp-c-aa-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
-          "mdip-1-0-2-http-c-aa-2-0-2-000"
+          "mdip-1-0-2-http-c-aa-2-1-2-000"
         ],
         "server-ltp": [
         ],
@@ -2841,12 +2841,12 @@
         ]
       },
       {
-        "uuid": "mdip-1-0-2-op-c-bm-alt-2-0-2-000",
+        "uuid": "mdip-1-0-2-op-c-bm-alt-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
         ],
         "server-ltp": [
-          "mdip-1-0-2-http-c-alt-2-0-2-000"
+          "mdip-1-0-2-http-c-alt-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -2866,12 +2866,12 @@
         ]
       },
       {
-        "uuid": "mdip-1-0-2-op-c-bm-alt-2-0-2-001",
+        "uuid": "mdip-1-0-2-op-c-bm-alt-2-1-2-001",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
         ],
         "server-ltp": [
-          "mdip-1-0-2-http-c-alt-2-0-2-000"
+          "mdip-1-0-2-http-c-alt-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -2891,12 +2891,12 @@
         ]
       },
       {
-        "uuid": "mdip-1-0-2-op-c-bm-alt-2-0-2-002",
+        "uuid": "mdip-1-0-2-op-c-bm-alt-2-1-2-002",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
         ],
         "server-ltp": [
-          "mdip-1-0-2-http-c-alt-2-0-2-000"
+          "mdip-1-0-2-http-c-alt-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -2916,12 +2916,12 @@
         ]
       },
       {
-        "uuid": "mdip-1-0-2-op-c-bm-alt-2-0-2-003",
+        "uuid": "mdip-1-0-2-op-c-bm-alt-2-1-2-003",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
         ],
         "server-ltp": [
-          "mdip-1-0-2-http-c-alt-2-0-2-000"
+          "mdip-1-0-2-http-c-alt-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -2941,12 +2941,12 @@
         ]
       },
       {
-        "uuid": "mdip-1-0-2-op-c-bm-alt-2-0-2-004",
+        "uuid": "mdip-1-0-2-op-c-bm-alt-2-1-2-004",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
         ],
         "server-ltp": [
-          "mdip-1-0-2-http-c-alt-2-0-2-000"
+          "mdip-1-0-2-http-c-alt-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -2966,12 +2966,12 @@
         ]
       },
       {
-        "uuid": "mdip-1-0-2-op-c-bm-alt-2-0-2-005",
+        "uuid": "mdip-1-0-2-op-c-bm-alt-2-1-2-005",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
         ],
         "server-ltp": [
-          "mdip-1-0-2-http-c-alt-2-0-2-000"
+          "mdip-1-0-2-http-c-alt-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -2991,18 +2991,18 @@
         ]
       },
       {
-        "uuid": "mdip-1-0-2-http-c-alt-2-0-2-000",
+        "uuid": "mdip-1-0-2-http-c-alt-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
-          "mdip-1-0-2-op-c-bm-alt-2-0-2-000",
-          "mdip-1-0-2-op-c-bm-alt-2-0-2-001",
-          "mdip-1-0-2-op-c-bm-alt-2-0-2-002",
-          "mdip-1-0-2-op-c-bm-alt-2-0-2-003",
-          "mdip-1-0-2-op-c-bm-alt-2-0-2-004",
-          "mdip-1-0-2-op-c-bm-alt-2-0-2-005"
+          "mdip-1-0-2-op-c-bm-alt-2-1-2-000",
+          "mdip-1-0-2-op-c-bm-alt-2-1-2-001",
+          "mdip-1-0-2-op-c-bm-alt-2-1-2-002",
+          "mdip-1-0-2-op-c-bm-alt-2-1-2-003",
+          "mdip-1-0-2-op-c-bm-alt-2-1-2-004",
+          "mdip-1-0-2-op-c-bm-alt-2-1-2-005"
         ],
         "server-ltp": [
-          "mdip-1-0-2-tcp-c-alt-2-0-2-000"
+          "mdip-1-0-2-tcp-c-alt-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -3011,17 +3011,17 @@
             "http-client-interface-1-0:http-client-interface-pac": {
               "http-client-interface-configuration": {
                 "application-name": "ApplicationLayerTopology",
-                "release-number": "2.0.2"
+                "release-number": "2.1.2"
               }
             }
           }
         ]
       },
       {
-        "uuid": "mdip-1-0-2-tcp-c-alt-2-0-2-000",
+        "uuid": "mdip-1-0-2-tcp-c-alt-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
-          "mdip-1-0-2-http-c-alt-2-0-2-000"
+          "mdip-1-0-2-http-c-alt-2-1-2-000"
         ],
         "server-ltp": [
         ],
@@ -3044,12 +3044,12 @@
         ]
       },
       {
-        "uuid": "mdip-1-0-2-http-c-okm-2-0-2-000",
+        "uuid": "mdip-1-0-2-http-c-okm-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
         ],
         "server-ltp": [
-          "mdip-1-0-2-tcp-c-okm-2-0-2-000"
+          "mdip-1-0-2-tcp-c-okm-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -3058,17 +3058,17 @@
             "http-client-interface-1-0:http-client-interface-pac": {
               "http-client-interface-configuration": {
                 "application-name": "OperationKeyManagement",
-                "release-number": "2.0.2"
+                "release-number": "2.1.2"
               }
             }
           }
         ]
       },
       {
-        "uuid": "mdip-1-0-2-tcp-c-okm-2-0-2-000",
+        "uuid": "mdip-1-0-2-tcp-c-okm-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
-          "mdip-1-0-2-http-c-okm-2-0-2-000"
+          "mdip-1-0-2-http-c-okm-2-1-2-000"
         ],
         "server-ltp": [
         ],
@@ -4780,7 +4780,7 @@
               {
                 "local-id": "2000",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "mdip-1-0-2-op-c-bm-ro-2-0-2-000"
+                "logical-termination-point": "mdip-1-0-2-op-c-bm-ro-2-1-2-000"
               }
             ]
           },
@@ -5230,7 +5230,7 @@
               {
                 "local-id": "2000",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "mdip-1-0-2-op-c-bs-eatl-2-0-2-000"
+                "logical-termination-point": "mdip-1-0-2-op-c-bs-eatl-2-1-2-000"
               }
             ]
           },
@@ -5255,7 +5255,7 @@
               {
                 "local-id": "2000",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "mdip-1-0-2-op-c-bs-ol-2-0-2-000"
+                "logical-termination-point": "mdip-1-0-2-op-c-bs-ol-2-1-2-000"
               }
             ]
           },
@@ -5590,7 +5590,7 @@
               {
                 "local-id": "2000",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "mdip-1-0-2-op-c-bs-aa-2-0-2-000"
+                "logical-termination-point": "mdip-1-0-2-op-c-bs-aa-2-1-2-000"
               }
             ]
           },
@@ -5615,7 +5615,7 @@
               {
                 "local-id": "2000",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "mdip-1-0-2-op-c-bs-aa-2-0-2-000"
+                "logical-termination-point": "mdip-1-0-2-op-c-bs-aa-2-1-2-000"
               }
             ]
           },
@@ -5645,7 +5645,7 @@
               {
                 "local-id": "2000",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "mdip-1-0-2-op-c-bm-ro-2-0-2-001"
+                "logical-termination-point": "mdip-1-0-2-op-c-bm-ro-2-1-2-001"
               }
             ]
           },
@@ -5675,7 +5675,7 @@
               {
                 "local-id": "2000",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "mdip-1-0-2-op-c-bm-ro-2-0-2-002"
+                "logical-termination-point": "mdip-1-0-2-op-c-bm-ro-2-1-2-002"
               }
             ]
           },
@@ -5705,7 +5705,7 @@
               {
                 "local-id": "2000",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "mdip-1-0-2-op-c-bm-ro-2-0-2-003"
+                "logical-termination-point": "mdip-1-0-2-op-c-bm-ro-2-1-2-003"
               }
             ]
           },
@@ -5775,7 +5775,7 @@
               {
                 "local-id": "2000",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "mdip-1-0-2-op-c-bm-alt-2-0-2-001"
+                "logical-termination-point": "mdip-1-0-2-op-c-bm-alt-2-1-2-001"
               }
             ]
           },
@@ -5800,7 +5800,7 @@
               {
                 "local-id": "2000",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "mdip-1-0-2-op-c-bm-alt-2-0-2-002"
+                "logical-termination-point": "mdip-1-0-2-op-c-bm-alt-2-1-2-002"
               }
             ]
           },
@@ -5825,7 +5825,7 @@
               {
                 "local-id": "2000",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "mdip-1-0-2-op-c-bm-alt-2-0-2-003"
+                "logical-termination-point": "mdip-1-0-2-op-c-bm-alt-2-1-2-003"
               }
             ]
           },
@@ -5850,7 +5850,7 @@
               {
                 "local-id": "2000",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "mdip-1-0-2-op-c-bm-alt-2-0-2-004"
+                "logical-termination-point": "mdip-1-0-2-op-c-bm-alt-2-1-2-004"
               }
             ]
           },
@@ -5880,7 +5880,7 @@
               {
                 "local-id": "2000",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "mdip-1-0-2-op-c-bm-alt-2-0-2-005"
+                "logical-termination-point": "mdip-1-0-2-op-c-bm-alt-2-1-2-005"
               }
             ]
           },
@@ -5905,7 +5905,7 @@
               {
                 "local-id": "2000",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "mdip-1-0-2-op-c-bm-alt-2-0-2-001"
+                "logical-termination-point": "mdip-1-0-2-op-c-bm-alt-2-1-2-001"
               }
             ]
           },
@@ -5930,7 +5930,7 @@
               {
                 "local-id": "2000",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "mdip-1-0-2-op-c-bm-alt-2-0-2-002"
+                "logical-termination-point": "mdip-1-0-2-op-c-bm-alt-2-1-2-002"
               }
             ]
           },
@@ -5955,7 +5955,7 @@
               {
                 "local-id": "2000",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "mdip-1-0-2-op-c-bm-alt-2-0-2-003"
+                "logical-termination-point": "mdip-1-0-2-op-c-bm-alt-2-1-2-003"
               }
             ]
           },
@@ -5980,7 +5980,7 @@
               {
                 "local-id": "2000",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "mdip-1-0-2-op-c-bm-alt-2-0-2-004"
+                "logical-termination-point": "mdip-1-0-2-op-c-bm-alt-2-1-2-004"
               }
             ]
           },
@@ -6005,7 +6005,7 @@
               {
                 "local-id": "2000",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "mdip-1-0-2-op-c-bm-alt-2-0-2-005"
+                "logical-termination-point": "mdip-1-0-2-op-c-bm-alt-2-1-2-005"
               }
             ]
           },

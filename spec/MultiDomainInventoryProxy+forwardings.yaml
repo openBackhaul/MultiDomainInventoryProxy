@@ -17,7 +17,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-bm-000
     consequent-requests:
       - client-name: RegistryOffice://v1/register-application
-        uuid: mdip-1-0-2-op-c-bm-ro-2-0-2-000
+        uuid: mdip-1-0-2-op-c-bm-ro-2-1-2-000
 
   - forwarding-name: PromptForEmbeddingCausesRequestForBequeathingData
     uuid: mdip-1-0-2-op-fc-bm-001
@@ -210,7 +210,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-274
     consequent-requests:
       - client-name: ExecutionAndTraceLog://v1/record-service-request
-        uuid: mdip-1-0-2-op-c-bs-eatl-2-0-2-000
+        uuid: mdip-1-0-2-op-c-bs-eatl-2-1-2-000
 
   - forwarding-name: OamRequestCausesLoggingRequest
     uuid: mdip-1-0-2-op-fc-bm-003
@@ -227,7 +227,7 @@ forwardings:
     initiating-requests:
     consequent-requests:
       - client-name: OamLog://v1/record-oam-request
-        uuid: mdip-1-0-2-op-c-bs-ol-2-0-2-000
+        uuid: mdip-1-0-2-op-c-bs-ol-2-1-2-000
 
   - forwarding-name: OutOfDomainServiceRequestCausesInquiryForAuthentication
     uuid: mdip-1-0-2-op-fc-bm-004
@@ -368,7 +368,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-is-274
     consequent-requests:
       - client-name: AdministratorAdministration://v1/approve-oam-request
-        uuid: mdip-1-0-2-op-c-bs-aa-2-0-2-000
+        uuid: mdip-1-0-2-op-c-bs-aa-2-1-2-000
 
   - forwarding-name: OamRequestCausesInquiryForAuthentication
     uuid: mdip-1-0-2-op-fc-bm-005
@@ -385,7 +385,7 @@ forwardings:
     initiating-requests:
     consequent-requests:
       - client-name: AdministratorAdministration://v1/approve-oam-request
-        uuid: mdip-1-0-2-op-c-bs-aa-2-0-2-000
+        uuid: mdip-1-0-2-op-c-bs-aa-2-1-2-000
 
   - forwarding-name: PromptForBequeathingDataCausesRequestForBroadcastingInfoAboutServerReplacement
     uuid: mdip-1-0-2-op-fc-bm-105
@@ -404,7 +404,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-im-000
     consequent-requests:
       - client-name: RegistryOffice://v1/relay-server-replacement
-        uuid: mdip-1-0-2-op-c-bm-ro-2-0-2-001
+        uuid: mdip-1-0-2-op-c-bm-ro-2-1-2-001
 
   - forwarding-name: PromptForBequeathingDataCausesRequestForDeregisteringOfOldRelease
     uuid: mdip-1-0-2-op-fc-bm-106
@@ -423,7 +423,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-im-000
     consequent-requests:
       - client-name: RegistryOffice://v1/deregister-application
-        uuid: mdip-1-0-2-op-c-bm-ro-2-0-2-002
+        uuid: mdip-1-0-2-op-c-bm-ro-2-1-2-002
 
   - forwarding-name: PromptingNewReleaseForUpdatingServerCausesRequestForBroadcastingInfoAboutBackwardCompatibleUpdateOfOperation
     uuid: mdip-1-0-2-op-fc-bm-107
@@ -442,7 +442,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-bm-007
     consequent-requests:
       - client-name: RegistryOffice://v1/relay-operation-update
-        uuid: mdip-1-0-2-op-c-bm-ro-2-0-2-003
+        uuid: mdip-1-0-2-op-c-bm-ro-2-1-2-003
 
   - forwarding-name: ServiceRequestCausesLtpUpdateRequest
     uuid: mdip-1-0-2-op-fc-bm-006
@@ -477,7 +477,7 @@ forwardings:
         uuid: mdip-1-0-2-op-s-im-000
     consequent-requests:
       - client-name: ApplicationLayerTopology://v1/update-ltp
-        uuid: mdip-1-0-2-op-c-bm-alt-2-0-2-001
+        uuid: mdip-1-0-2-op-c-bm-alt-2-1-2-001
 
   - forwarding-name: ServiceRequestCausesLtpDeletionRequest
     uuid: mdip-1-0-2-op-fc-bm-007
@@ -494,7 +494,7 @@ forwardings:
     initiating-requests:
     consequent-requests:
       - client-name: ApplicationLayerTopology://v1/delete-ltp-and-dependents
-        uuid: mdip-1-0-2-op-c-bm-alt-2-0-2-002
+        uuid: mdip-1-0-2-op-c-bm-alt-2-1-2-002
 
   - forwarding-name: ServiceRequestCausesFcUpdateRequest
     uuid: mdip-1-0-2-op-fc-bm-008
@@ -511,7 +511,7 @@ forwardings:
     initiating-requests:
     consequent-requests:
       - client-name: ApplicationLayerTopology://v1/update-fc
-        uuid: mdip-1-0-2-op-c-bm-alt-2-0-2-003
+        uuid: mdip-1-0-2-op-c-bm-alt-2-1-2-003
 
   - forwarding-name: ServiceRequestCausesFcPortUpdateRequest
     uuid: mdip-1-0-2-op-fc-bm-009
@@ -528,7 +528,7 @@ forwardings:
     initiating-requests:
     consequent-requests:
       - client-name: ApplicationLayerTopology://v1/update-fc-port
-        uuid: mdip-1-0-2-op-c-bm-alt-2-0-2-004
+        uuid: mdip-1-0-2-op-c-bm-alt-2-1-2-004
 
   - forwarding-name: ServiceRequestCausesFcPortDeletionRequest
     uuid: mdip-1-0-2-op-fc-bm-010
@@ -545,7 +545,7 @@ forwardings:
     initiating-requests:
     consequent-requests:
       - client-name: ApplicationLayerTopology://v1/delete-fc-port
-        uuid: mdip-1-0-2-op-c-bm-alt-2-0-2-005
+        uuid: mdip-1-0-2-op-c-bm-alt-2-1-2-005
 
   - forwarding-name: OamRequestCausesLtpUpdateRequest
     uuid: mdip-1-0-2-op-fc-bm-011
@@ -562,7 +562,7 @@ forwardings:
     initiating-requests:
     consequent-requests:
       - client-name: ApplicationLayerTopology://v1/update-ltp
-        uuid: mdip-1-0-2-op-c-bm-alt-2-0-2-001
+        uuid: mdip-1-0-2-op-c-bm-alt-2-1-2-001
 
   - forwarding-name: OamRequestCausesLtpDeletionRequest
     uuid: mdip-1-0-2-op-fc-bm-012
@@ -579,7 +579,7 @@ forwardings:
     initiating-requests:
     consequent-requests:
       - client-name: ApplicationLayerTopology://v1/delete-ltp-and-dependents
-        uuid: mdip-1-0-2-op-c-bm-alt-2-0-2-002
+        uuid: mdip-1-0-2-op-c-bm-alt-2-1-2-002
 
   - forwarding-name: OamRequestCausesFcUpdateRequest
     uuid: mdip-1-0-2-op-fc-bm-013
@@ -596,7 +596,7 @@ forwardings:
     initiating-requests:
     consequent-requests:
       - client-name: ApplicationLayerTopology://v1/update-fc
-        uuid: mdip-1-0-2-op-c-bm-alt-2-0-2-003
+        uuid: mdip-1-0-2-op-c-bm-alt-2-1-2-003
 
   - forwarding-name: OamRequestCausesFcPortUpdateRequest
     uuid: mdip-1-0-2-op-fc-bm-014
@@ -613,7 +613,7 @@ forwardings:
     initiating-requests:
     consequent-requests:
       - client-name: ApplicationLayerTopology://v1/update-fc-port
-        uuid: mdip-1-0-2-op-c-bm-alt-2-0-2-004
+        uuid: mdip-1-0-2-op-c-bm-alt-2-1-2-004
 
   - forwarding-name: OamRequestCausesFcPortDeletionRequest
     uuid: mdip-1-0-2-op-fc-bm-015
@@ -630,7 +630,7 @@ forwardings:
     initiating-requests:
     consequent-requests:
       - client-name: ApplicationLayerTopology://v1/delete-fc-port
-        uuid: mdip-1-0-2-op-c-bm-alt-2-0-2-005
+        uuid: mdip-1-0-2-op-c-bm-alt-2-1-2-005
 
 
   - forwarding-name: RequestForListOfConnectedDevicesCausesReadingFromCache
