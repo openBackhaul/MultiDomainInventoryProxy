@@ -2212,8 +2212,7 @@
           "mdip-1-0-2-op-s-is-274"
         ],
         "server-ltp": [
-          "mdip-1-0-2-tcp-s-000",
-          "mdip-1-0-2-tcp-s-001"
+          "mdip-1-0-2-tcp-s-000"
         ],
         "layer-protocol": [
           {
@@ -2272,31 +2271,6 @@
                   "ipv-4-address": "127.0.0.1"
                 },
                 "local-port": 4016
-              }
-            }
-          }
-        ]
-      },
-      {
-        "uuid": "mdip-1-0-2-tcp-s-001",
-        "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
-        "client-ltp": [
-          "mdip-1-0-2-http-s-000"
-        ],
-        "server-ltp": [
-        ],
-        "layer-protocol": [
-          {
-            "local-id": "0",
-            "layer-protocol-name": "tcp-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_TCP_LAYER",
-            "tcp-server-interface-1-0:tcp-server-interface-pac": {
-              "tcp-server-interface-configuration": {
-                "description": "With TLS layer",
-                "local-protocol": "tcp-server-interface-1-0:PROTOCOL_TYPE_HTTPS",
-                "local-address": {
-                  "ipv-4-address": "1.2.4.16"
-                },
-                "local-port": 4216
               }
             }
           }
