@@ -12784,13 +12784,13 @@ paths:
                   type: string
                   description: >
                     'Name of the application that is target of the bequeath-your-data-and-die process
-                    update [/core-model-1-4:control-construct/logical-termination-point=mdip-1-0-2-http-c-ro-1-0-2-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/application-name]'
+                    update [/core-model-1-4:control-construct/logical-termination-point=mdip-1-0-2-http-c-nr-1-0-2-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/application-name]'
                 release-number:
                   type: string
                   pattern: '^([0-9]{1,2})\.([0-9]{1,2})\.([0-9]{1,2})$'
                   description: >
                     'Release of the application that is target of the bequeath-your-data-and-die process
-                    update [/core-model-1-4:control-construct/logical-termination-point=mdip-1-0-2-http-c-ro-1-0-2-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/release-number]'
+                    update [/core-model-1-4:control-construct/logical-termination-point=mdip-1-0-2-http-c-nr-1-0-2-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/release-number]'
                 protocol:
                   type: string
                   enum:
@@ -12798,7 +12798,7 @@ paths:
                     - 'HTTPS'
                   description: >
                     'Protocol to be used during the bequeath-your-data-and-die process
-                    update [/core-model-1-4:control-construct/logical-termination-point=mdip-1-0-2-tcp-c-ro-1-0-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]'
+                    update [/core-model-1-4:control-construct/logical-termination-point=mdip-1-0-2-tcp-c-nr-1-0-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]'
                 address:
                   type: object
                   minProperties: 1
